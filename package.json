@@ -52,10 +52,7 @@
     "react-router-dom": "6.2.1",
     "react-scripts": "^5.0.1",
     "react-table": "7.7.0",
-<<<<<<< HEAD
     "socket.io-client": "^4.6.1",
-=======
->>>>>>> a068670239a88aeb9c2cae5ff87709f96a9c7f0e
     "stylis": "4.0.13",
     "stylis-plugin-rtl": "2.1.1",
     "uuid": "8.3.2",
