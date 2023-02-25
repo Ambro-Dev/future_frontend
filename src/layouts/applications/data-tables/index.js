@@ -35,56 +35,69 @@ function DataTables() {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const [query, setQuery] = useState();
-  const [users, setUsers] = useState([]);
-  const [conversations, setConversations] = useState([]);
+  const [usersList, setUsersList] = useState([]);
+  const [conversationsList, setConversationsList] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [messages, setMessages] = useState({});
+  const [messagesList, setMessagesList] = useState({});
   const [messageText, setMessageText] = useState("");
   const messagesContainerRef = useRef();
   const sendRef = useRef();
 
   useEffect(() => {
+    // Fetch the list of conversations from the server
+    axiosPrivate
+      .get(`/conversations/${auth.userId}`)
+      .then((response) => {
+        setConversationsList(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    // Fetch the list of users from the server
+    axiosPrivate
+      .get("/users")
+      .then((response) => {
+        setUsersList(response.data);
+        console.log(usersList);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     // Listen for new messages
-    socket.on("message", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
+    socket.on("new-message", (message) => {
+      setMessagesList((prevMessages) => [...prevMessages, message]);
+    });
+
+    socket.on("conversation-messages", (messages) => {
+      setMessagesList(messages);
+    });
+
+    socket.on("conversationList", (conversations) => {
+      setConversationsList(conversations);
+    });
+
+    socket.on("userList", (users) => {
+      setUsersList(users);
     });
   }, []);
-
-  useEffect(() => {
-    const user = auth.userId;
-    const conversation = selectedConversation;
-
-    socket.emit("join-conversation", { user, conversation });
-
-    return () => {
-      socket.emit("leave-conversation", { user, conversation });
-    };
-  }, [auth.userId, selectedConversation]);
 
   useEffect(() => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messagesList]);
 
   const handleConversationSelect = (conversationId) => {
     setSelectedConversation(conversationId);
-    axiosPrivate
-      .get(`/messages/${conversationId}`)
-      .then((response) => {
-        setMessages(response.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    socket.emit("join-conversation", { conversationId });
     setTimeout(() => {
       sendRef.current.scrollIntoView({ behavior: "auto" });
     }, 300);
   };
 
   const handleUserClick = (chatUser) => {
-    const selectedUser = users.find((user) => user._id === chatUser);
+    const selectedUser = usersList.find((user) => user._id === chatUser);
     if (selectedUser) {
       const newConversation = {
         name: `${selectedUser.name} ${selectedUser.surname} - ${auth.name} ${auth.surname}`,
@@ -93,9 +106,9 @@ function DataTables() {
       axiosPrivate
         .post("/conversations/", newConversation)
         .then((response) => {
-          setConversations((prevConversations) => [...prevConversations, response.data]);
+          setConversationsList((prevConversations) => [...prevConversations, response.data]);
           setSelectedConversation(response.data._id);
-          setMessages([]);
+          setMessagesList([]);
         })
         .catch((err) => {
           console.error(err);
@@ -124,29 +137,6 @@ function DataTables() {
     }
   };
 
-  useEffect(() => {
-    // Fetch the list of conversations from the server
-    axiosPrivate
-      .get(`/conversations/${auth.userId}`)
-      .then((response) => {
-        setConversations(response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-    // Fetch the list of users from the server
-    axiosPrivate
-      .get("/users")
-      .then((response) => {
-        setUsers(response.data);
-        console.log(users);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -158,7 +148,7 @@ function DataTables() {
                 <MDBox pr={1}>
                   <Autocomplete
                     disablePortal
-                    options={users}
+                    options={usersList}
                     getOptionLabel={(user) => `${user.name} ${user.surname} ${user.studentNumber}`}
                     getOptionSelected={(option, value) => option._id === value._id}
                     onChange={(event, value) => setQuery(value ? value._id : "")}
@@ -177,7 +167,7 @@ function DataTables() {
               <MDTypography pb={1} variant="h5">
                 Conversations:
               </MDTypography>
-              {conversations.map((conversation) => (
+              {conversationsList.map((conversation) => (
                 <MDBox key={conversation._id} pt={1}>
                   <MDButton
                     size="large"
@@ -193,13 +183,13 @@ function DataTables() {
             </MDBox>
           </Grid>
           <Grid item xs={12} xl={8} sx={{ height: "max-content" }}>
-            <Card className="chat-room">
+            <Card className="chat-conversation">
               <MDBox m={3}>
                 {selectedConversation ? (
                   <>
                     <MDBox className="chat-header">
                       <MDTypography variant="h5">
-                        {conversations.find((conv) => conv._id === selectedConversation)?.name}
+                        {conversationsList.find((conv) => conv._id === selectedConversation)?.name}
                       </MDTypography>
                     </MDBox>
                     <MDBox
@@ -209,9 +199,25 @@ function DataTables() {
                       flexDirection="column"
                       mt={2}
                     >
-                      {messages && Object.values(messages).length > 0 ? (
-                        Object.values(messages).map((message) => {
-                          const sender = users.find((user) => user._id === message.sender);
+                      {messagesList && Object.values(messagesList).length > 0 ? (
+                        Object.values(messagesList).map((message) => {
+                          const sender = usersList.find((user) => user._id === message.sender);
+                          const formattedDate = new Date(message.createdAt).toLocaleDateString(
+                            "us-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            }
+                          );
+                          const formattedTime = new Date(message.createdAt).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "numeric",
+                              minute: "numeric",
+                              hour12: false,
+                            }
+                          );
                           return (
                             <Card
                               className={`chat-message ${
@@ -226,6 +232,14 @@ function DataTables() {
                               >{`${sender.name} ${sender.surname}`}</MDTypography>
                               <MDTypography className="text" variant="button" color="text">
                                 {message.text}
+                              </MDTypography>
+                              <MDTypography
+                                className="date"
+                                variant="caption"
+                                pt={2}
+                                sx={({ justifyContent: "flex-end" }, { alignSelf: "flex-end" })}
+                              >
+                                {`${formattedDate} ${formattedTime}`}
                               </MDTypography>
                             </Card>
                           );
