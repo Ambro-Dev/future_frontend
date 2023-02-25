@@ -80,17 +80,6 @@ function Login() {
         accessToken,
         picture,
       });
-      console.log(
-        userId,
-        email,
-        password,
-        name,
-        surname,
-        roles,
-        studentNumber,
-        accessToken,
-        picture
-      );
       setEmail("");
       setPassword("");
       navigate(from, { replace: true });

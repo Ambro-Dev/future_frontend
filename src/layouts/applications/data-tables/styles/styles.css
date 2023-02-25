@@ -1,0 +1,24 @@
+.chat-message {
+  margin: 10px;
+  padding: 10px;
+  max-width: 70%;
+}
+
+.chat-message.self {
+  background-color: #b8b5cf;
+  align-self: flex-end;
+}
+
+.chat-message.other {
+  align-self: flex-start;
+}
+
+.messages-container {
+  max-height: 50vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.button.active {
+  background-color: rgb(233, 233, 233);
+}
