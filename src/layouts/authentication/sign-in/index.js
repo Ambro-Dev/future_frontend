@@ -33,7 +33,7 @@ function Login() {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  const { setAuth } = useAuth();
+  const { setAuth, auth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,6 +45,8 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+
+  if (auth.userId) navigate(from, { replace: true });
 
   useEffect(() => {
     emailRef.current.focus();

@@ -8,13 +8,13 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import { Card, Grid, Toolbar } from "@mui/material";
 
-import { useEffect, useRef, useState } from "react";
-import io from "socket.io-client";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import { SocketContext } from "context/socket";
 
 import useAuth from "hooks/useAuth";
 import MDButton from "components/MDButton";
@@ -27,11 +27,11 @@ import conversationAnimation from "assets/images/illustrations/981-consultation-
 import messageAnimation from "assets/images/illustrations/177-envelope-mail-send-flat-edited.json";
 
 // Connect to the Socket.io server
-const socket = io("http://localhost:8080");
 
 // Data
 
 function DataTables() {
+  const socket = useContext(SocketContext);
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const [query, setQuery] = useState();
@@ -64,22 +64,25 @@ function DataTables() {
       .catch((err) => {
         console.error(err);
       });
-    // Listen for new messages
-    socket.on("new-message", (message) => {
-      setMessagesList((prevMessages) => [...prevMessages, message]);
+
+    socket.on("connect", () => {
+      console.log(`User connected: ${socket.id}`);
     });
+
+    // Listen for new messages
 
     socket.on("conversation-messages", (messages) => {
       setMessagesList(messages);
+      console.log(messages);
     });
 
-    socket.on("conversationList", (conversations) => {
-      setConversationsList(conversations);
+    socket.on("message", (message) => {
+      setMessagesList((prevMessages) => [...prevMessages, message]);
     });
 
-    socket.on("userList", (users) => {
-      setUsersList(users);
-    });
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -89,8 +92,12 @@ function DataTables() {
   }, [messagesList]);
 
   const handleConversationSelect = (conversationId) => {
+    if (selectedConversation) {
+      socket.emit("leave-conversation", { conversation: selectedConversation });
+    }
+
     setSelectedConversation(conversationId);
-    socket.emit("join-conversation", { conversationId });
+    socket.emit("join-conversation", conversationId);
     setTimeout(() => {
       sendRef.current.scrollIntoView({ behavior: "auto" });
     }, 300);
