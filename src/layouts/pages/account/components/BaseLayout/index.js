@@ -1,28 +1,9 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // @mui material components
-import Grid from "@mui/material/Grid";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 
 // Material Dashboard 2 PRO React components
 import MDBox from "components/MDBox";
@@ -37,7 +18,6 @@ import Footer from "examples/Footer";
 
 function BaseLayout({ stickyNavbar, children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
-  const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -59,26 +39,10 @@ function BaseLayout({ stickyNavbar, children }) {
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
-  const handleSetTabValue = (event, newValue) => setTabValue(newValue);
-
   return (
     <DashboardLayout>
       <DashboardNavbar absolute={!stickyNavbar} isMini />
-      <MDBox mt={stickyNavbar ? 3 : 10}>
-        <Grid container>
-          <Grid item xs={12} sm={8} lg={4}>
-            <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                <Tab label="Messages" />
-                <Tab label="Social" />
-                <Tab label="Notifications" />
-                <Tab label="Backup" />
-              </Tabs>
-            </AppBar>
-          </Grid>
-        </Grid>
-        {children}
-      </MDBox>
+      <MDBox mt={stickyNavbar ? 3 : 10}>{children}</MDBox>
       <Footer />
     </DashboardLayout>
   );

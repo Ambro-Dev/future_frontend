@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "App";
-import { SocketContext, socket } from "context/socket";
+import { SocketProvider } from "context/socket";
 
 // Material Dashboard 2 PRO React Context Provider
 import { MaterialUIControllerProvider } from "context";
@@ -12,13 +12,13 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <SocketContext.Provider value={socket}>
+        <SocketProvider>
           <MaterialUIControllerProvider>
             <Routes>
               <Route path="/*" element={<App />} />
             </Routes>
           </MaterialUIControllerProvider>
-        </SocketContext.Provider>
+        </SocketProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,

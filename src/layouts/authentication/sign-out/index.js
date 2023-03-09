@@ -12,6 +12,7 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
+import { SocketContext } from "context/socket";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
@@ -20,12 +21,15 @@ import axios from "api/axios";
 const LOGOUT_URL = "/logout";
 
 function Logout() {
+  const { socket, setSocket } = useContext(SocketContext);
   const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
 
   const logout = async () => {
+    socket.disconnect();
+    setSocket(null);
     axios.get(LOGOUT_URL);
     setAuth({});
     navigate("/authentication/sign-in");

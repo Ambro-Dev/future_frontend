@@ -1,7 +1,11 @@
-import React from "react";
-import socketio from "socket.io-client";
+/* eslint-disable react/jsx-no-constructed-context-values */
+/* eslint-disable react/prop-types */
+import { createContext, useState } from "react";
 
-const SOCKET_PORT = "http://localhost:8080";
+export const SocketContext = createContext();
 
-export const socket = socketio.connect(SOCKET_PORT);
-export const SocketContext = React.createContext();
+export function SocketProvider({ children }) {
+  const [socket, setSocket] = useState(null);
+
+  return <SocketContext.Provider value={{ socket, setSocket }}>{children}</SocketContext.Provider>;
+}

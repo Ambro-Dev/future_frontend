@@ -31,7 +31,7 @@ import messageAnimation from "assets/images/illustrations/177-envelope-mail-send
 // Data
 
 function DataTables() {
-  const socket = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const [query, setQuery] = useState();
@@ -79,10 +79,6 @@ function DataTables() {
     socket.on("message", (message) => {
       setMessagesList((prevMessages) => [...prevMessages, message]);
     });
-
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
   useEffect(() => {
@@ -163,12 +159,10 @@ function DataTables() {
                     renderInput={(params) => <TextField {...params} label="Search users..." />}
                   />
                 </MDBox>
-                <MDBox>
-                  <MDButton onClick={() => handleUserClick(query)}>
-                    Create new conversation
-                  </MDButton>
-                </MDBox>
               </Toolbar>
+              <MDBox pl={3}>
+                <MDButton onClick={() => handleUserClick(query)}>Create new conversation</MDButton>
+              </MDBox>
             </MDBox>
             <MDBox mb={3}>
               <MDTypography pb={1} variant="h5">
@@ -310,7 +304,7 @@ function DataTables() {
                       display="flex"
                     >
                       <MDTypography variant="h5" fontWeight="medium" textTransform="uppercase">
-                        Select conversation or create a new one
+                        Select conversation or search user and create a new one
                       </MDTypography>
                     </Grid>
                     <Grid item xs={12} xl={6} sx={{ height: "400px" }}>
