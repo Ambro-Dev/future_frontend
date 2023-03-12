@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 

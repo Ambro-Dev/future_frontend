@@ -1,16 +1,10 @@
 /**
 =========================================================
-* Material Dashboard 2 PRO React - v2.1.0
+* Distance Learning React - v1.1.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+Coded by Ambro-Dev
 
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
 // @mui material components
@@ -19,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Icon from "@mui/material/Icon";
 import Grid from "@mui/material/Grid";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
@@ -29,7 +23,7 @@ import PieChart from "examples/Charts/PieChart";
 // Data
 import channelChartData from "layouts/dashboards/sales/components/ChannelsChart/data";
 
-// Material Dashboard 2 PRO React contexts
+// Distance Learning React contexts
 import { useMaterialUIController } from "context";
 
 function ChannelsChart() {

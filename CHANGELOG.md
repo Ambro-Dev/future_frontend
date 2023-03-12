@@ -2,7 +2,7 @@
 
 ## [2.1.0] 2022-02-14
 
-- TypeScript version of the product is available: [Material Dashboard 2 PRO React TS](https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts)
+- TypeScript version of the product is available: [Distance Learning React TS](https://mans.org.pl/product/material-dashboard-2-pro-react-ts)
 
 ### Bug fixing
 
@@ -879,4 +879,4 @@ prettier                  1.16.4   →   1.18.2
 ### Original Release
 
 - Added Material-UI as base framework
-- Added design from Material Dashboard Pro BS3 by Creative Tim
+- Added design from Material Dashboard Pro BS3 by Ambro-Dev

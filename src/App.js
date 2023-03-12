@@ -8,18 +8,18 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 PRO React examples
+// Distance Learning React examples
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 
-// Material Dashboard 2 PRO React themes
+// Distance Learning React themes
 import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
 
-// Material Dashboard 2 PRO React Dark Mode themes
+// Distance Learning React Dark Mode themes
 import themeDark from "assets/theme-dark";
 import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
@@ -28,10 +28,10 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
-// Material Dashboard 2 PRO React routes
+// Distance Learning React routes
 import routes from "routes";
 
-// Material Dashboard 2 PRO React contexts
+// Distance Learning React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 import Login from "layouts/authentication/sign-in";
 
@@ -40,6 +40,7 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
 import RequireAuth from "components/RequireAuth";
+import PricingPage from "layouts/pages/pricing-page";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -168,6 +169,7 @@ export default function App() {
           {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
+          <Route path="/admin" element={<PricingPage />} key="admin-page" />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -193,6 +195,7 @@ export default function App() {
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
         <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
+        <Route path="/admin" element={<PricingPage />} key="admin-page" />
       </Routes>
     </ThemeProvider>
   );

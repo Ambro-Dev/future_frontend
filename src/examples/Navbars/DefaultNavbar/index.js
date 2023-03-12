@@ -1,13 +1,13 @@
 /* eslint-disable no-param-reassign */
 /**
 =========================================================
-* Material Dashboard 2 PRO React TS - v1.0.0
+* Distance Learning React TS - v1.0.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Product Page: https://mans.org.pl/product/material-dashboard-2-pro-react-ts
+* Copyright 2022 Ambro-Dev (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+Coded by Ambro-Dev
 
  =========================================================
 
@@ -31,19 +31,19 @@ import Divider from "@mui/material/Divider";
 import MuiLink from "@mui/material/Link";
 import Container from "@mui/material/Container";
 
-// Material Dashboard 2 PRO React TS components
+// Distance Learning React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-// Material Dashboard 2 PRO React TS examples components
+// Distance Learning React TS examples components
 import DefaultNavbarDropdown from "examples/Navbars/DefaultNavbar/DefaultNavbarDropdown";
 import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMobile";
 
-// Material Dashboard 2 PRO React TS Base Styles
+// Distance Learning React TS Base Styles
 import breakpoints from "assets/theme/base/breakpoints";
 
-// Material Dashboard 2 PRO React context
+// Distance Learning React context
 import { useMaterialUIController } from "context";
 
 function DefaultNavbar({ routes, brand, transparent, light, action }) {
@@ -555,7 +555,7 @@ function DefaultNavbar({ routes, brand, transparent, light, action }) {
             lineHeight={0}
             py={1.5}
             pl={1.5}
-            color={transparent ? "white" : "inherit"}
+            color={transparent ? "dark" : "inherit"}
             sx={{ cursor: "pointer" }}
             onClick={openMobileNavbar}
           >
@@ -579,7 +579,7 @@ function DefaultNavbar({ routes, brand, transparent, light, action }) {
 
 // Declaring default props for DefaultNavbar
 DefaultNavbar.defaultProps = {
-  brand: "Material Dashboard PRO",
+  brand: "Distance Learning - Admin Panel",
   transparent: false,
   light: false,
   action: false,

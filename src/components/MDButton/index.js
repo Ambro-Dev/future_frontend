@@ -1,12 +1,12 @@
 /**
 =========================================================
-* Material Dashboard 2 PRO React - v2.1.0
+* Distance Learning React - v2.1.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Product Page: https://mans.org.pl/product/material-dashboard-pro-react
+* Copyright 2022 Ambro-Dev (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+Coded by Ambro-Dev
 
 =========================================================
 
@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 // Custom styles for MDButton
 import MDButtonRoot from "components/MDButton/MDButtonRoot";
 
-// Material Dashboard 2 PRO React contexts
+// Distance Learning React contexts
 import { useMaterialUIController } from "context";
 
 const MDButton = forwardRef(

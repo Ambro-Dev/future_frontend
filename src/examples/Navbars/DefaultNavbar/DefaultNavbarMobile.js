@@ -1,16 +1,10 @@
 /**
 =========================================================
-* Material Dashboard 2 PRO React - v2.1.0
+* Distance Learning React - v1.1.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+Coded by Ambro-Dev
 
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
 import { useState } from "react";
@@ -26,11 +20,11 @@ import Collapse from "@mui/material/Collapse";
 import MuiLink from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 PRO React TS components
+// Distance Learning React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// Material Dashboard 2 PRO React TS exampless
+// Distance Learning React TS exampless
 import DefaultNavbarDropdown from "examples/Navbars/DefaultNavbar/DefaultNavbarDropdown";
 
 function DefaultNavbarMobile({ routes, open }) {
@@ -50,7 +44,7 @@ function DefaultNavbarMobile({ routes, open }) {
         route={route}
         collapse={Boolean(navCollapse)}
       >
-        <MDBox sx={{ height: "15rem", maxHeight: "15rem", overflowY: "scroll" }}>
+        <MDBox sx={{ height: "auto", maxHeight: "15rem", overflowY: "scroll" }}>
           {routeCollapses &&
             routeCollapses.map((item) => (
               <MDBox key={item.name} px={2}>

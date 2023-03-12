@@ -1,16 +1,10 @@
 /**
 =========================================================
-* Material Dashboard 2 PRO React - v2.1.0
+* Distance Learning React - v1.1.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+Coded by Ambro-Dev
 
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
 import { useState } from "react";
@@ -27,13 +21,13 @@ import { v4 as uuidv4 } from "uuid";
 // @mui material components
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 
-// Material Dashboard 2 PRO React examples
+// Distance Learning React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -44,7 +38,7 @@ import Header from "layouts/applications/kanban/components/Header";
 // Data
 import boards from "layouts/applications/kanban/data";
 
-// Material Dashboard 2 PRO React context
+// Distance Learning React context
 import { useMaterialUIController } from "context";
 
 function Kanban() {

@@ -1,16 +1,10 @@
 /**
 =========================================================
-* Material Dashboard 2 PRO React - v2.1.0
+* Distance Learning React - v1.1.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+Coded by Ambro-Dev
 
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
 import { useRef, useEffect, useState, useMemo } from "react";
@@ -25,17 +19,17 @@ import { Line } from "react-chartjs-2";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// Material Dashboard 2 PRO React helper functions
+// Distance Learning React helper functions
 import gradientChartLine from "assets/theme/functions/gradientChartLine";
 
 // MixedChart configurations
 import configs from "examples/Charts/MixedChart/configs";
 
-// Material Dashboard 2 PRO React base styles
+// Distance Learning React base styles
 import colors from "assets/theme/base/colors";
 
 function MixedChart({ icon, title, description, height, chart }) {

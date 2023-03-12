@@ -13,7 +13,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
@@ -87,6 +87,7 @@ function Login() {
         accessToken,
         picture,
       });
+      console.log(accessToken);
       const newSocket = socketio.connect(SOCKET_PORT);
       setSocket(newSocket);
       setEmail("");

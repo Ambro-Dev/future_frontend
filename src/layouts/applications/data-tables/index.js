@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 PRO React examples
+// Distance Learning React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";

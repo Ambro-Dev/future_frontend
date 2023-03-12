@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "App";
 import { SocketProvider } from "context/socket";
 
-// Material Dashboard 2 PRO React Context Provider
+// Distance Learning React Context Provider
 import { MaterialUIControllerProvider } from "context";
 
 ReactDOM.render(

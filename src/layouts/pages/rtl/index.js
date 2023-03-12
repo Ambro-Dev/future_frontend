@@ -1,16 +1,10 @@
 /**
 =========================================================
-* Material Dashboard 2 PRO React - v2.1.0
+* Distance Learning React - v1.1.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+Coded by Ambro-Dev
 
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
 import { useEffect, useMemo, useState } from "react";
@@ -19,11 +13,11 @@ import { useEffect, useMemo, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// Material Dashboard 2 PRO React examples
+// Distance Learning React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -37,20 +31,17 @@ import Calendar from "examples/Calendar";
 import CategoriesList from "examples/Lists/CategoriesList";
 
 // RTL page components
-import Steps from "layouts/pages/rtl/components/Steps";
 import FullBody from "layouts/pages/rtl/components/FullBody";
 import MediaPlayer from "layouts/pages/rtl/components/MediaPlayer";
 import OrdersOverview from "layouts/pages/rtl/components/OrdersOverview";
 import UpcomingEvents from "layouts/pages/rtl/components/UpcomingEvents";
-import Chart from "layouts/pages/rtl/components/Chart";
 
 // Data
 import progressLineChartData from "layouts/pages/rtl/data/progressLineChartData";
 import calendarEventsData from "layouts/pages/rtl/data/calendarEventsData";
 import categoriesListData from "layouts/pages/rtl/data/categoriesListData";
-import caloriesChartData from "layouts/pages/rtl/data/caloriesChartData";
 
-// Material Dashboard 2 PRO React contexts
+// Distance Learning React contexts
 import { useMaterialUIController, setDirection } from "context";
 
 function RTL() {
@@ -152,14 +143,6 @@ function RTL() {
                 onChange={handleSetLights}
               />
             </Grid>
-            <Grid item xs={12} lg={3}>
-              <Chart
-                title="سعرات حراريه"
-                count={97}
-                percentage={{ color: "success", label: "+5%" }}
-                chart={caloriesChartData}
-              />
-            </Grid>
             <Grid item xs={12} md={6} lg={2}>
               <MiniInfoCard
                 icon="shortcut"
@@ -173,9 +156,6 @@ function RTL() {
                 }
                 description="مدينة نيويورك"
               />
-            </Grid>
-            <Grid item xs={12} md={6} lg={2}>
-              <Steps />
             </Grid>
           </Grid>
         </MDBox>

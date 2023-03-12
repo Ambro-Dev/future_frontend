@@ -7,17 +7,18 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// Material Dashboard 2 PRO React base styles
+// Distance Learning React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 import useAuth from "hooks/useAuth";
 
 import backgroundImage from "assets/images/bg-profile.jpeg";
 import MDAvatar from "components/MDAvatar";
-import defaultPicture from "assets/images/default.png";
+
+const defaultPicture = "http://localhost:8080/storage/user_storage/default/default.png";
 
 const REACT_APP_SERVER_URL = "http://localhost:8080";
 // Images

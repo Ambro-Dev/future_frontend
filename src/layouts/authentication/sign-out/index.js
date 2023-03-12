@@ -5,7 +5,7 @@ import AuthContext from "context/AuthProvider";
 // @mui material components
 import Card from "@mui/material/Card";
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";

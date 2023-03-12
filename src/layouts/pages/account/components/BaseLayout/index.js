@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 
 // @mui material components
 
-// Material Dashboard 2 PRO React components
+// Distance Learning React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 PRO React base styles
+// Distance Learning React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
-// Material Dashboard 2 PRO React examples
+// Distance Learning React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
