@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
 =========================================================
 * Distance Learning React - v1.1.0
@@ -67,15 +68,21 @@ function Overview() {
             <Grid container spacing={1}>
               <Grid item xs={12} md={6} xl={3} sx={{ display: "flex" }}>
                 <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-                <ProfileInfoCard
-                  title="profile information"
-                  info={{
-                    fullName: `${auth.name} ${auth.surname}`,
-                    email: `${auth.email}`,
-                    studentNumber: `${auth.studentNumber}`,
-                  }}
-                  shadow={false}
-                />
+                {auth ? (
+                  <ProfileInfoCard
+                    title="profile information"
+                    info={{
+                      fullName: `${auth.name} ${auth.surname}`,
+                      email: `${auth.email}`,
+                      studentNumber: `${auth.studentNumber}`,
+                    }}
+                    shadow={false}
+                  />
+                ) : (
+                  <MDBox>
+                    <MDTypography>Loading</MDTypography>
+                  </MDBox>
+                )}
               </Grid>
               <Grid item xs={12} xl={4}>
                 <ProfilesList title="conversations" profiles={profilesListData} shadow={false} />
@@ -93,15 +100,14 @@ function Overview() {
             </MDBox>
           </MDBox>
           <MDBox p={2}>
-            {courses.length > 0 && (
+            {courses.length > 0 ? (
               <Grid container spacing={6}>
                 {courses.map((course) => (
-                  <Grid item xs={12} md={6} xl={3} key={course.name}>
+                  <Grid item xs={12} md={6} xl={3} key={course._id}>
                     <DefaultProjectCard
                       image={homeDecor1}
-                      lable={`${course.groupIds.name}`}
                       title={`${course.name}`}
-                      description={`${course.teacherId.name}`}
+                      description={`${course.teacherId.name} ${course.teacherId.surname}`}
                       action={{
                         type: "internal",
                         route: "/pages/profile/profile-overview",
@@ -110,14 +116,13 @@ function Overview() {
                       }}
                       authors={[{ image: team1, name: `` }]}
                     />
-                    {course.groupIds.map((group) => (
-                      <p key={group.studentIds.studentNumber}>
-                        {console.log(group.studentIds.name)}
-                      </p>
-                    ))}
                   </Grid>
                 ))}
               </Grid>
+            ) : (
+              <MDBox>
+                <MDTypography>Loading</MDTypography>
+              </MDBox>
             )}
           </MDBox>
         </Header>

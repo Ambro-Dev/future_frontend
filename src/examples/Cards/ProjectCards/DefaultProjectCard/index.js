@@ -24,7 +24,7 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 
-function DefaultProjectCard({ image, label, title, description, action, authors }) {
+function DefaultProjectCard({ image, title, description, action, authors }) {
   const renderAuthors = authors.map(({ image: media, name }) => (
     <Tooltip key={name} title={name} placement="bottom">
       <MDAvatar
@@ -70,9 +70,6 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
         />
       </MDBox>
       <MDBox mt={1} mx={0.5}>
-        <MDTypography variant="button" fontWeight="regular" color="text" textTransform="capitalize">
-          {label}
-        </MDTypography>
         <MDBox mb={1}>
           {action.type === "internal" ? (
             <MDTypography
@@ -140,7 +137,6 @@ DefaultProjectCard.defaultProps = {
 // Typechecking props for the DefaultProjectCard
 DefaultProjectCard.propTypes = {
   image: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   action: PropTypes.shape({

@@ -18,30 +18,40 @@ import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 
 // Images
-import orderImage from "assets/images/product-12.jpg";
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
+
+const REACT_APP_SERVER_URL = "http://localhost:8080";
 
 function OrderInfo() {
+  const [teacher, setTeacher] = useState();
+  const axiosPrivate = useAxiosPrivate();
+  const serverUrl = REACT_APP_SERVER_URL;
+  const [pictureUrl, setPictureUrl] = useState();
+
+  useEffect(() => {
+    axiosPrivate.get("/courses/63e98a3f2d8af2d329d36602/teacher").then((response) => {
+      setTeacher(response.data);
+      setPictureUrl(`${serverUrl}/${response.data.picture}`);
+    });
+  }, []);
+
   return (
     <Grid container spacing={3} alignItems="center">
       <Grid item xs={12} md={6}>
         <MDBox display="flex" alignItems="center">
           <MDBox mr={2}>
-            <MDAvatar size="xxl" src={orderImage} alt="Gold Glasses" />
+            <MDAvatar size="xxl" src={pictureUrl} alt="Gold Glasses" />
           </MDBox>
           <MDBox lineHeight={1}>
             <MDTypography variant="h6" fontWeight="medium">
-              Gold Glasses
+              {teacher?.name} {teacher?.surname}
             </MDTypography>
-            <MDBox mb={2}>
-              <MDTypography variant="button" color="text">
-                Order was delivered 2 days ago.
-              </MDTypography>
-            </MDBox>
             <MDBadge
               variant="gradient"
               color="success"
               size="xs"
-              badgeContent="delivered"
+              badgeContent="teacher"
               container
             />
           </MDBox>
@@ -49,15 +59,11 @@ function OrderInfo() {
       </Grid>
       <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
         <MDButton variant="gradient" color="dark" size="small">
-          contact us
+          send message
         </MDButton>
         <MDBox mt={0.5}>
           <MDTypography variant="button" color="text">
-            Do you like the product? Leave us a review{" "}
-            <MDTypography component="a" href="#" variant="button" color="text" fontWeight="regular">
-              here
-            </MDTypography>
-            .
+            Have You got any questions?
           </MDTypography>
         </MDBox>
       </Grid>

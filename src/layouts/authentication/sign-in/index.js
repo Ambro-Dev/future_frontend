@@ -38,11 +38,12 @@ function Login() {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  const { setAuth, auth } = useAuth();
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const isMountedRef = useRef(true);
 
   const emailRef = useRef();
   const errRef = useRef();
@@ -51,24 +52,34 @@ function Login() {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  if (auth.userId) navigate(from, { replace: true });
-
   useEffect(() => {
     emailRef.current.focus();
+
+    return () => {
+      isMountedRef.current = false;
+    };
   }, []);
 
   useEffect(() => {
     setErrMsg("");
+
+    return () => {
+      isMountedRef.current = false;
+    };
   }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(LOGIN_URL, JSON.stringify({ email, password }), {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        LOGIN_URL,
+        { email, password },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
       const userId = response?.data?.id;
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
@@ -78,16 +89,14 @@ function Login() {
       const studentNumber = response?.data?.studentNumber;
       setAuth({
         userId,
-        email,
-        password,
         name,
+        email,
         surname,
         roles,
         studentNumber,
         accessToken,
         picture,
       });
-      console.log(accessToken);
       const newSocket = socketio.connect(SOCKET_PORT);
       setSocket(newSocket);
       setEmail("");

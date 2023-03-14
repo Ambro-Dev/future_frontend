@@ -10,8 +10,8 @@ import { MaterialUIControllerProvider } from "context";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
+    <AuthProvider>
+      <BrowserRouter>
         <SocketProvider>
           <MaterialUIControllerProvider>
             <Routes>
@@ -19,8 +19,8 @@ ReactDOM.render(
             </Routes>
           </MaterialUIControllerProvider>
         </SocketProvider>
-      </AuthProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
