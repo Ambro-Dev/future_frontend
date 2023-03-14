@@ -59,21 +59,15 @@ function DataTables() {
       .get("/users")
       .then((response) => {
         setUsersList(response.data);
-        console.log(usersList);
       })
       .catch((err) => {
         console.error(err);
       });
 
-    socket.on("connect", () => {
-      console.log(`User connected: ${socket.id}`);
-    });
-
     // Listen for new messages
 
     socket.on("conversation-messages", (messages) => {
       setMessagesList(messages);
-      console.log(messages);
     });
 
     socket.on("message", (message) => {
@@ -93,6 +87,7 @@ function DataTables() {
     }
 
     setSelectedConversation(conversationId);
+    setMessagesList([]);
     socket.emit("join-conversation", conversationId);
     setTimeout(() => {
       sendRef.current.scrollIntoView({ behavior: "auto" });
@@ -153,7 +148,6 @@ function DataTables() {
                     disablePortal
                     options={usersList}
                     getOptionLabel={(user) => `${user.name} ${user.surname} ${user.studentNumber}`}
-                    getOptionSelected={(option, value) => option._id === value._id}
                     onChange={(event, value) => setQuery(value ? value._id : "")}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label="Search users..." />}
