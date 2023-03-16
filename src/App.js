@@ -41,6 +41,7 @@ import brandDark from "assets/images/logo-ct-dark.png";
 
 import RequireAuth from "components/RequireAuth";
 import PricingPage from "layouts/pages/pricing-page";
+import Widgets from "layouts/pages/widgets";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -57,8 +58,10 @@ export default function App() {
 
   // eslint-disable-next-line no-unused-vars
   const ROLES = {
-    Student: 2001,
-    Teacher: 1984,
+    Teacher: 5150,
+    Student: 1984,
+    User: 2001,
+    Admin: 1001,
   };
 
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -113,7 +116,7 @@ export default function App() {
 
       if (route.route) {
         return (
-          <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route exact path={route.route} element={route.component} key={route.key} />
           </Route>
         );
@@ -169,7 +172,12 @@ export default function App() {
           {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
-          <Route path="/admin" element={<PricingPage />} key="admin-page" />
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+            <Route path="/admin" element={<PricingPage />} key="admin-page" />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
+          </Route>
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -195,7 +203,12 @@ export default function App() {
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
         <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
-        <Route path="/admin" element={<PricingPage />} key="admin-page" />
+        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+          <Route path="/admin" element={<PricingPage />} key="admin-page" />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+          <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
+        </Route>
       </Routes>
     </ThemeProvider>
   );

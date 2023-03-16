@@ -16,6 +16,7 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
+import PropTypes from "prop-types";
 
 // Images
 import { useEffect, useState } from "react";
@@ -23,14 +24,14 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 
 const REACT_APP_SERVER_URL = "http://localhost:8080";
 
-function OrderInfo() {
+function OrderInfo({ courseId }) {
   const [teacher, setTeacher] = useState();
   const axiosPrivate = useAxiosPrivate();
   const serverUrl = REACT_APP_SERVER_URL;
   const [pictureUrl, setPictureUrl] = useState();
 
   useEffect(() => {
-    axiosPrivate.get("/courses/63e98a3f2d8af2d329d36602/teacher").then((response) => {
+    axiosPrivate.get(`/courses/${courseId}/teacher`).then((response) => {
       setTeacher(response.data);
       setPictureUrl(`${serverUrl}/${response.data.picture}`);
     });
@@ -70,5 +71,9 @@ function OrderInfo() {
     </Grid>
   );
 }
+
+OrderInfo.propTypes = {
+  courseId: PropTypes.string.isRequired,
+};
 
 export default OrderInfo;

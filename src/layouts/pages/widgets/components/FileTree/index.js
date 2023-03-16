@@ -106,7 +106,7 @@ function renderTreeItem(item) {
       </StyledTreeItem>
     );
   }
-  return <StyledTreeItem nodeId={item.name} label={item.name} />;
+  return <StyledTreeItem key={item.name} nodeId={item.name} label={item.name} />;
 }
 
 function FileTree() {

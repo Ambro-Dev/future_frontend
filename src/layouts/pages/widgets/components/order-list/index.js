@@ -14,6 +14,7 @@ import DataTable from "examples/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import useAuth from "hooks/useAuth";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 import MDAvatar from "components/MDAvatar";
 import { Grid } from "@mui/material";
@@ -28,7 +29,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 // Data
 
-function OrderList() {
+function OrderList({ courseId }) {
   const serverUrl = REACT_APP_SERVER_URL;
 
   const axiosPrivate = useAxiosPrivate();
@@ -64,7 +65,7 @@ function OrderList() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const { data } = await axiosPrivate.get("courses/63e98a3f2d8af2d329d36602/members", {
+        const { data } = await axiosPrivate.get(`courses/${courseId}/members`, {
           headers: { "Content-Type": "application/json", Accept: "aplication/json" },
         });
         const processedData = data.map((user) => ({
@@ -183,5 +184,9 @@ function OrderList() {
   }
   return <Grid>Loading</Grid>;
 }
+
+OrderList.propTypes = {
+  courseId: PropTypes.string.isRequired,
+};
 
 export default OrderList;

@@ -19,13 +19,14 @@ import MDTypography from "components/MDTypography";
 import DefaultItem from "examples/Items/DefaultItem";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
+import PropTypes from "prop-types";
 
-function UpcomingEvents() {
+function UpcomingEvents({ courseId }) {
   const [events, setEvents] = useState();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    axiosPrivate.get("/events/63e98a3f2d8af2d329d36602").then((response) => {
+    axiosPrivate.get(`/events/${courseId}`).then((response) => {
       setEvents(response.data);
     });
   }, []);
@@ -76,5 +77,9 @@ function UpcomingEvents() {
     </Card>
   );
 }
+
+UpcomingEvents.propTypes = {
+  courseId: PropTypes.string.isRequired,
+};
 
 export default UpcomingEvents;

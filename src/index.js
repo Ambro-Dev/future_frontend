@@ -4,9 +4,14 @@ import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "App";
 import { SocketProvider } from "context/socket";
+import LogRocket from "logrocket";
+import setupLogRocketReact from "logrocket-react";
 
 // Distance Learning React Context Provider
 import { MaterialUIControllerProvider } from "context";
+
+LogRocket.init("ubeizn/future");
+setupLogRocketReact(LogRocket);
 
 ReactDOM.render(
   <React.StrictMode>

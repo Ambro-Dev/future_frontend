@@ -105,6 +105,12 @@ const routes = [
         ],
       },
       {
+        name: "Courses",
+        key: "courses",
+        route: "/courses",
+        component: <Kanban />,
+      },
+      {
         name: "Users",
         key: "users",
         collapse: [
@@ -174,12 +180,6 @@ const routes = [
     key: "applications",
     icon: <Icon fontSize="medium">apps</Icon>,
     collapse: [
-      {
-        name: "Kanban",
-        key: "kanban",
-        route: "/applications/kanban",
-        component: <Kanban />,
-      },
       {
         name: "Wizard",
         key: "wizard",

@@ -28,6 +28,7 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import Modal from "@mui/material/Modal";
 import MDTypography from "components/MDTypography";
 import { Card } from "@mui/material";
+import { useParams } from "react-router-dom";
 import OrderInfo from "./components/OrderInfo";
 import OrderList from "./components/order-list";
 import FileTree from "./components/FileTree";
@@ -35,6 +36,8 @@ import FileTree from "./components/FileTree";
 // Data
 
 function Widgets() {
+  const params = useParams();
+  const courseId = params.id;
   const [calendarEventsData, setCalendarEventsData] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
@@ -65,9 +68,10 @@ function Widgets() {
   };
 
   useEffect(() => {
+    console.log(courseId);
     // Make API call using Axios
     axiosPrivate
-      .get("/events/63e98a3f2d8af2d329d36602")
+      .get(`/events/${courseId}`)
       .then((response) => {
         // Update state with fetched data
         setCalendarEventsData(response.data);
@@ -84,7 +88,7 @@ function Widgets() {
         <MDBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} lg={4}>
-              <OrderInfo />
+              <OrderInfo courseId={courseId} />
             </Grid>
           </Grid>
         </MDBox>
@@ -122,14 +126,14 @@ function Widgets() {
             )}
           </Grid>
           <Grid item xs={12} lg={3}>
-            <UpcomingEvents />
+            <UpcomingEvents courseId={courseId} />
           </Grid>
           <Grid item xs={12} lg={4}>
             <FileTree />
           </Grid>
         </Grid>
       </MDBox>
-      <OrderList />
+      <OrderList courseId={courseId} />
       <Footer />
     </DashboardLayout>
   );
