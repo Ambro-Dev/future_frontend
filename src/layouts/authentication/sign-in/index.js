@@ -97,6 +97,7 @@ function Login() {
         accessToken,
         picture,
       });
+      console.log(accessToken);
       const newSocket = socketio.connect(SOCKET_PORT);
       setSocket(newSocket);
       setEmail("");

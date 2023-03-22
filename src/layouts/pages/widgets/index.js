@@ -8,7 +8,7 @@ Coded by Ambro-Dev
 
 */
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -29,9 +29,10 @@ import Modal from "@mui/material/Modal";
 import MDTypography from "components/MDTypography";
 import { Card } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { SocketContext } from "context/socket";
 import OrderInfo from "./components/OrderInfo";
 import OrderList from "./components/order-list";
-import FileTree from "./components/FileTree";
+import UploadFile from "./components/UploadFile";
 
 // Data
 
@@ -39,6 +40,7 @@ function Widgets() {
   const params = useParams();
   const courseId = params.id;
   const [calendarEventsData, setCalendarEventsData] = useState([]);
+  const { socket } = useContext(SocketContext);
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
   const modalRef = useRef();
@@ -79,6 +81,16 @@ function Widgets() {
       .catch((error) => {
         console.log(error);
       });
+
+    socket.emit("join-course", courseId);
+
+    socket.on("event", (event) => {
+      setCalendarEventsData((prevEvents) => [...prevEvents, event]);
+    });
+
+    return () => {
+      socket.emit("leave-course", courseId);
+    };
   }, []);
 
   return (
@@ -87,7 +99,7 @@ function Widgets() {
       <MDBox my={3}>
         <MDBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={4}>
+            <Grid item xs={12} sm={6} lg={5}>
               <OrderInfo courseId={courseId} />
             </Grid>
           </Grid>
@@ -121,15 +133,18 @@ function Widgets() {
                   <MDTypography id="modal-modal-description" sx={{ mt: 2 }}>
                     End: {selectedEvent?.end?.toLocaleString()}
                   </MDTypography>
+                  <MDTypography id="modal-modal-description" sx={{ mt: 2 }}>
+                    Link: {selectedEvent?.url?.toLocaleString()}
+                  </MDTypography>
                 </Card>
               </Modal>
             )}
           </Grid>
           <Grid item xs={12} lg={3}>
-            <UpcomingEvents courseId={courseId} />
+            <UpcomingEvents events={calendarEventsData} courseId={courseId} />
           </Grid>
           <Grid item xs={12} lg={4}>
-            <FileTree />
+            <UploadFile />
           </Grid>
         </Grid>
       </MDBox>

@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-underscore-dangle */
 /**
 =========================================================
@@ -17,26 +18,32 @@ import MDTypography from "components/MDTypography";
 
 // Distance Learning React examples
 import DefaultItem from "examples/Items/DefaultItem";
-import { useEffect, useState } from "react";
-import useAxiosPrivate from "hooks/useAxiosPrivate";
+import { useState } from "react";
 import PropTypes from "prop-types";
+import MDButton from "components/MDButton";
+import NewEvent from "./NewEvent";
 
-function UpcomingEvents({ courseId }) {
-  const [events, setEvents] = useState();
-  const axiosPrivate = useAxiosPrivate();
+function UpcomingEvents({ events, courseId }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    axiosPrivate.get(`/events/${courseId}`).then((response) => {
-      setEvents(response.data);
-    });
-  }, []);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
   return (
     <Card sx={{ height: "500px", overflow: "auto" }}>
-      <MDBox pt={2} px={2} lineHeight={1}>
-        <MDTypography variant="h6" fontWeight="medium">
+      <MDBox pt={2} px={2} lineHeight={1} sx={{ display: "flex", justifyContent: "space-between" }}>
+        <MDTypography variant="h6" fontWeight="medium" pt={1}>
           Events
         </MDTypography>
+        <MDButton color="success" circular onClick={openModal}>
+          Add Event
+        </MDButton>
+        <NewEvent open={isModalOpen} courseId={courseId} onClose={closeModal} />
       </MDBox>
       {events && events.length > 0 ? (
         events.map((event) => {
@@ -79,6 +86,7 @@ function UpcomingEvents({ courseId }) {
 }
 
 UpcomingEvents.propTypes = {
+  events: PropTypes.array.isRequired,
   courseId: PropTypes.string.isRequired,
 };
 
