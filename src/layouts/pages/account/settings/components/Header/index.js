@@ -24,9 +24,9 @@ import Icon from "@mui/material/Icon";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
-const defaultPicture = "http://localhost:8080/storage/user_storage/default/default.png";
+const defaultPicture = "http://localhost:5000/storage/user_storage/default/default.png";
 
-const REACT_APP_SERVER_URL = "http://localhost:8080";
+const REACT_APP_SERVER_URL = "http://localhost:5000";
 
 // Images
 

@@ -22,7 +22,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import MDTypography from "components/MDTypography";
 
-const REACT_APP_SERVER_URL = "http://localhost:8080";
+const REACT_APP_SERVER_URL = "http://localhost:5000";
 
 // Set up the fonts
 pdfMake.vfs = pdfFonts.pdfMake.vfs;

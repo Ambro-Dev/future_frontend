@@ -22,7 +22,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
-const REACT_APP_SERVER_URL = "http://localhost:8080";
+const REACT_APP_SERVER_URL = "http://localhost:5000";
 
 function OrderInfo({ courseId }) {
   const [teacher, setTeacher] = useState();

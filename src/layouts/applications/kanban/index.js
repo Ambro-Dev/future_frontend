@@ -21,7 +21,7 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import MDTypography from "components/MDTypography";
 import CategoriesList from "examples/Lists/CategoriesList";
 
-const REACT_APP_SERVER_URL = "http://localhost:8080";
+const REACT_APP_SERVER_URL = "http://localhost:5000";
 const defaultPicture = "/storage/user_storage/default/default.png";
 
 function Kanban() {

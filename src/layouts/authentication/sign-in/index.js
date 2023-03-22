@@ -28,7 +28,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import axios from "api/axios";
 import socketio from "socket.io-client";
 
-const SOCKET_PORT = "http://localhost:8080";
+const SOCKET_PORT = "http://localhost:5000";
 
 const LOGIN_URL = "/auth";
 

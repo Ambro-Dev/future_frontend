@@ -18,9 +18,9 @@ import useAuth from "hooks/useAuth";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 import MDAvatar from "components/MDAvatar";
 
-const defaultPicture = "http://localhost:8080/storage/user_storage/default/default.png";
+const defaultPicture = "http://localhost:5000/storage/user_storage/default/default.png";
 
-const REACT_APP_SERVER_URL = "http://localhost:8080";
+const REACT_APP_SERVER_URL = "http://localhost:5000";
 // Images
 
 function Header({ children }) {
