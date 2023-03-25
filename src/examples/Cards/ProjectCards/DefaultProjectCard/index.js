@@ -64,7 +64,7 @@ function DefaultProjectCard({ image, title, description, action, authors }) {
             maxWidth: "100%",
             margin: 0,
             boxShadow: ({ boxShadows: { md } }) => md,
-            objectFit: "cover",
+            objectFit: "scale-down",
             objectPosition: "center",
           }}
         />

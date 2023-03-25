@@ -7,69 +7,34 @@ Coded by Ambro-Dev
 
 */
 
-// Images
-import kal from "assets/images/kal-visuals-square.jpg";
-import marie from "assets/images/marie.jpg";
-import ivana from "assets/images/ivana-square.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
+import useAuth from "hooks/useAuth";
 
-const profilesListData = [
-  {
-    image: kal,
-    name: "Sophie B.",
-    description: "Hi! I need more information..",
-    action: {
-      type: "internal",
-      route: "/pages/profile/profile-overview",
-      color: "info",
-      label: "reply",
-    },
-  },
-  {
-    image: marie,
-    name: "Anne Marie",
-    description: "Awesome work, can you..",
-    action: {
-      type: "internal",
-      route: "/pages/profile/profile-overview",
-      color: "info",
-      label: "reply",
-    },
-  },
-  {
-    image: ivana,
-    name: "Ivanna",
-    description: "About files I can..",
-    action: {
-      type: "internal",
-      route: "/pages/profile/profile-overview",
-      color: "info",
-      label: "reply",
-    },
-  },
-  {
-    image: team4,
-    name: "Peterson",
-    description: "Have a great afternoon..",
-    action: {
-      type: "internal",
-      route: "/pages/profile/profile-overview",
-      color: "info",
-      label: "reply",
-    },
-  },
-  {
-    image: team3,
-    name: "Nick Daniel",
-    description: "Hi! I need more information..",
-    action: {
-      type: "internal",
-      route: "/pages/profile/profile-overview",
-      color: "info",
-      label: "reply",
-    },
-  },
-];
+const axiosPrivate = useAxiosPrivate();
+const { auth } = useAuth();
+const { data } = axiosPrivate.get(`conversation/${auth.userId}`);
 
-export default profilesListData;
+const conversationObjects = data.map((conversation) => {
+  // retrieve messages for conversation and sort by timestamp
+  conversation.messages.sort((a, b) => b.timestamp - a.timestamp);
+
+  // extract text of last message and shorten it
+  const lastMessage = conversation.messages[0];
+  const shortenedDescription = lastMessage.text.slice(0, 30);
+
+  // create conversation object
+  return {
+    image: conversation.image,
+    name: conversation.name,
+    description: shortenedDescription,
+    action: {
+      type: "internal",
+      route: "/pages/chat",
+      color: "info",
+      label: "message",
+    },
+  };
+});
+
+// display conversation objects in UI
+export default conversationObjects;

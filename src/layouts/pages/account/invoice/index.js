@@ -10,9 +10,6 @@ Coded by Ambro-Dev
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import Table from "@mui/material/Table";
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
 
 // Distance Learning React components
 import MDBox from "components/MDBox";
@@ -28,14 +25,21 @@ import logoCTDark from "assets/images/logo-ct-dark.png";
 
 // Distance Learning React context
 import { useMaterialUIController } from "context";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Invoice() {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
-  const borderBottom = {
-    borderBottom: ({ borders: { borderWidth }, palette: { light } }) =>
-      `${borderWidth[1]} solid ${light.main}`,
+  const location = useLocation();
+  const selectedEvent = location.state;
+  console.log(selectedEvent);
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(-1);
   };
 
   return (
@@ -56,32 +60,26 @@ function Invoice() {
                       mb={1}
                     />
                     <MDTypography variant="h6" fontWeight="medium">
-                      St. Independence Embankment, 050105 Bucharest, Romania
+                      Teacher
                     </MDTypography>
-                    <MDBox mt={1} mb={2}>
-                      <MDTypography
-                        display="block"
-                        variant="body2"
-                        color={darkMode ? "text" : "secondary"}
-                      >
-                        tel: +4 (074) 1090873
-                      </MDTypography>
-                    </MDBox>
                   </Grid>
                   <Grid item xs={12} md={7} lg={3}>
                     <MDBox width="100%" textAlign={{ xs: "left", md: "right" }} mt={6}>
                       <MDBox mt={1}>
-                        <MDTypography variant="h6" fontWeight="medium">
-                          Billed to: John Doe
-                        </MDTypography>
-                      </MDBox>
-                      <MDBox mb={1}>
-                        <MDTypography variant="body2" color={darkMode ? "text" : "secondary"}>
-                          4006 Locust View Drive
-                          <br />
-                          San Francisco CA
-                          <br />
-                          California
+                        <MDTypography
+                          component="span"
+                          variant="h6"
+                          fontWeight="regular"
+                          color={darkMode ? "text" : "secondary"}
+                        >
+                          <MDButton
+                            variant="gradient"
+                            color="success"
+                            href={selectedEvent.url}
+                            target="_blank"
+                          >
+                            Join call
+                          </MDButton>
                         </MDTypography>
                       </MDBox>
                     </MDBox>
@@ -95,10 +93,10 @@ function Invoice() {
                         color={darkMode ? "text" : "secondary"}
                         fontWeight="regular"
                       >
-                        Invoice no
+                        Title
                       </MDTypography>
                       <MDTypography variant="h5" fontWeight="medium">
-                        #0453119
+                        {selectedEvent.title}
                       </MDTypography>
                     </Grid>
                     <Grid item xs={12} md={7} lg={5}>
@@ -116,12 +114,12 @@ function Invoice() {
                             color={darkMode ? "text" : "secondary"}
                             fontWeight="regular"
                           >
-                            Invoice date:
+                            Start time:
                           </MDTypography>
                         </MDBox>
                         <MDBox width="50%">
                           <MDTypography variant="h6" fontWeight="medium">
-                            06/03/2019
+                            {selectedEvent.start.toLocaleString("en-US")}
                           </MDTypography>
                         </MDBox>
                       </MDBox>
@@ -138,12 +136,12 @@ function Invoice() {
                             color={darkMode ? "text" : "secondary"}
                             fontWeight="regular"
                           >
-                            Due date:
+                            End time:
                           </MDTypography>
                         </MDBox>
                         <MDBox width="50%">
                           <MDTypography variant="h6" fontWeight="medium">
-                            11/03/2019
+                            {selectedEvent.end.toLocaleString("en-US")}
                           </MDTypography>
                         </MDBox>
                       </MDBox>
@@ -155,201 +153,16 @@ function Invoice() {
               {/* Invoice table */}
               <MDBox p={3}>
                 <MDBox width="100%" overflow="auto">
-                  <Table sx={{ minWidth: "32rem" }}>
-                    <MDBox component="thead">
-                      <TableRow>
-                        <MDBox
-                          component="th"
-                          width={{ xs: "45%", md: "50%" }}
-                          py={1.5}
-                          px={1}
-                          textAlign="left"
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="h6" color="text" fontWeight="medium">
-                            Item
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="th"
-                          py={1.5}
-                          pl={3}
-                          pr={1}
-                          textAlign="left"
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="h6" color="text" fontWeight="medium">
-                            Qty
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="th"
-                          py={1.5}
-                          pl={3}
-                          pr={1}
-                          textAlign="left"
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="h6" color="text" fontWeight="medium">
-                            Rate
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="th"
-                          py={1.5}
-                          pl={3}
-                          pr={1}
-                          textAlign="left"
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="h6" color="text" fontWeight="medium">
-                            Amount
-                          </MDTypography>
-                        </MDBox>
-                      </TableRow>
-                    </MDBox>
-                    <TableBody>
-                      <TableRow>
-                        <MDBox component="td" textAlign="left" p={1} sx={borderBottom}>
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            Premium Support
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            1
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            $ 9.00
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            $ 9.00
-                          </MDTypography>
-                        </MDBox>
-                      </TableRow>
-                      <TableRow>
-                        <MDBox component="td" textAlign="left" p={1} sx={borderBottom}>
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            Distance Learning
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            3
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            $ 100.00
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            $ 300.00
-                          </MDTypography>
-                        </MDBox>
-                      </TableRow>
-                      <TableRow>
-                        <MDBox component="td" textAlign="left" p={1}>
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            Parts for service
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox component="td" textAlign="left" py={1} pr={1} pl={3}>
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            1
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox component="td" textAlign="left" py={1} pr={1} pl={3}>
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            $ 89.00
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox component="td" textAlign="left" py={1} pr={1} pl={3}>
-                          <MDTypography variant="body2" color="text" fontWeight="regular">
-                            $ 89.00
-                          </MDTypography>
-                        </MDBox>
-                      </TableRow>
-                      <TableRow>
-                        <MDBox component="td" textAlign="left" p={1} sx={borderBottom} />
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        />
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="h5">Total</MDTypography>
-                        </MDBox>
-                        <MDBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          sx={borderBottom}
-                        >
-                          <MDTypography variant="h5">$ 698</MDTypography>
-                        </MDBox>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
+                  <MDTypography
+                    variant="h6"
+                    color={darkMode ? "text" : "secondary"}
+                    fontWeight="regular"
+                  >
+                    Description
+                  </MDTypography>
+                  <MDTypography variant="button" fontWeight="regular">
+                    {selectedEvent.description}
+                  </MDTypography>
                 </MDBox>
               </MDBox>
 
@@ -357,25 +170,12 @@ function Invoice() {
               <MDBox p={3} mt={7}>
                 <Grid container>
                   <Grid item xs={12} lg={5}>
-                    <MDTypography variant="h5" fontWeight="medium">
-                      Thank you!
+                    <MDTypography variant="h6" fontWeight="regular">
+                      Files
                     </MDTypography>
                     <MDBox mt={1} mb={2} lineHeight={0}>
-                      <MDTypography variant="button" color={darkMode ? "text" : "secondary"}>
-                        If you encounter any issues related to the invoice you can contact us at:
-                      </MDTypography>
+                      <AttachFileIcon fontSize="large" />
                     </MDBox>
-                    <MDTypography
-                      component="span"
-                      variant="h6"
-                      fontWeight="regular"
-                      color={darkMode ? "text" : "secondary"}
-                    >
-                      email:{" "}
-                      <MDTypography component="span" variant="h6" fontWeight="regular">
-                        support@creative-tim.com
-                      </MDTypography>
-                    </MDTypography>
                   </Grid>
                   <Grid item xs={12} lg={7}>
                     <MDBox
@@ -386,8 +186,8 @@ function Invoice() {
                       alignItems="flex-end"
                       mt={{ xs: 2, md: 0 }}
                     >
-                      <MDButton variant="gradient" color="info" onClick={() => window.print(this)}>
-                        print
+                      <MDButton variant="gradient" color="warning" onClick={handleClick}>
+                        Close
                       </MDButton>
                     </MDBox>
                   </Grid>

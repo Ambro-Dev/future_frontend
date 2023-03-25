@@ -6,7 +6,7 @@
 Coded by Ambro-Dev
 
 */
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -26,9 +26,26 @@ import NextEvents from "layouts/applications/calendar/components/NextEvents";
 import ProductivityChart from "layouts/applications/calendar/components/ProductivityChart";
 
 // Data
-import calendarEventsData from "layouts/applications/calendar/data/calendarEventsData";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
+import useAuth from "hooks/useAuth";
 
 function Calendar() {
+  const axiosPrivate = useAxiosPrivate();
+  const [calendarEventsData, setCalendarEventsData] = useState([]);
+  const { auth } = useAuth();
+
+  useEffect(() => {
+    axiosPrivate
+      .get(`/events/user/${auth.userId}`)
+      .then((response) => {
+        // Update state with fetched data
+        setCalendarEventsData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -40,13 +57,7 @@ function Calendar() {
           <Grid item xs={12} xl={9} sx={{ height: "max-content" }}>
             {useMemo(
               () => (
-                <EventCalendar
-                  initialView="dayGridMonth"
-                  initialDate="2021-08-10"
-                  events={calendarEventsData}
-                  selectable
-                  editable
-                />
+                <EventCalendar initialView="dayGridMonth" events={calendarEventsData} />
               ),
               [calendarEventsData]
             )}

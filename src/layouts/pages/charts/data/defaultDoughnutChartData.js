@@ -8,7 +8,7 @@ Coded by Ambro-Dev
 */
 
 const defaultDoughnutChartData = {
-  labels: ["Ambro-Dev", "Github", "Bootsnipp", "Dev.to", "Codeinwp"],
+  labels: ["MANS", "Github", "Bootsnipp", "Dev.to", "Codeinwp"],
   datasets: {
     label: "Projects",
     backgroundColors: ["info", "dark", "error", "secondary", "primary"],

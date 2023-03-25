@@ -55,17 +55,7 @@ function UpcomingEvents({ events, courseId }) {
           const formattedStartTime = new Date(event.start).toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
-            hour12: false,
-          });
-          const formattedEndDate = new Date(event.end).toLocaleDateString("us-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          });
-          const formattedEndTime = new Date(event.end).toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "numeric",
-            hour12: false,
+            hour12: true,
           });
           return (
             <MDBox p={2} key={event._id}>
@@ -73,7 +63,7 @@ function UpcomingEvents({ events, courseId }) {
                 color="dark"
                 icon="savings"
                 title={event.title}
-                description={`${formattedStartDate} ${formattedStartTime} - ${formattedEndDate} ${formattedEndTime}`}
+                description={`${formattedStartDate} at ${formattedStartTime}`}
               />
             </MDBox>
           );

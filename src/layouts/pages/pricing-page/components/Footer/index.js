@@ -33,7 +33,7 @@ function Footer({ light }) {
             color={light ? "white" : "text"}
             fontSize={size.sm}
           >
-            &copy; {new Date().getFullYear()}, made by Ambro-Dev
+            &copy; {new Date().getFullYear()}, made by Gwarant
           </MDBox>
           <MDBox
             component="ul"
@@ -59,7 +59,7 @@ function Footer({ light }) {
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  Ambro-Dev
+                  MANS
                 </MDTypography>
               </Link>
             </MDBox>

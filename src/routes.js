@@ -7,12 +7,11 @@ import NewUser from "layouts/pages/users/new-user";
 import Settings from "layouts/pages/account/settings";
 import Billing from "layouts/pages/account/billing";
 import Invoice from "layouts/pages/account/invoice";
-import Timeline from "layouts/pages/projects/timeline";
 import Charts from "layouts/pages/charts";
 import Notifications from "layouts/pages/notifications";
 import Kanban from "layouts/applications/kanban";
 import Wizard from "layouts/applications/wizard";
-import DataTables from "layouts/applications/data-tables";
+import Chat from "layouts/applications/data-tables";
 import Calendar from "layouts/applications/calendar";
 import NewProduct from "layouts/ecommerce/products/new-product";
 import EditProduct from "layouts/ecommerce/products/edit-product";
@@ -105,7 +104,7 @@ const routes = [
       {
         name: "Courses",
         key: "courses",
-        route: "/courses",
+        route: "/pages/courses",
         component: <Kanban />,
       },
       {
@@ -120,6 +119,12 @@ const routes = [
             component: <NewUser />,
           },
         ],
+      },
+      {
+        name: "Chat",
+        key: "chat",
+        route: "/pages/chat",
+        component: <Chat />,
       },
       {
         name: "Account",
@@ -148,19 +153,6 @@ const routes = [
           },
         ],
       },
-      {
-        name: "Projects",
-        key: "projects",
-        collapse: [
-          {
-            name: "Timeline",
-            key: "timeline",
-            protected: true,
-            route: "/pages/projects/timeline",
-            component: <Timeline />,
-          },
-        ],
-      },
       { name: "Charts", key: "charts", route: "/pages/charts", component: <Charts /> },
       {
         name: "Notfications",
@@ -181,12 +173,6 @@ const routes = [
         key: "wizard",
         route: "/applications/wizard",
         component: <Wizard />,
-      },
-      {
-        name: "Data Tables",
-        key: "data-tables",
-        route: "/applications/data-tables",
-        component: <DataTables />,
       },
       {
         name: "Calendar",

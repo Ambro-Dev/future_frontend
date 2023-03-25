@@ -27,22 +27,19 @@ import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 // Overview page components
 import Header from "layouts/pages/profile/components/Header";
 
-// Data
-import profilesListData from "layouts/pages/profile/profile-overview/data/profilesListData";
-
-// Images
-import homeDecor1 from "assets/images/home-decor-1.jpg";
-import team1 from "assets/images/team-1.jpg";
-
 import useAuth from "hooks/useAuth";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
+const REACT_APP_SERVER_URL = "http://localhost:5000";
+
 function Overview() {
+  const serverUrl = REACT_APP_SERVER_URL;
   const { auth } = useAuth();
   const [courses, setCourses] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const [loading, setLoading] = useState(true);
+  const [conversationList, setConversationList] = useState();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -56,6 +53,38 @@ function Overview() {
       }
     };
     fetchCourses();
+
+    const getConversations = () => {
+      axiosPrivate.get(`conversations/${auth.userId}`).then((response) => {
+        if (response.data && response.data.length > 0) {
+          const conversationObjects = response.data.map((conversation) => {
+            // retrieve messages for conversation and sort by timestamp
+            conversation.messages.sort((a, b) => b.timestamp - a.timestamp);
+
+            // extract text of last message and shorten it
+            const lastMessage = conversation.messages[0];
+            const shortenedDescription = lastMessage.text.slice(0, 30);
+            const otherUser = conversation.members.find((member) => member._id !== auth.userId);
+
+            // create conversation object
+            return {
+              key: conversation._id,
+              image: `${serverUrl}/${otherUser.picture}`,
+              name: `${otherUser.name} ${otherUser.surname}`,
+              description: shortenedDescription,
+              action: {
+                type: "internal",
+                route: "/pages/chat",
+                color: "info",
+                label: "message",
+              },
+            };
+          });
+          setConversationList(conversationObjects);
+        }
+      });
+    };
+    getConversations();
   }, [auth.userId]);
 
   if (!loading) {
@@ -85,7 +114,11 @@ function Overview() {
                 )}
               </Grid>
               <Grid item xs={12} xl={4}>
-                <ProfilesList title="conversations" profiles={profilesListData} shadow={false} />
+                {conversationList && conversationList.length > 0 ? (
+                  <ProfilesList title="conversations" profiles={conversationList} shadow={false} />
+                ) : (
+                  <MDBox>No conversations</MDBox>
+                )}
               </Grid>
             </Grid>
           </MDBox>
@@ -102,22 +135,29 @@ function Overview() {
           <MDBox p={2}>
             {courses.length > 0 ? (
               <Grid container spacing={6}>
-                {courses.map((course) => (
-                  <Grid item xs={12} md={6} xl={3} key={course._id}>
-                    <DefaultProjectCard
-                      image={homeDecor1}
-                      title={`${course.name}`}
-                      description={`${course.teacherId.name} ${course.teacherId.surname}`}
-                      action={{
-                        type: "internal",
-                        route: "/pages/profile/profile-overview",
-                        color: "info",
-                        label: "view project",
-                      }}
-                      authors={[{ image: team1, name: `` }]}
-                    />
-                  </Grid>
-                ))}
+                {courses.map((course) => {
+                  const topMembers = course.members.sort((a, b) => b.score - a.score).slice(0, 5);
+
+                  return (
+                    <Grid item xs={12} md={6} xl={3} key={course._id}>
+                      <DefaultProjectCard
+                        image={`${serverUrl}/${course.pic}`}
+                        title={`${course.name}`}
+                        description={`${course.teacherId.name} ${course.teacherId.surname}`}
+                        action={{
+                          type: "internal",
+                          route: `/courses/course-info/${course._id}`,
+                          color: "info",
+                          label: "go to course",
+                        }}
+                        authors={topMembers.map((member) => ({
+                          image: `${serverUrl}/${member.picture}`,
+                          name: `${member.name} ${member.surname}`,
+                        }))}
+                      />
+                    </Grid>
+                  );
+                })}
               </Grid>
             ) : (
               <MDBox>

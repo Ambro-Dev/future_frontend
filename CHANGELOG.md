@@ -879,4 +879,4 @@ prettier                  1.16.4   →   1.18.2
 ### Original Release
 
 - Added Material-UI as base framework
-- Added design from Material Dashboard Pro BS3 by Ambro-Dev
+- Added design from Material Dashboard Pro BS3 by MANS

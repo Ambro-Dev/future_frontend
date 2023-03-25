@@ -4,7 +4,7 @@
 =========================================================
 
 * Product Page: https://mans.org.pl/product/material-dashboard-pro-react
-* Copyright 2022 Ambro-Dev (https://www.creative-tim.com)
+* Copyright 2022 MANS (https://www.creative-tim.com)
 
 Coded by Ambro-Dev
 
