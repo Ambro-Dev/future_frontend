@@ -34,6 +34,7 @@ export default styled("div")(({ theme, ownerState }) => {
 
     "& .ql-editor": {
       color: darkMode ? white.main : text.main,
+      whiteSpace: "pre-wrap",
 
       "& p": {
         fontSize: size.md,

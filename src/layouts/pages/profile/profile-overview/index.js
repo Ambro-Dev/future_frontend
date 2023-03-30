@@ -30,6 +30,7 @@ import Header from "layouts/pages/profile/components/Header";
 import useAuth from "hooks/useAuth";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const REACT_APP_SERVER_URL = "http://localhost:5000";
 
@@ -38,11 +39,21 @@ function Overview() {
   const { auth } = useAuth();
   const [courses, setCourses] = useState([]);
   const axiosPrivate = useAxiosPrivate();
+  const [picture, setPicture] = useState();
   const [loading, setLoading] = useState(true);
   const [conversationList, setConversationList] = useState();
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    axiosPrivate
+      .get(`/profile-picture/users/${auth.userId}/picture`, { responseType: "blob" })
+      .then((response) => {
+        setPicture(URL.createObjectURL(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching image:", error);
+      });
+
+    const fetchUserCourses = async () => {
       try {
         const { data } = await axiosPrivate.get(`/users/${auth.userId}/courses`);
         setCourses(data);
@@ -52,7 +63,24 @@ function Overview() {
         setLoading(false);
       }
     };
-    fetchCourses();
+
+    const fetchTeacherCourses = async () => {
+      try {
+        const { data } = await axiosPrivate.get(`/users/teacher/${auth.userId}/courses`);
+        setCourses(data);
+        console.log(data);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    };
+
+    if (auth.roles.includes(5150)) {
+      fetchTeacherCourses();
+    } else {
+      fetchUserCourses();
+    }
 
     const getConversations = () => {
       axiosPrivate.get(`conversations/${auth.userId}`).then((response) => {
@@ -69,7 +97,7 @@ function Overview() {
             // create conversation object
             return {
               key: conversation._id,
-              image: `${serverUrl}/${otherUser.picture}`,
+              user: otherUser._id,
               name: `${otherUser.name} ${otherUser.surname}`,
               description: shortenedDescription,
               action: {
@@ -92,12 +120,12 @@ function Overview() {
       <DashboardLayout>
         <DashboardNavbar />
         <MDBox mb={2} />
-        <Header>
+        <Header picture={picture}>
           <MDBox mt={5} mb={3}>
             <Grid container spacing={1}>
               <Grid item xs={12} md={6} xl={3} sx={{ display: "flex" }}>
                 <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-                {auth ? (
+                {auth.studentNumber ? (
                   <ProfileInfoCard
                     title="profile information"
                     info={{
@@ -108,9 +136,14 @@ function Overview() {
                     shadow={false}
                   />
                 ) : (
-                  <MDBox>
-                    <MDTypography>Loading</MDTypography>
-                  </MDBox>
+                  <ProfileInfoCard
+                    title="profile information"
+                    info={{
+                      fullName: `${auth.name} ${auth.surname}`,
+                      email: `${auth.email}`,
+                    }}
+                    shadow={false}
+                  />
                 )}
               </Grid>
               <Grid item xs={12} xl={4}>
@@ -135,29 +168,21 @@ function Overview() {
           <MDBox p={2}>
             {courses.length > 0 ? (
               <Grid container spacing={6}>
-                {courses.map((course) => {
-                  const topMembers = course.members.sort((a, b) => b.score - a.score).slice(0, 5);
-
-                  return (
-                    <Grid item xs={12} md={6} xl={3} key={course._id}>
-                      <DefaultProjectCard
-                        image={`${serverUrl}/${course.pic}`}
-                        title={`${course.name}`}
-                        description={`${course.teacherId.name} ${course.teacherId.surname}`}
-                        action={{
-                          type: "internal",
-                          route: `/courses/course-info/${course._id}`,
-                          color: "info",
-                          label: "go to course",
-                        }}
-                        authors={topMembers.map((member) => ({
-                          image: `${serverUrl}/${member.picture}`,
-                          name: `${member.name} ${member.surname}`,
-                        }))}
-                      />
-                    </Grid>
-                  );
-                })}
+                {courses.map((course) => (
+                  <Grid item xs={12} md={6} xl={3} key={course._id}>
+                    <DefaultProjectCard
+                      image={`${serverUrl}/${course.pic}`}
+                      title={`${course.name}`}
+                      description={`${course.teacherId.name} ${course.teacherId.surname}`}
+                      action={{
+                        type: "internal",
+                        route: `/courses/course-info/${course._id}`,
+                        color: "info",
+                        label: "go to course",
+                      }}
+                    />
+                  </Grid>
+                ))}
               </Grid>
             ) : (
               <MDBox>
@@ -171,10 +196,9 @@ function Overview() {
     );
   }
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <Footer />
-    </DashboardLayout>
+    <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
+      <CircularProgress color="inherit" />
+    </Backdrop>
   );
 }
 export default Overview;

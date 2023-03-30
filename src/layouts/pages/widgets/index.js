@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/button-has-type */
 /**
 =========================================================
@@ -27,11 +28,14 @@ import UpcomingEvents from "layouts/pages/widgets/components/UpcomingEvents";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useNavigate, useParams } from "react-router-dom";
 import { SocketContext } from "context/socket";
-import MDButton from "components/MDButton";
 import useAuth from "hooks/useAuth";
+import MDTypography from "components/MDTypography";
+import MDEditor from "components/MDEditor";
+import { Card } from "@mui/material";
 import OrderInfo from "./components/OrderInfo";
 import OrderList from "./components/order-list";
-import UploadFile from "./components/UploadFile";
+import UploadFile from "./components/UploadFile/index";
+import CourseEdit from "./components/CourseEdit";
 
 // Data
 
@@ -43,6 +47,8 @@ function Widgets() {
   const [calendarEventsData, setCalendarEventsData] = useState([]);
   const { socket } = useContext(SocketContext);
   const axiosPrivate = useAxiosPrivate();
+  const [description, setDescription] = useState();
+  const [editing, setEditing] = useState(false);
 
   const handleOpen = async (info) => {
     info.jsEvent.preventDefault();
@@ -71,6 +77,17 @@ function Widgets() {
         console.log(error);
       });
 
+    axiosPrivate
+      .get(`/courses/${courseId}`)
+      .then((response) => {
+        // Update state with fetched data
+        const { data } = response;
+        setDescription(data.description);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     socket.emit("join-course", courseId);
 
     socket.on("event", (event) => {
@@ -82,21 +99,86 @@ function Widgets() {
     };
   }, []);
 
+  const handleSave = () => {
+    setEditing(!editing);
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox my={3}>
         <MDBox mb={3}>
           <Grid container spacing={3}>
-            {auth.roles.includes(2001) ? (
+            {auth.roles.includes(5150) ? (
               <Grid item xs={12} sm={6} lg={5}>
-                <MDButton href="">Edit Course</MDButton>
+                <CourseEdit
+                  courseId={courseId}
+                  setEditing={setEditing}
+                  editing={editing}
+                  handleSave={handleSave}
+                />
               </Grid>
             ) : (
               <Grid item xs={12} sm={6} lg={5}>
                 <OrderInfo courseId={courseId} />
               </Grid>
             )}
+            <Grid item xs={12} sm={6} lg={7}>
+              <Card mb={2}>
+                {auth.roles.includes(5150) ? (
+                  editing ? (
+                    <MDBox p={2}>
+                      <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                        <MDTypography
+                          component="label"
+                          variant="h6"
+                          fontWeight="medium"
+                          color="text"
+                        >
+                          Description / Info
+                        </MDTypography>
+                      </MDBox>
+                      <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                        <MDEditor value={description} onChange={setDescription} />
+                      </MDBox>
+                    </MDBox>
+                  ) : (
+                    <MDBox p={2}>
+                      <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                        <MDTypography
+                          component="label"
+                          variant="h6"
+                          fontWeight="medium"
+                          color="text"
+                        >
+                          Description / Info
+                        </MDTypography>
+                      </MDBox>
+                      <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                        <MDTypography
+                          color="text"
+                          variant="body2"
+                          dangerouslySetInnerHTML={{ __html: description }}
+                        />
+                      </MDBox>
+                    </MDBox>
+                  )
+                ) : (
+                  <MDBox p={2}>
+                    <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                      <MDTypography component="label" variant="h6" fontWeight="medium" color="text">
+                        Description / Info
+                      </MDTypography>
+                    </MDBox>
+                    <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                      <MDTypography color="text" variant="body2">
+                        {description}
+                      </MDTypography>
+                    </MDBox>
+                  </MDBox>
+                )}
+              </Card>
+            </Grid>
           </Grid>
         </MDBox>
         <Grid container spacing={3}>
@@ -115,7 +197,7 @@ function Widgets() {
             <UpcomingEvents events={calendarEventsData} courseId={courseId} />
           </Grid>
           <Grid item xs={12} lg={4}>
-            <UploadFile />
+            <UploadFile courseId={courseId} />
           </Grid>
         </Grid>
       </MDBox>

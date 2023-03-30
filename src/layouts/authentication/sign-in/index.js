@@ -93,12 +93,15 @@ function Login() {
         accessToken,
         picture,
       });
-      console.log(accessToken);
       const newSocket = socketio.connect(SOCKET_PORT);
       setSocket(newSocket);
       setEmail("");
       setPassword("");
-      navigate(from, { replace: true });
+      if (roles.includes(1001)) {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate(from, { replace: true });
+      }
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");

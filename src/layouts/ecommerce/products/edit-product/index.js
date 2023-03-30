@@ -1,76 +1,15 @@
-/**
-=========================================================
-* Distance Learning React - v1.1.0
-=========================================================
-
-Coded by Ambro-Dev
-
-*/
-
-// @mui material components
-import Grid from "@mui/material/Grid";
-
-// Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
-
-// Distance Learning React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+import React from "react";
+import FormCreatorRenderComponent from "./components/FormCreatorComponent";
 
-// EditProduct page components
-import ProductImage from "layouts/ecommerce/products/edit-product/components/ProductImage";
-import ProductInfo from "layouts/ecommerce/products/edit-product/components/ProductInfo";
-import Socials from "layouts/ecommerce/products/edit-product/components/Socials";
-import Pricing from "layouts/ecommerce/products/edit-product/components/Pricing";
-
-function EditProduct() {
+function ExamBuilder() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox my={3}>
-        <MDBox mb={6}>
-          <Grid container spacing={3} alignItems="center">
-            <Grid item xs={12} lg={6}>
-              <MDTypography variant="h4" fontWeight="medium">
-                Make the changes below
-              </MDTypography>
-              <MDBox mt={1} mb={2}>
-                <MDTypography variant="body2" color="text">
-                  We’re constantly trying to express ourselves and actualize our dreams. If you have
-                  the opportunity to play.
-                </MDTypography>
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <MDBox display="flex" justifyContent="flex-end">
-                <MDButton variant="gradient" color="info">
-                  save
-                </MDButton>
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <Grid container spacing={3}>
-          <Grid item xs={12} lg={4}>
-            <ProductImage />
-          </Grid>
-          <Grid item xs={12} lg={8}>
-            <ProductInfo />
-          </Grid>
-          <Grid item xs={12} lg={4}>
-            <Socials />
-          </Grid>
-          <Grid item xs={12} lg={8}>
-            <Pricing />
-          </Grid>
-        </Grid>
-      </MDBox>
-      <Footer />
+      <FormCreatorRenderComponent />;
     </DashboardLayout>
   );
 }
 
-export default EditProduct;
+export default ExamBuilder;

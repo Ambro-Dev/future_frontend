@@ -43,6 +43,7 @@ import RequireAuth from "components/RequireAuth";
 import PricingPage from "layouts/pages/pricing-page";
 import Widgets from "layouts/pages/widgets";
 import Timeline from "layouts/pages/projects/timeline";
+import Invoice from "layouts/pages/account/invoice";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -179,6 +180,7 @@ export default function App() {
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
             <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
+            <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
           </Route>
         </Routes>
       </ThemeProvider>
@@ -211,6 +213,7 @@ export default function App() {
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
           <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
           <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
+          <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
         </Route>
       </Routes>
     </ThemeProvider>

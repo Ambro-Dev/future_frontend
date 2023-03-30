@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import Switch from "@mui/material/Switch";
 
 // Distance Learning React components
 import MDBox from "components/MDBox";
@@ -23,61 +22,52 @@ import MDButton from "components/MDButton";
 import Icon from "@mui/material/Icon";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-
-const defaultPicture = "http://localhost:5000/storage/user_storage/default/default.png";
-
-const REACT_APP_SERVER_URL = "http://localhost:5000";
+import { DropzoneDialog } from "mui-file-dropzone";
 
 // Images
 
 function Header() {
-  const ServerUrl = REACT_APP_SERVER_URL;
-  const [visible, setVisible] = useState(true);
   const { auth } = useAuth();
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
-  const [picture, setPicture] = useState(defaultPicture);
+  const [picture, setPicture] = useState();
+  const [open, setOpen] = useState(false);
+  const [imageIrl, setImageUrl] = useState();
 
-  const handleSetVisible = () => setVisible(!visible);
-
-  const handleFileUpload = (e) => {
-    setFile(e.target.files[0]);
+  const handleSave = async (files) => {
+    setPicture(files[0]);
+    setOpen(false);
+    const formData = new FormData();
+    formData.append("picture", files[0]);
+    const response = await axiosPrivate.post(
+      `/profile-picture/users/${auth.userId}/picture`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    console.log(response.data);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-    if (!file) {
-      return;
-    }
-
-    setLoading(true);
-
-    const formData = new FormData();
-    formData.append("profilePicture", file);
-
-    try {
-      await axiosPrivate
-        .post(`/users/${auth.userId}/profile-picture`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-        });
-
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-    }
+  const handleClose = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
-    if (auth.picture) setPicture(`${ServerUrl}/${auth.picture}`);
-  }, [auth.picture]);
+    axiosPrivate
+      .get(`/profile-picture/users/${auth.userId}/picture`, { responseType: "blob" })
+      .then((response) => {
+        setImageUrl(URL.createObjectURL(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching image:", error);
+      });
+  }, []);
 
   return (
     <Card id="profile">
@@ -85,28 +75,37 @@ function Header() {
         <Grid container spacing={3} alignItems="center">
           <Grid item>
             <MDBox position="relative" height="max-content" mx="auto">
-              <MDAvatar src={picture} alt="profile picture" size="xxl" variant="rounded" />
+              {picture ? (
+                <MDAvatar
+                  src={URL.createObjectURL(picture)}
+                  alt="profile picture"
+                  size="xxl"
+                  variant="rounded"
+                />
+              ) : (
+                <MDAvatar src={imageIrl} alt="profile picture" size="xxl" variant="rounded" />
+              )}
               <MDBox alt="spotify logo" position="absolute" left={0} bottom={0} mr={-1} mb={-1}>
                 <Tooltip title="Edit" placement="top">
-                  <MDButton variant="gradient" color="info" size="small" component="label" iconOnly>
-                    <Icon>edit</Icon>
-                    <input hidden accept="image/*" onChange={handleFileUpload} type="file" />
-                  </MDButton>
-                </Tooltip>
-              </MDBox>
-              <MDBox alt="spotify logo" position="absolute" right={0} bottom={0} mr={-1} mb={-1}>
-                <Tooltip title="Edit" placement="top">
                   <MDButton
+                    onClick={handleOpen}
                     variant="gradient"
                     color="info"
                     size="small"
-                    onClick={handleSubmit}
                     component="label"
                     iconOnly
                   >
-                    <Icon>save</Icon>
+                    <Icon>edit</Icon>
                   </MDButton>
                 </Tooltip>
+                <DropzoneDialog
+                  open={open}
+                  onSave={handleSave}
+                  acceptedFiles={["image/jpeg", "image/png", "image/bmp", "image/jpg"]}
+                  showPreviews
+                  maxFileSize={1000000}
+                  onClose={handleClose}
+                />
               </MDBox>
             </MDBox>
           </Grid>
@@ -118,21 +117,6 @@ function Header() {
               <MDTypography variant="button" color="text" fontWeight="medium">
                 {auth.studentNumber}
               </MDTypography>
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3} sx={{ ml: "auto" }}>
-            <MDBox
-              display="flex"
-              justifyContent={{ md: "flex-end" }}
-              alignItems="center"
-              lineHeight={1}
-            >
-              <MDTypography variant="caption" fontWeight="regular">
-                Switch to {visible ? "invisible" : "visible"}
-              </MDTypography>
-              <MDBox ml={1}>
-                <Switch checked={visible} onChange={handleSetVisible} disabled={loading} />
-              </MDBox>
             </MDBox>
           </Grid>
         </Grid>

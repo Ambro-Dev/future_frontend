@@ -1,101 +1,143 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/button-has-type */
-import React, { useState } from "react";
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable no-underscore-dangle */
+/**
+=========================================================
+* Distance Learning React - v1.1.0
+=========================================================
+
+Coded by Ambro-Dev
+
+*/
+
+// @mui material components
+import Card from "@mui/material/Card";
+
+// Distance Learning React components
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+
+// Distance Learning React examples
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import MDButton from "components/MDButton";
+import { useMaterialUIController } from "context";
+import { DropzoneDialog } from "mui-file-dropzone";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
-function UploadFile() {
+import image from "assets/images/icons/flags/US.png";
+import FileItem from "examples/Items/FileItem";
+import useAuth from "hooks/useAuth";
+
+function UploadFile({ courseId }) {
+  const { auth } = useAuth();
+  const [controller] = useMaterialUIController();
+  const { darkMode } = controller;
+  const [open, setOpen] = useState(false);
+  const [refreshFiles, setRefreshFiles] = useState(false);
+  const [courseFiles, setCourseFiles] = useState(null);
   const axiosPrivate = useAxiosPrivate();
-  const [file, setFile] = useState(null);
-  const [inputContainsFile, setInputContainsFile] = useState(false);
-  const [currentlyUploading, setCurrentlyUploading] = useState(false);
-  const [imageId, setImageId] = useState(null);
-  const [progress, setProgress] = useState(null);
 
-  const handleFile = (event) => {
-    setFile(event.target.files[0]);
-    setInputContainsFile(true);
-  };
-
-  const fileUploadHandler = () => {
-    const fd = new FormData();
-    fd.append("image", file);
-    console.log(fd);
+  const handleDownload = (file) => {
     axiosPrivate
-      .post(`/files/upload`, file, {
-        onUploadProgress: (progressEvent) => {
-          setProgress((progressEvent.loaded / progressEvent.total) * 100);
-          console.log(
-            "upload progress: ",
-            Math.round((progressEvent.loaded / progressEvent.total) * 100)
-          );
-        },
+      .get(`files/file/${file.filename}`, {
+        responseType: "blob",
       })
-      .then(({ data }) => {
-        setImageId(data);
-        setFile(null);
-        setInputContainsFile(false);
-        setCurrentlyUploading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.status === 400) {
-          const errMsg = err.response.data;
-          if (errMsg) {
-            console.log(errMsg);
-            alert(errMsg);
-          }
-        } else if (err.response.status === 500) {
-          console.log("db error");
-          alert("db error");
-        } else {
-          console.log("other error: ", err);
-        }
-        setInputContainsFile(false);
-        setCurrentlyUploading(false);
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", file.originalname);
+        document.body.appendChild(link);
+        link.click();
       });
   };
 
-  const handleClick = () => {
-    if (inputContainsFile) {
-      setCurrentlyUploading(true);
-      fileUploadHandler();
-    }
+  useEffect(() => {
+    axiosPrivate.get(`files/${courseId}`).then((response) => {
+      setCourseFiles(response.data);
+    });
+  }, [refreshFiles]);
+
+  const handleSave = async (files) => {
+    setOpen(false);
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    const response = await axiosPrivate.post(`/files/${courseId}/upload`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(response.data);
+    setRefreshFiles(!refreshFiles);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
-    <div className="regular">
-      <div className="image-section">
-        {imageId ? (
-          <>
-            <img className="image" src={`/api/image/${imageId}`} alt="regular version" />
-            <a className="link" href={`/api/image/${imageId}`} target="_blank" rel="noreferrer">
-              link
-            </a>
-          </>
+    <Card sx={{ height: "500px", overflow: "auto" }}>
+      <MDBox pt={2} px={2} lineHeight={1} sx={{ display: "flex", justifyContent: "space-between" }}>
+        <MDTypography
+          color={darkMode ? "text" : "secondary"}
+          variant="h6"
+          fontWeight="medium"
+          pt={1}
+        >
+          Files
+        </MDTypography>
+        {auth.roles.includes(5150) && <MDButton onClick={handleOpen}>Add File</MDButton>}
+        <DropzoneDialog
+          open={open}
+          onSave={handleSave}
+          acceptedFiles={[
+            "image/jpeg",
+            "image/png",
+            "image/bmp",
+            "image/jpg",
+            "application/vnd.ms-excel",
+            "application/vnd.oasis.opendocument.text",
+            "application/pdf",
+            "text/csv",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "application/zip",
+          ]}
+          showPreviews
+          maxFileSize={10000000}
+          onClose={handleClose}
+        />
+      </MDBox>
+      <MDBox p={2} sx={{ overflow: "auto" }}>
+        {courseFiles ? (
+          courseFiles.map((file) => {
+            const extension = file.filename.split(".").pop();
+            return (
+              <FileItem
+                key={file.filename}
+                color="dark"
+                icon={image}
+                title={file.originalname}
+                event={() => handleDownload(file)}
+                eventDel={handleDownload}
+                extension={extension}
+                auth={auth}
+              />
+            );
+          })
         ) : (
-          <p className="nopic">no regular version pic yet</p>
+          <MDBox>No files yet</MDBox>
         )}
-      </div>
-      <div className="inputcontainer">
-        {currentlyUploading ? (
-          <img className="loadingdots" alt="upload in progress" />
-        ) : (
-          <>
-            <input className="file-input" onChange={handleFile} type="file" name="file" id="file" />
-            <label
-              className={`inputlabel ${file && "file-selected"}`}
-              htmlFor="file"
-              onClick={handleClick}
-            >
-              {file ? <>SUBMIT</> : <>REGULAR VERSION</>}
-            </label>
-          </>
-        )}
-      </div>
-    </div>
+      </MDBox>
+    </Card>
   );
 }
+
+UploadFile.propTypes = {
+  courseId: PropTypes.string.isRequired,
+};
 
 export default UploadFile;

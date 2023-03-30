@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable new-cap */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
@@ -17,12 +18,9 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import MDAvatar from "components/MDAvatar";
-import { Grid } from "@mui/material";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import MDTypography from "components/MDTypography";
-
-const REACT_APP_SERVER_URL = "http://localhost:5000";
 
 // Set up the fonts
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -30,13 +28,13 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 // Data
 
 function OrderList({ courseId }) {
-  const serverUrl = REACT_APP_SERVER_URL;
-
   const axiosPrivate = useAxiosPrivate();
+  const [imageUrls, setImageUrls] = useState([]);
+
   const { auth } = useAuth();
 
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [listUsers, setListUsers] = useState([]);
   const [csvList, setCsvList] = useState();
 
   const docDefinition = {
@@ -68,21 +66,51 @@ function OrderList({ courseId }) {
         const { data } = await axiosPrivate.get(`courses/${courseId}/members`, {
           headers: { "Content-Type": "application/json", Accept: "aplication/json" },
         });
+        setUsers(data);
+        console.log(data);
         const processedData = data.map((user) => ({
           name: user.name,
           surname: user.surname,
           studentNumber: user.studentNumber,
         }));
+        Promise.all(
+          data.map((user) =>
+            axiosPrivate
+              .get(`/profile-picture/users/${user._id}/picture`, {
+                responseType: "blob",
+              })
+              .then((response) => URL.createObjectURL(response.data))
+              .catch((error) => {
+                console.error("Error fetching image:", error);
+                return null;
+              })
+          )
+        ).then(setImageUrls);
         setCsvList(processedData);
-        setUsers(data);
-        setLoading(false);
       } catch (error) {
         console.error(error);
-        setLoading(false);
       }
     };
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if (users.length === imageUrls.length) {
+      try {
+        const tableData = users.map((user, index) => ({
+          id: user._id,
+          name: user.name,
+          surname: user.surname,
+          studentNumber: user.studentNumber,
+          picture: imageUrls[index],
+        }));
+        setListUsers(tableData);
+        console.log(tableData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [imageUrls]);
 
   const handlePdfExport = () => {
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
@@ -115,74 +143,75 @@ function OrderList({ courseId }) {
     document.body.removeChild(link);
   }
 
-  if (!loading) {
-    return (
-      <MDBox my={3}>
-        <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-          <MDBox display="flex">
-            <MDBox ml={1}>
-              <MDButton variant="outlined" color="dark" onClick={() => exportCSV(csvList)}>
-                <Icon>description</Icon>
-                &nbsp;export csv
-              </MDButton>
-            </MDBox>
-            <MDBox ml={1}>
-              <MDButton variant="outlined" color="dark" onClick={handlePdfExport}>
-                <Icon>picture_as_pdf</Icon>
-                &nbsp;Export PDF
-              </MDButton>
+  return (
+    <MDBox>
+      {listUsers && listUsers.length > 0 ? (
+        <MDBox my={3}>
+          <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
+            <MDBox display="flex">
+              <MDBox ml={1}>
+                <MDButton variant="outlined" color="dark" onClick={() => exportCSV(csvList)}>
+                  <Icon>description</Icon>
+                  &nbsp;export csv
+                </MDButton>
+              </MDBox>
+              <MDBox ml={1}>
+                <MDButton variant="outlined" color="dark" onClick={handlePdfExport}>
+                  <Icon>picture_as_pdf</Icon>
+                  &nbsp;Export PDF
+                </MDButton>
+              </MDBox>
             </MDBox>
           </MDBox>
+          <MDBox>
+            {users.length > 0 && (
+              <MDBox>
+                <Card>
+                  <MDBox pt={2} px={2} lineHeight={1}>
+                    <MDTypography variant="h6" fontWeight="medium">
+                      Members
+                    </MDTypography>
+                  </MDBox>
+                  <DataTable
+                    table={{
+                      columns: [
+                        {
+                          Header: "picture",
+                          accessor: "picture",
+                          width: "10%",
+                          Cell: ({ row }) => <MDAvatar src={row.original.picture} size="sm" />,
+                        },
+                        { Header: "name", accessor: "name" },
+                        { Header: "surname", accessor: "surname" },
+                        { Header: "studentNumber", accessor: "studentNumber" },
+                        {
+                          Header: "actions",
+                          accessor: "actions",
+                          Cell: ({ row }) => (
+                            <MDButton
+                              onClick={() => console.log(row.original)}
+                              disabled={row.original.studentNumber === auth.studentNumber}
+                            >
+                              Message
+                            </MDButton>
+                          ),
+                        },
+                      ],
+                      rows: listUsers,
+                    }}
+                    entriesPerPage={false}
+                    canSearch
+                  />
+                </Card>
+              </MDBox>
+            )}
+          </MDBox>
         </MDBox>
-        <MDBox>
-          {users.length > 0 && (
-            <MDBox>
-              <Card>
-                <MDBox pt={2} px={2} lineHeight={1}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                    Members
-                  </MDTypography>
-                </MDBox>
-                <DataTable
-                  table={{
-                    columns: [
-                      {
-                        Header: "picture",
-                        accessor: "picture",
-                        width: "10%",
-                        Cell: ({ row }) => (
-                          <MDAvatar src={`${serverUrl}/${row.original.picture}`} size="sm" />
-                        ),
-                      },
-                      { Header: "name", accessor: "name" },
-                      { Header: "surname", accessor: "surname" },
-                      { Header: "studentNumber", accessor: "studentNumber" },
-                      {
-                        Header: "actions",
-                        accessor: "actions",
-                        Cell: ({ row }) => (
-                          <MDButton
-                            onClick={() => console.log(row.original)}
-                            disabled={row.original.studentNumber === auth.studentNumber}
-                          >
-                            Message
-                          </MDButton>
-                        ),
-                      },
-                    ],
-                    rows: users,
-                  }}
-                  entriesPerPage={false}
-                  canSearch
-                />
-              </Card>
-            </MDBox>
-          )}
-        </MDBox>
-      </MDBox>
-    );
-  }
-  return <Grid>Loading</Grid>;
+      ) : (
+        <MDBox>Still loading</MDBox>
+      )}
+    </MDBox>
+  );
 }
 
 OrderList.propTypes = {

@@ -16,35 +16,13 @@ import PropTypes from "prop-types";
 // @mui material components
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import Tooltip from "@mui/material/Tooltip";
 
 // Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
-import MDAvatar from "components/MDAvatar";
 
-function DefaultProjectCard({ image, title, description, action, authors }) {
-  const renderAuthors = authors.map(({ image: media, name }) => (
-    <Tooltip key={name} title={name} placement="bottom">
-      <MDAvatar
-        src={media}
-        alt={name}
-        size="xs"
-        sx={({ borders: { borderWidth }, palette: { white } }) => ({
-          border: `${borderWidth[2]} solid ${white.main}`,
-          cursor: "pointer",
-          position: "relative",
-          ml: -1.25,
-
-          "&:hover, &:focus": {
-            zIndex: "10",
-          },
-        })}
-      />
-    </Tooltip>
-  ));
-
+function DefaultProjectCard({ image, title, description, action }) {
   return (
     <Card
       sx={{
@@ -64,7 +42,7 @@ function DefaultProjectCard({ image, title, description, action, authors }) {
             maxWidth: "100%",
             margin: 0,
             boxShadow: ({ boxShadows: { md } }) => md,
-            objectFit: "scale-down",
+            objectFit: "cover",
             objectPosition: "center",
           }}
         />
@@ -122,7 +100,6 @@ function DefaultProjectCard({ image, title, description, action, authors }) {
               {action.label}
             </MDButton>
           )}
-          <MDBox display="flex">{renderAuthors}</MDBox>
         </MDBox>
       </MDBox>
     </Card>
@@ -130,9 +107,6 @@ function DefaultProjectCard({ image, title, description, action, authors }) {
 }
 
 // Setting default values for the props of DefaultProjectCard
-DefaultProjectCard.defaultProps = {
-  authors: [],
-};
 
 // Typechecking props for the DefaultProjectCard
 DefaultProjectCard.propTypes = {
@@ -155,7 +129,6 @@ DefaultProjectCard.propTypes = {
     ]).isRequired,
     label: PropTypes.string.isRequired,
   }).isRequired,
-  authors: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default DefaultProjectCard;

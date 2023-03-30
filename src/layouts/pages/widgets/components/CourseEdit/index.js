@@ -21,27 +21,20 @@ import PropTypes from "prop-types";
 // Images
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import useAuth from "hooks/useAuth";
 
-function OrderInfo({ courseId }) {
-  const [imageIrl, setImageUrl] = useState();
-  const { auth } = useAuth();
-  const [teacher, setTeacher] = useState();
+const REACT_APP_SERVER_URL = "http://localhost:5000";
+
+function CourseEdit({ courseId, setEditing, handleSave, editing }) {
+  const [course, setCourse] = useState();
   const axiosPrivate = useAxiosPrivate();
+  const serverUrl = REACT_APP_SERVER_URL;
+  const [pictureUrl, setPictureUrl] = useState();
 
   useEffect(() => {
-    axiosPrivate.get(`/courses/${courseId}/teacher`).then((response) => {
-      setTeacher(response.data);
+    axiosPrivate.get(`/courses/${courseId}`).then((response) => {
+      setCourse(response.data);
+      setPictureUrl(`${serverUrl}/${response.data.pic}`);
     });
-
-    axiosPrivate
-      .get(`/profile-picture/users/${auth.userId}/picture`, { responseType: "blob" })
-      .then((response) => {
-        setImageUrl(URL.createObjectURL(response.data));
-      })
-      .catch((error) => {
-        console.error("Error fetching image:", error);
-      });
   }, []);
 
   return (
@@ -49,38 +42,34 @@ function OrderInfo({ courseId }) {
       <Grid item xs={12} md={6}>
         <MDBox display="flex" alignItems="center">
           <MDBox mr={2}>
-            <MDAvatar size="xxl" src={imageIrl} alt="Gold Glasses" />
+            <MDAvatar size="xxl" src={pictureUrl} alt="course image" />
           </MDBox>
           <MDBox lineHeight={1}>
             <MDTypography variant="h6" fontWeight="medium">
-              {teacher?.name} {teacher?.surname}
+              {course?.name}
             </MDTypography>
-            <MDBadge
-              variant="gradient"
-              color="success"
-              size="xs"
-              badgeContent="teacher"
-              container
-            />
+            <MDBadge variant="gradient" color="info" size="xs" badgeContent="course" container />
           </MDBox>
         </MDBox>
       </Grid>
       <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
-        <MDButton variant="gradient" color="dark" size="small">
-          send message
-        </MDButton>
-        <MDBox mt={0.5}>
-          <MDTypography variant="button" color="text">
-            Have You got any questions?
-          </MDTypography>
-        </MDBox>
+        {editing ? (
+          <MDButton color="success" onClick={handleSave}>
+            Save
+          </MDButton>
+        ) : (
+          <MDButton onClick={setEditing}>Edit Course</MDButton>
+        )}
       </Grid>
     </Grid>
   );
 }
 
-OrderInfo.propTypes = {
+CourseEdit.propTypes = {
   courseId: PropTypes.string.isRequired,
+  setEditing: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired,
+  handleSave: PropTypes.func.isRequired,
 };
 
-export default OrderInfo;
+export default CourseEdit;

@@ -18,59 +18,74 @@ import MDTypography from "components/MDTypography";
 
 // Distance Learning React examples
 import DefaultItem from "examples/Items/DefaultItem";
-import { useState } from "react";
 import PropTypes from "prop-types";
 import MDButton from "components/MDButton";
-import NewEvent from "./NewEvent";
+import { useNavigate } from "react-router-dom";
+import useAuth from "hooks/useAuth";
 
 function UpcomingEvents({ events, courseId }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { auth } = useAuth();
+  const navigate = useNavigate();
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const handleOpen = async (e) => {
+    e.preventDefault();
+    const course = {
+      id: courseId,
+    };
 
-  const openModal = () => {
-    setIsModalOpen(true);
+    navigate("/applications/wizard", { state: course });
   };
 
   return (
-    <Card sx={{ height: "500px", overflow: "auto" }}>
-      <MDBox pt={2} px={2} lineHeight={1} sx={{ display: "flex", justifyContent: "space-between" }}>
+    <Card sx={{ height: "500px" }}>
+      <MDBox
+        pt={2}
+        px={2}
+        pb={1}
+        lineHeight={1}
+        sx={{ display: "flex", justifyContent: "space-between" }}
+      >
         <MDTypography variant="h6" fontWeight="medium" pt={1}>
           Events
         </MDTypography>
-        <MDButton color="success" circular onClick={openModal}>
-          Add Event
-        </MDButton>
-        <NewEvent open={isModalOpen} courseId={courseId} onClose={closeModal} />
+        {auth.roles.includes(5150) && (
+          <MDButton color="success" circular onClick={handleOpen}>
+            Add Event
+          </MDButton>
+        )}
       </MDBox>
-      {events && events.length > 0 ? (
-        events.map((event) => {
-          const formattedStartDate = new Date(event.start).toLocaleDateString("us-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          });
-          const formattedStartTime = new Date(event.start).toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "numeric",
-            hour12: true,
-          });
-          return (
-            <MDBox p={2} key={event._id}>
-              <DefaultItem
-                color="dark"
-                icon="savings"
-                title={event.title}
-                description={`${formattedStartDate} at ${formattedStartTime}`}
-              />
-            </MDBox>
-          );
-        })
-      ) : (
-        <MDBox p={2}>No events yet</MDBox>
-      )}
+      <MDBox sx={{ overflow: "auto" }}>
+        {events && events.length > 0 ? (
+          events.map((event, index) => {
+            const formattedStartDate = new Date(event.start).toLocaleDateString("us-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+            const formattedStartTime = new Date(event.start).toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "numeric",
+              hour12: true,
+            });
+            return (
+              <MDBox key={event._id}>
+                <DefaultItem
+                  color="dark"
+                  type={event.className}
+                  title={event.title}
+                  description={`${formattedStartDate} at ${formattedStartTime}`}
+                  eventdescription={event.description}
+                  url={event.url}
+                  index={index}
+                  classname={event.className}
+                />
+              </MDBox>
+            );
+          })
+        ) : (
+          <MDBox p={2}>No events yet</MDBox>
+        )}
+      </MDBox>
     </Card>
   );
 }

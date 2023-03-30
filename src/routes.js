@@ -6,7 +6,6 @@ import AllProjects from "layouts/pages/profile/all-projects";
 import NewUser from "layouts/pages/users/new-user";
 import Settings from "layouts/pages/account/settings";
 import Billing from "layouts/pages/account/billing";
-import Invoice from "layouts/pages/account/invoice";
 import Charts from "layouts/pages/charts";
 import Notifications from "layouts/pages/notifications";
 import Kanban from "layouts/applications/kanban";
@@ -23,6 +22,7 @@ import LogoutPage from "layouts/authentication/sign-out";
 import Icon from "@mui/material/Icon";
 
 const routes = [
+  { type: "title", title: "Profile", key: "profile-pages" },
   {
     type: "collapse",
     name: "Profile",
@@ -31,22 +31,19 @@ const routes = [
     collapse: [
       {
         name: "My Profile",
-        key: "my-profile",
-        protected: true,
-        route: "/pages/profile/profile-overview",
+        key: "profile-overview",
+        route: "/profile/profile-overview",
         component: <ProfileOverview />,
       },
       {
         name: "Settings",
-        key: "profile-settings",
-        protected: true,
-        route: "/pages/account/settings",
+        key: "settings",
+        route: "/profile/settings",
         component: <Settings />,
       },
       {
         name: "Logout",
         key: "logout",
-        protected: true,
         route: "/authentication/sign-out",
         component: <LogoutPage />,
       },
@@ -87,13 +84,6 @@ const routes = [
         key: "profile",
         collapse: [
           {
-            name: "Profile Overview",
-            key: "profile-overview",
-            protected: true,
-            route: "/pages/profile/profile-overview",
-            component: <ProfileOverview />,
-          },
-          {
             name: "All Projects",
             key: "all-projects",
             route: "/pages/profile/all-projects",
@@ -131,25 +121,11 @@ const routes = [
         key: "account",
         collapse: [
           {
-            name: "Settings",
-            key: "settings",
-            protected: true,
-            route: "/pages/account/settings",
-            component: <Settings />,
-          },
-          {
             name: "Billing",
             key: "billing",
             protected: true,
             route: "/pages/account/billing",
             component: <Billing />,
-          },
-          {
-            name: "Invoice",
-            key: "invoice",
-            protected: true,
-            route: "/pages/account/invoice",
-            component: <Invoice />,
           },
         ],
       },

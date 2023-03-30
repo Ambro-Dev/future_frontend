@@ -18,14 +18,22 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-function Account() {
-  const [design, setDesign] = useState(false);
-  const [code, setCode] = useState(false);
-  const [develop, setDevelop] = useState(false);
+import PropTypes from "prop-types";
 
-  const handleSetDesign = () => setDesign(!design);
-  const handleSetCode = () => setCode(!code);
-  const handleSetDevelop = () => setDevelop(!develop);
+function Account({ setClassName }) {
+  const [design, setDesign] = useState(true);
+  const [code, setCode] = useState(false);
+
+  const handleSetDesign = () => {
+    setDesign(!design);
+    if (code) setCode(!code);
+    setClassName("success");
+  };
+  const handleSetCode = () => {
+    setCode(!code);
+    if (design) setDesign(!design);
+    setClassName("info");
+  };
 
   const customButtonStyles = ({
     functions: { pxToRem, rgba },
@@ -60,12 +68,9 @@ function Account() {
       <MDBox width="80%" textAlign="center" mx="auto" my={4}>
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
-            What are you doing? (checkboxes)
+            What type of event You want to create?
           </MDTypography>
         </MDBox>
-        <MDTypography variant="body2" color="text">
-          Give us more details about you. What do you enjoy doing in your spare time?
-        </MDTypography>
       </MDBox>
       <MDBox mt={2}>
         <Grid container spacing={3} justifyContent="center">
@@ -77,10 +82,10 @@ function Account() {
                 onClick={handleSetDesign}
                 sx={customButtonStyles}
               >
-                <Icon sx={{ color: design ? "white" : "inherit" }}>brush</Icon>
+                <Icon sx={{ color: design ? "white" : "inherit" }}>video_call</Icon>
               </MDButton>
               <MDTypography variant="h6" sx={{ mt: 1 }}>
-                Design
+                Video Lesson
               </MDTypography>
             </MDBox>
           </Grid>
@@ -92,25 +97,10 @@ function Account() {
                 onClick={handleSetCode}
                 sx={customButtonStyles}
               >
-                <Icon sx={{ color: design ? "white" : "inherit" }}>integration_instructions</Icon>
+                <Icon sx={{ color: code ? "white" : "inherit" }}>grading</Icon>
               </MDButton>
               <MDTypography variant="h6" sx={{ mt: 1 }}>
-                Code
-              </MDTypography>
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <MDBox textAlign="center">
-              <MDButton
-                color="info"
-                variant={develop ? "contained" : "outlined"}
-                onClick={handleSetDevelop}
-                sx={customButtonStyles}
-              >
-                <Icon sx={{ color: design ? "white" : "inherit" }}>developer_mode</Icon>
-              </MDButton>
-              <MDTypography variant="h6" sx={{ mt: 1 }}>
-                Develop
+                Exam
               </MDTypography>
             </MDBox>
           </Grid>
@@ -119,5 +109,9 @@ function Account() {
     </MDBox>
   );
 }
+
+Account.propTypes = {
+  setClassName: PropTypes.func.isRequired,
+};
 
 export default Account;

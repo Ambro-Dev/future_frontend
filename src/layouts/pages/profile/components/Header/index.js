@@ -17,17 +17,15 @@ import useAuth from "hooks/useAuth";
 
 import backgroundImage from "assets/images/bg-profile.jpeg";
 import MDAvatar from "components/MDAvatar";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
 
-const defaultPicture = "http://localhost:5000/storage/user_storage/default/default.png";
-
-const REACT_APP_SERVER_URL = "http://localhost:5000";
 // Images
 
 function Header({ children }) {
-  const serverUrl = REACT_APP_SERVER_URL;
+  const axiosPrivate = useAxiosPrivate();
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const { auth } = useAuth();
-  const [picture, setPicture] = useState(defaultPicture);
+  const [imageIrl, setImageUrl] = useState();
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -37,9 +35,14 @@ function Header({ children }) {
         : setTabsOrientation("horizontal");
     }
 
-    if (auth.picture) {
-      setPicture(`${serverUrl}/${auth.picture}`);
-    }
+    axiosPrivate
+      .get(`/profile-picture/users/${auth.userId}/picture`, { responseType: "blob" })
+      .then((response) => {
+        setImageUrl(URL.createObjectURL(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching image:", error);
+      });
     /** 
      The event listener that's calling the handleTabsOrientation function when resizing the window.
     */
@@ -82,16 +85,18 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={picture} alt={`${auth.name} ${auth.surname}`} size="xl" shadow="sm" />
+            <MDAvatar src={imageIrl} alt={`${auth.name} ${auth.surname}`} size="xl" shadow="sm" />
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
                 {auth.name} {auth.surname}
               </MDTypography>
-              <MDTypography variant="button" color="text" fontWeight="regular">
-                {auth.studentNumber}
-              </MDTypography>
+              {auth.studentNumber && (
+                <MDTypography variant="button" color="text" fontWeight="regular">
+                  {auth.studentNumber}
+                </MDTypography>
+              )}
             </MDBox>
           </Grid>
         </Grid>

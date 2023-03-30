@@ -24,8 +24,6 @@ import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
-import MDBadge from "components/MDBadge";
 
 // Distance Learning React examples
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -147,9 +145,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={1}>
-              <MDInput label="Search here" />
-            </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
               <Link to="/pages/profile/profile-overview">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
@@ -175,9 +170,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 variant="contained"
                 onClick={handleOpenMenu}
               >
-                <MDBadge badgeContent={9} color="error" size="xs" circular>
-                  <Icon sx={iconsStyle}>notifications</Icon>
-                </MDBadge>
+                <Icon sx={iconsStyle}>flag</Icon>
               </IconButton>
               {renderMenu()}
             </MDBox>

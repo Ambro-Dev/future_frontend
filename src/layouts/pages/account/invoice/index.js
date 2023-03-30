@@ -27,6 +27,7 @@ import logoCTDark from "assets/images/logo-ct-dark.png";
 import { useMaterialUIController } from "context";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Divider } from "@mui/material";
 
 function Invoice() {
   const [controller] = useMaterialUIController();
@@ -34,11 +35,11 @@ function Invoice() {
 
   const location = useLocation();
   const selectedEvent = location.state;
-  console.log(selectedEvent);
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     navigate(-1);
   };
 
@@ -160,6 +161,7 @@ function Invoice() {
                   >
                     Description
                   </MDTypography>
+                  <Divider variant="middle" />
                   <MDTypography variant="button" fontWeight="regular">
                     {selectedEvent.description}
                   </MDTypography>
@@ -170,6 +172,7 @@ function Invoice() {
               <MDBox p={3} mt={7}>
                 <Grid container>
                   <Grid item xs={12} lg={5}>
+                    <Divider variant="middle" />
                     <MDTypography variant="h6" fontWeight="regular">
                       Files
                     </MDTypography>

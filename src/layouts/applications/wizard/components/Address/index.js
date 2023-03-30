@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /**
 =========================================================
 * Distance Learning React - v1.1.0
@@ -13,11 +14,20 @@ import Grid from "@mui/material/Grid";
 // Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import FormField from "../FormField";
 
 // Wizard application components
-import FormField from "layouts/applications/wizard/components/FormField";
 
-function Address() {
+function Address({
+  setEventEndDate,
+  setEventEndTime,
+  setEventStartDate,
+  setEventStartTime,
+  eventStartDate,
+  eventEndDate,
+  eventEndTime,
+  eventStartTime,
+}) {
   return (
     <MDBox>
       <MDBox width="80%" textAlign="center" mx="auto" my={4}>
@@ -33,17 +43,45 @@ function Address() {
       </MDBox>
       <MDBox mt={2}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <FormField type="text" label="Street Name" InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <FormField type="number" label="Street Number" InputLabelProps={{ shrink: true }} />
-          </Grid>
           <Grid item xs={12} md={7}>
-            <FormField type="text" label="City" InputLabelProps={{ shrink: true }} />
+            <FormField
+              type="date"
+              label="Start date"
+              InputLabelProps={{ shrink: true }}
+              required
+              value={eventStartDate}
+              onChange={(e) => setEventStartDate(e.target.value)}
+            />
           </Grid>
           <Grid item xs={12} md={5}>
-            <FormField type="text" label="Country" InputLabelProps={{ shrink: true }} />
+            <FormField
+              type="time"
+              label="Start time"
+              InputLabelProps={{ shrink: true }}
+              required
+              value={eventStartTime}
+              onChange={(e) => setEventStartTime(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} md={7}>
+            <FormField
+              type="date"
+              label="End date"
+              InputLabelProps={{ shrink: true }}
+              required
+              value={eventEndDate}
+              onChange={(e) => setEventEndDate(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <FormField
+              type="time"
+              label="End time"
+              InputLabelProps={{ shrink: true }}
+              required
+              value={eventEndTime}
+              onChange={(e) => setEventEndTime(e.target.value)}
+            />
           </Grid>
         </Grid>
       </MDBox>

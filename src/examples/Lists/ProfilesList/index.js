@@ -1,32 +1,37 @@
-/**
-=========================================================
-* Distance Learning React - v1.1.0
-=========================================================
-
-Coded by Ambro-Dev
-
-*/
-
-// react-routers components
 import { Link } from "react-router-dom";
-
-// prop-types is library for typechecking of props
 import PropTypes from "prop-types";
-
-// @mui material components
 import Card from "@mui/material/Card";
-
-// Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
+import { useState, useEffect } from "react";
 
 function ProfilesList({ title, profiles, shadow }) {
-  const renderProfiles = profiles.map(({ image, name, description, action }) => (
+  const axiosPrivate = useAxiosPrivate();
+  const [imageUrls, setImageUrls] = useState([]);
+
+  useEffect(() => {
+    Promise.all(
+      profiles.map((profile) =>
+        axiosPrivate
+          .get(`/profile-picture/users/${profile.user}/picture`, {
+            responseType: "blob",
+          })
+          .then((response) => URL.createObjectURL(response.data))
+          .catch((error) => {
+            console.error("Error fetching image:", error);
+            return null;
+          })
+      )
+    ).then(setImageUrls);
+  }, [axiosPrivate, profiles]);
+
+  const renderProfiles = profiles.map(({ name, description, action }, index) => (
     <MDBox key={name} component="li" display="flex" alignItems="center" py={1} mb={1}>
       <MDBox mr={2}>
-        <MDAvatar src={image} alt="something here" shadow="md" />
+        <MDAvatar src={imageUrls[index]} alt="something here" shadow="md" />
       </MDBox>
       <MDBox display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center">
         <MDTypography variant="button" fontWeight="medium">
@@ -73,12 +78,10 @@ function ProfilesList({ title, profiles, shadow }) {
   );
 }
 
-// Setting default props for the ProfilesList
 ProfilesList.defaultProps = {
   shadow: true,
 };
 
-// Typechecking props for the ProfilesList
 ProfilesList.propTypes = {
   title: PropTypes.string.isRequired,
   profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
