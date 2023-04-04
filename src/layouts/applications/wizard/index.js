@@ -151,7 +151,7 @@ function Wizard() {
           };
           socket.emit("new-event", sendEvent);
           openSuccessSB();
-          navigate(-1);
+          navigate("/ecommerce/products/edit-product", { state: sendEvent });
         }
       });
       setName("");

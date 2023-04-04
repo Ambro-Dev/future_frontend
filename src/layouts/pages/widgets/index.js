@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/button-has-type */
 /**
@@ -52,14 +53,15 @@ function Widgets() {
 
   const handleOpen = async (info) => {
     info.jsEvent.preventDefault();
+    console.log(info.event);
     const selectedEvent = {
       title: info.event.title,
       start: info.event.start,
       end: info.event.end,
       description: info.event.extendedProps.description,
+      _id: info.event.extendedProps._id,
       url: info.event.url,
     };
-    console.log(info.event);
 
     navigate("/pages/account/invoice", { state: selectedEvent });
   };

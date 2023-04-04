@@ -94,6 +94,10 @@ function Overview() {
             const shortenedDescription = lastMessage.text.slice(0, 30);
             const otherUser = conversation.members.find((member) => member._id !== auth.userId);
 
+            if (!otherUser) {
+              return null;
+            }
+
             // create conversation object
             return {
               key: conversation._id,
@@ -108,7 +112,7 @@ function Overview() {
               },
             };
           });
-          setConversationList(conversationObjects);
+          setConversationList(conversationObjects.filter(Boolean));
         }
       });
     };

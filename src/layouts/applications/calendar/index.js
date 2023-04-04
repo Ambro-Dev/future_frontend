@@ -40,6 +40,7 @@ function Calendar() {
       .then((response) => {
         // Update state with fetched data
         setCalendarEventsData(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
 =========================================================
 * Distance Learning React - v1.1.0
@@ -28,15 +29,28 @@ import { useMaterialUIController } from "context";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
+import { useEffect } from "react";
+import useAuth from "hooks/useAuth";
 
 function Invoice() {
+  const { auth } = useAuth();
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
+  const navigate = useNavigate();
 
   const location = useLocation();
   const selectedEvent = location.state;
 
-  const navigate = useNavigate();
+  const sendEvent = {
+    _id: selectedEvent._id,
+  };
+  console.log(selectedEvent);
+
+  useEffect(() => {
+    if (!selectedEvent) {
+      navigate("/profile/profile-overview");
+    }
+  }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -71,16 +85,64 @@ function Invoice() {
                           component="span"
                           variant="h6"
                           fontWeight="regular"
+                          display="flex"
+                          justifyContent="end"
                           color={darkMode ? "text" : "secondary"}
                         >
-                          <MDButton
-                            variant="gradient"
-                            color="success"
-                            href={selectedEvent.url}
-                            target="_blank"
-                          >
-                            Join call
-                          </MDButton>
+                          {auth.roles.includes(5150) ? (
+                            <>
+                              {!selectedEvent.url?.includes("video-lesson") ? (
+                                <MDButton
+                                  variant="gradient"
+                                  color="success"
+                                  onClick={() =>
+                                    navigate("/ecommerce/products/edit-product", {
+                                      state: sendEvent,
+                                    })
+                                  }
+                                >
+                                  Edit Exam
+                                </MDButton>
+                              ) : (
+                                <MDButton
+                                  variant="gradient"
+                                  color="success"
+                                  href={selectedEvent.url}
+                                  target="_blank"
+                                >
+                                  Join call
+                                </MDButton>
+                              )}
+                              <MDButton variant="gradient" color="error" sx={{ ml: 1 }}>
+                                Delete Event
+                              </MDButton>
+                            </>
+                          ) : (
+                            <MDBox>
+                              {selectedEvent.url?.includes("video-lesson") ? (
+                                <MDButton
+                                  variant="gradient"
+                                  color="success"
+                                  href={selectedEvent.url}
+                                  target="_blank"
+                                >
+                                  Join call
+                                </MDButton>
+                              ) : (
+                                <MDButton
+                                  variant="gradient"
+                                  color="success"
+                                  onClick={() =>
+                                    navigate("/ecommerce/products/new-product", {
+                                      state: sendEvent,
+                                    })
+                                  }
+                                >
+                                  Join exam
+                                </MDButton>
+                              )}
+                            </MDBox>
+                          )}
                         </MDTypography>
                       </MDBox>
                     </MDBox>

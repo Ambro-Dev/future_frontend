@@ -43,13 +43,13 @@ function ProfilesList({ title, profiles, shadow }) {
       </MDBox>
       <MDBox ml="auto">
         {action.type === "internal" ? (
-          <MDButton component={Link} to={action.route} variant="text" color="info">
+          <MDButton component={Link} to="/pages/chat" variant="text" color="info">
             {action.label}
           </MDButton>
         ) : (
           <MDButton
             component="a"
-            href={action.route}
+            href="/pages/chat"
             target="_blank"
             rel="noreferrer"
             variant="text"
