@@ -15,6 +15,8 @@ const resources = {
       profile: {
         profileInfo: "profile information",
         fullname: "fullName",
+        email: "email",
+        studentnumber: "studentNumber",
       },
     },
   },
@@ -27,6 +29,9 @@ const resources = {
       },
       profile: {
         profileInfo: "Informacje użytkownika",
+        fullname: "imięNazwisko",
+        email: "email",
+        studentnumber: "numerStudenta",
       },
     },
   },

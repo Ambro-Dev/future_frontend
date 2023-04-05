@@ -135,9 +135,9 @@ function Overview() {
                   <ProfileInfoCard
                     title={t("profileInfo")}
                     info={{
-                      fullName: `${auth.name} ${auth.surname}`,
-                      email: `${auth.email}`,
-                      studentNumber: `${auth.studentNumber}`,
+                      [t("fullname")]: `${auth.name} ${auth.surname}`,
+                      [t("email")]: `${auth.email}`,
+                      [t("studentnumber")]: `${auth.studentNumber}`,
                     }}
                     shadow={false}
                   />
@@ -145,8 +145,8 @@ function Overview() {
                   <ProfileInfoCard
                     title={t("profileInfo")}
                     info={{
-                      fullName: `${auth.name} ${auth.surname}`,
-                      email: `${auth.email}`,
+                      [t("fullname")]: `${auth.name} ${auth.surname}`,
+                      [t("email")]: `${auth.email}`,
                     }}
                     shadow={false}
                   />
