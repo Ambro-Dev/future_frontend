@@ -29,7 +29,7 @@ const conversationObjects = data.map((conversation) => {
     description: shortenedDescription,
     action: {
       type: "internal",
-      route: "/pages/chat",
+      route: "/chat",
       color: "info",
       label: "message",
     },

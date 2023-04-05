@@ -24,7 +24,7 @@ import { useMaterialUIController } from "context";
 import { DropzoneDialog } from "mui-file-dropzone";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
-import image from "assets/images/icons/flags/US.png";
+import image from "assets/images/icons/flags/EN.png";
 import FileItem from "examples/Items/FileItem";
 import useAuth from "hooks/useAuth";
 

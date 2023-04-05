@@ -46,6 +46,11 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
+import { useTranslation } from "react-i18next";
+
+import pl from "assets/images/icons/flags/PL.png";
+import en from "assets/images/icons/flags/EN.png";
+import ru from "assets/images/icons/flags/RU.png";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -85,6 +90,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   // Render the notifications menu
   const renderMenu = () => (
     <Menu
@@ -98,9 +109,21 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
-      <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
-      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
+      <NotificationItem
+        icon={<MDBox component="img" src={pl} />}
+        title="Polish"
+        onClick={() => changeLanguage("pl")}
+      />
+      <NotificationItem
+        icon={<MDBox component="img" src={en} />}
+        title="English"
+        onClick={() => changeLanguage("en")}
+      />
+      <NotificationItem
+        icon={<MDBox component="img" src={ru} />}
+        title="Russian"
+        onClick={() => changeLanguage("ru")}
+      />
     </Menu>
   );
 

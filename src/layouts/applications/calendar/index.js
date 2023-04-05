@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
 =========================================================
 * Distance Learning React - v1.1.0
@@ -21,18 +22,33 @@ import Footer from "examples/Footer";
 import EventCalendar from "examples/Calendar";
 
 // Calendar application components
-import Header from "layouts/applications/calendar/components/Header";
 import NextEvents from "layouts/applications/calendar/components/NextEvents";
-import ProductivityChart from "layouts/applications/calendar/components/ProductivityChart";
 
 // Data
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import useAuth from "hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 function Calendar() {
+  const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [calendarEventsData, setCalendarEventsData] = useState([]);
+  const [nextEvents, setNextEvents] = useState([]);
   const { auth } = useAuth();
+
+  const handleOpen = async (info) => {
+    info.jsEvent.preventDefault();
+    const selectedEvent = {
+      title: info.event.title,
+      start: info.event.start,
+      end: info.event.end,
+      description: info.event.extendedProps.description,
+      _id: info.event.extendedProps._id,
+      url: info.event.url,
+    };
+
+    navigate("/pages/account/invoice", { state: selectedEvent });
+  };
 
   useEffect(() => {
     axiosPrivate
@@ -40,7 +56,13 @@ function Calendar() {
       .then((response) => {
         // Update state with fetched data
         setCalendarEventsData(response.data);
-        console.log(response.data);
+        const currentDateTime = new Date();
+
+        const futureEvents = response.data.filter((event) => {
+          const eventStartDate = new Date(event.start); // convert start date to Date object
+          return eventStartDate >= currentDateTime; // filter events that start now or in the future
+        });
+        setNextEvents(futureEvents);
       })
       .catch((error) => {
         console.log(error);
@@ -51,24 +73,23 @@ function Calendar() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={3}>
-        <MDBox display="flex" justifyContent="flex-end" mt={1} mb={4} mx={2}>
-          <Header />
-        </MDBox>
         <Grid container spacing={3}>
           <Grid item xs={12} xl={9} sx={{ height: "max-content" }}>
             {useMemo(
               () => (
-                <EventCalendar initialView="dayGridMonth" events={calendarEventsData} />
+                <EventCalendar
+                  initialView="dayGridMonth"
+                  events={calendarEventsData}
+                  eventClick={handleOpen}
+                  locale="en"
+                />
               ),
               [calendarEventsData]
             )}
           </Grid>
           <Grid item xs={12} xl={3}>
             <MDBox mb={3}>
-              <NextEvents />
-            </MDBox>
-            <MDBox mb={3}>
-              <ProductivityChart />
+              <NextEvents events={nextEvents} />
             </MDBox>
           </Grid>
         </Grid>

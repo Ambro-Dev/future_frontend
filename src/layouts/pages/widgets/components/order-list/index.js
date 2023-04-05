@@ -21,6 +21,7 @@ import MDAvatar from "components/MDAvatar";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import MDTypography from "components/MDTypography";
+import { useNavigate } from "react-router-dom";
 
 // Set up the fonts
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -28,6 +29,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 // Data
 
 function OrderList({ courseId }) {
+  const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [imageUrls, setImageUrls] = useState([]);
 
@@ -189,7 +191,7 @@ function OrderList({ courseId }) {
                           accessor: "actions",
                           Cell: ({ row }) => (
                             <MDButton
-                              onClick={() => console.log(row.original)}
+                              onClick={() => navigate("/chat")}
                               disabled={row.original.studentNumber === auth.studentNumber}
                             >
                               Message

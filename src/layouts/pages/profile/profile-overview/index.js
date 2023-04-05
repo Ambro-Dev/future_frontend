@@ -23,6 +23,7 @@ import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import ProfilesList from "examples/Lists/ProfilesList";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+import { useTranslation } from "react-i18next";
 
 // Overview page components
 import Header from "layouts/pages/profile/components/Header";
@@ -35,6 +36,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 const REACT_APP_SERVER_URL = "http://localhost:5000";
 
 function Overview() {
+  const { t } = useTranslation("translation", { keyPrefix: "profile" });
   const serverUrl = REACT_APP_SERVER_URL;
   const { auth } = useAuth();
   const [courses, setCourses] = useState([]);
@@ -106,7 +108,7 @@ function Overview() {
               description: shortenedDescription,
               action: {
                 type: "internal",
-                route: "/pages/chat",
+                route: "/chat",
                 color: "info",
                 label: "message",
               },
@@ -131,7 +133,7 @@ function Overview() {
                 <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
                 {auth.studentNumber ? (
                   <ProfileInfoCard
-                    title="profile information"
+                    title={t("profileInfo")}
                     info={{
                       fullName: `${auth.name} ${auth.surname}`,
                       email: `${auth.email}`,
@@ -141,7 +143,7 @@ function Overview() {
                   />
                 ) : (
                   <ProfileInfoCard
-                    title="profile information"
+                    title={t("profileInfo")}
                     info={{
                       fullName: `${auth.name} ${auth.surname}`,
                       email: `${auth.email}`,

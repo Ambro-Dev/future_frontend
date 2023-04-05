@@ -46,6 +46,7 @@ function Widgets() {
   const params = useParams();
   const courseId = params.id;
   const [calendarEventsData, setCalendarEventsData] = useState([]);
+  const [nextEvents, setNextEvents] = useState([]);
   const { socket } = useContext(SocketContext);
   const axiosPrivate = useAxiosPrivate();
   const [description, setDescription] = useState();
@@ -74,6 +75,13 @@ function Widgets() {
       .then((response) => {
         // Update state with fetched data
         setCalendarEventsData(response.data);
+        const currentDateTime = new Date();
+
+        const futureEvents = response.data.filter((event) => {
+          const eventStartDate = new Date(event.start); // convert start date to Date object
+          return eventStartDate >= currentDateTime; // filter events that start now or in the future
+        });
+        setNextEvents(futureEvents);
       })
       .catch((error) => {
         console.log(error);
@@ -173,9 +181,11 @@ function Widgets() {
                       </MDTypography>
                     </MDBox>
                     <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                      <MDTypography color="text" variant="body2">
-                        {description}
-                      </MDTypography>
+                      <MDTypography
+                        color="text"
+                        variant="body2"
+                        dangerouslySetInnerHTML={{ __html: description }}
+                      />
                     </MDBox>
                   </MDBox>
                 )}
@@ -196,7 +206,7 @@ function Widgets() {
             ))}
           </Grid>
           <Grid item xs={12} lg={3}>
-            <UpcomingEvents events={calendarEventsData} courseId={courseId} />
+            <UpcomingEvents events={nextEvents} courseId={courseId} />
           </Grid>
           <Grid item xs={12} lg={4}>
             <UploadFile courseId={courseId} />

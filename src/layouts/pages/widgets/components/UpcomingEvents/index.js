@@ -46,7 +46,7 @@ function UpcomingEvents({ events, courseId }) {
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
         <MDTypography variant="h6" fontWeight="medium" pt={1}>
-          Events
+          Upcoming Events
         </MDTypography>
         {auth.roles.includes(5150) && (
           <MDButton color="success" circular onClick={handleOpen}>
@@ -83,14 +83,14 @@ function UpcomingEvents({ events, courseId }) {
                   color="dark"
                   type={event.className}
                   title={event.title}
-                  description={`${formattedStartDate} at ${formattedStartTime}`}
+                  description={`${formattedStartDate}, ${formattedStartTime}`}
                   eventdescription={event.description}
                   url={event.url}
                   index={index}
                   classname={event.className}
                   event={event._id}
-                  start={`${formattedStartDate} at ${formattedStartTime}`}
-                  end={`${formattedEndDate} at ${formattedEndTime}`}
+                  start={`${formattedStartDate}, ${formattedStartTime}`}
+                  end={`${formattedEndDate}, ${formattedEndTime}`}
                 />
               </MDBox>
             );

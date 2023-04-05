@@ -1,21 +1,10 @@
 // Distance Learning React layouts
-import Analytics from "layouts/dashboards/analytics";
-import Sales from "layouts/dashboards/sales";
 import ProfileOverview from "layouts/pages/profile/profile-overview";
-import AllProjects from "layouts/pages/profile/all-projects";
-import NewUser from "layouts/pages/users/new-user";
 import Settings from "layouts/pages/account/settings";
 import Billing from "layouts/pages/account/billing";
-import Charts from "layouts/pages/charts";
-import Notifications from "layouts/pages/notifications";
 import Kanban from "layouts/applications/kanban";
-import Wizard from "layouts/applications/wizard";
 import Chat from "layouts/applications/data-tables";
 import Calendar from "layouts/applications/calendar";
-import NewProduct from "layouts/ecommerce/products/new-product";
-import EditProduct from "layouts/ecommerce/products/edit-product";
-import ProductPage from "layouts/ecommerce/products/product-page";
-import ResetCover from "layouts/authentication/reset-password/cover";
 import LogoutPage from "layouts/authentication/sign-out";
 
 // @mui icons
@@ -25,190 +14,69 @@ const routes = [
   { type: "title", title: "Profile", key: "profile-pages" },
   {
     type: "collapse",
-    name: "Profile",
-    key: "profile",
+    name: "My Profile",
+    key: "profile-overview",
+    route: "/profile-overview",
     icon: <Icon fontSize="large">account_circle</Icon>,
-    collapse: [
-      {
-        name: "My Profile",
-        key: "profile-overview",
-        route: "/profile/profile-overview",
-        component: <ProfileOverview />,
-      },
-      {
-        name: "Settings",
-        key: "settings",
-        route: "/profile/settings",
-        component: <Settings />,
-      },
-      {
-        name: "Logout",
-        key: "logout",
-        route: "/authentication/sign-out",
-        component: <LogoutPage />,
-      },
-    ],
+    component: <ProfileOverview />,
+    noCollapse: true,
   },
-  { type: "divider", key: "divider-0" },
   {
     type: "collapse",
-    name: "Dashboards",
-    key: "dashboards",
-    icon: <Icon fontSize="medium">dashboard</Icon>,
-    collapse: [
-      {
-        name: "Analytics",
-        key: "analytics",
-        protected: true,
-        route: "/dashboards/analytics",
-        component: <Analytics />,
-      },
-      {
-        name: "Sales",
-        key: "sales",
-        protected: true,
-        route: "/dashboards/sales",
-        component: <Sales />,
-      },
-    ],
+    name: "Settings",
+    key: "settings",
+    route: "/settings",
+    icon: <Icon fontSize="medium">settings</Icon>,
+    component: <Settings />,
+    noCollapse: true,
   },
+  {
+    type: "collapse",
+    name: "Logout",
+    key: "logout",
+    route: "/sign-out",
+    icon: <Icon fontSize="medium">logout</Icon>,
+    component: <LogoutPage />,
+    noCollapse: true,
+  },
+
+  { type: "divider", key: "divider-0" },
   { type: "title", title: "Pages", key: "title-pages" },
   {
     type: "collapse",
-    name: "Pages",
-    key: "pages",
-    icon: <Icon fontSize="medium">image</Icon>,
-    collapse: [
-      {
-        name: "Profile",
-        key: "profile",
-        collapse: [
-          {
-            name: "All Projects",
-            key: "all-projects",
-            route: "/pages/profile/all-projects",
-            component: <AllProjects />,
-          },
-        ],
-      },
-      {
-        name: "Courses",
-        key: "courses",
-        route: "/pages/courses",
-        component: <Kanban />,
-      },
-      {
-        name: "Users",
-        key: "users",
-        collapse: [
-          {
-            name: "New User",
-            key: "new-user",
-            protected: true,
-            route: "/pages/users/new-user",
-            component: <NewUser />,
-          },
-        ],
-      },
-      {
-        name: "Chat",
-        key: "chat",
-        route: "/pages/chat",
-        component: <Chat />,
-      },
-      {
-        name: "Account",
-        key: "account",
-        collapse: [
-          {
-            name: "Billing",
-            key: "billing",
-            protected: true,
-            route: "/pages/account/billing",
-            component: <Billing />,
-          },
-        ],
-      },
-      { name: "Charts", key: "charts", route: "/pages/charts", component: <Charts /> },
-      {
-        name: "Notfications",
-        key: "notifications",
-        route: "/pages/notifications",
-        component: <Notifications />,
-      },
-    ],
+    name: "Courses",
+    key: "courses",
+    route: "/courses",
+    icon: <Icon fontSize="medium">class</Icon>,
+    component: <Kanban />,
+    noCollapse: true,
   },
   {
     type: "collapse",
-    name: "Applications",
-    key: "applications",
-    icon: <Icon fontSize="medium">apps</Icon>,
-    collapse: [
-      {
-        name: "Wizard",
-        key: "wizard",
-        route: "/applications/wizard",
-        component: <Wizard />,
-      },
-      {
-        name: "Calendar",
-        key: "calendar",
-        route: "/applications/calendar",
-        component: <Calendar />,
-      },
-    ],
+    name: "Chat",
+    key: "chat",
+    route: "/chat",
+    icon: <Icon fontSize="medium">chat</Icon>,
+    component: <Chat />,
+    noCollapse: true,
   },
   {
     type: "collapse",
-    name: "Ecommerce",
-    key: "ecommerce",
-    icon: <Icon fontSize="medium">shopping_basket</Icon>,
-    collapse: [
-      {
-        name: "Products",
-        key: "products",
-        collapse: [
-          {
-            name: "New Product",
-            key: "new-product",
-            route: "/ecommerce/products/new-product",
-            component: <NewProduct />,
-          },
-          {
-            name: "Edit Product",
-            key: "edit-product",
-            route: "/ecommerce/products/edit-product",
-            component: <EditProduct />,
-          },
-          {
-            name: "Product Page",
-            key: "product-page",
-            route: "/ecommerce/products/product-page",
-            component: <ProductPage />,
-          },
-        ],
-      },
-    ],
+    name: "Grades",
+    key: "billing",
+    route: "/billing",
+    icon: <Icon fontSize="medium">grade</Icon>,
+    component: <Billing />,
+    noCollapse: true,
   },
   {
     type: "collapse",
-    name: "Authentication",
-    key: "authentication",
-    icon: <Icon fontSize="medium">content_paste</Icon>,
-    collapse: [
-      {
-        name: "Reset Password",
-        key: "reset-password",
-        collapse: [
-          {
-            name: "Cover",
-            key: "cover",
-            route: "/authentication/reset-password/cover",
-            component: <ResetCover />,
-          },
-        ],
-      },
-    ],
+    name: "Calendar",
+    key: "calendar",
+    route: "/calendar",
+    icon: <Icon fontSize="medium">calendar_today</Icon>,
+    component: <Calendar />,
+    noCollapse: true,
   },
 ];
 

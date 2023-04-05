@@ -44,6 +44,9 @@ import PricingPage from "layouts/pages/pricing-page";
 import Widgets from "layouts/pages/widgets";
 import Timeline from "layouts/pages/projects/timeline";
 import Invoice from "layouts/pages/account/invoice";
+import NewProduct from "layouts/ecommerce/products/new-product";
+import EditProduct from "layouts/ecommerce/products/edit-product";
+import Wizard from "layouts/applications/wizard";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -172,15 +175,28 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+          <Route path="*" element={<Navigate to="/profile-overview" />} />
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route path="/admin" element={<PricingPage />} key="admin-page" />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+            <Route
+              path="/ecommerce/products/edit-product"
+              element={<EditProduct />}
+              key="edit-product"
+            />
+            <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
             <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
             <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
+            <Route
+              path="/ecommerce/products/new-product"
+              element={<NewProduct />}
+              key="new-product"
+            />
           </Route>
         </Routes>
       </ThemeProvider>
@@ -205,15 +221,28 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+        <Route path="*" element={<Navigate to="/profile-overview" />} />
         <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
         <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
           <Route path="/admin" element={<PricingPage />} key="admin-page" />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+          <Route
+            path="/ecommerce/products/edit-product"
+            element={<EditProduct />}
+            key="edit-product"
+          />
+          <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
         </Route>
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
           <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
           <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
           <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
+          <Route
+            path="/ecommerce/products/new-product"
+            element={<NewProduct />}
+            key="new-product"
+          />
         </Route>
       </Routes>
     </ThemeProvider>

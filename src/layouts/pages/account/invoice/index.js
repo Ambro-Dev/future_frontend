@@ -20,19 +20,21 @@ import MDButton from "components/MDButton";
 // Invoice page components
 import BaseLayout from "layouts/pages/account/components/BaseLayout";
 
-// Images
-import logoCT from "assets/images/logo-ct.png";
-import logoCTDark from "assets/images/logo-ct-dark.png";
-
 // Distance Learning React context
 import { useMaterialUIController } from "context";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "hooks/useAuth";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
+
+const REACT_APP_SERVER_URL = "http://localhost:5000";
 
 function Invoice() {
+  const serverUrl = REACT_APP_SERVER_URL;
+  const [course, setCourse] = useState();
+  const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
@@ -44,12 +46,20 @@ function Invoice() {
   const sendEvent = {
     _id: selectedEvent._id,
   };
-  console.log(selectedEvent);
 
   useEffect(() => {
     if (!selectedEvent) {
       navigate("/profile/profile-overview");
     }
+
+    axiosPrivate
+      .get(`/courses/${selectedEvent._id}/event`)
+      .then((response) => {
+        setCourse(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   const handleClick = (e) => {
@@ -69,13 +79,20 @@ function Invoice() {
                   <Grid item xs={12} md={4}>
                     <MDBox
                       component="img"
-                      src={darkMode ? logoCT : logoCTDark}
+                      src={course && `${serverUrl}/${course.pic}`}
                       width="25%"
                       p={1}
                       mb={1}
+                      sx={{
+                        cursor: "pointer",
+                        ":hover": {
+                          cursor: "pointer",
+                        },
+                      }}
+                      onClick={() => navigate(`/courses/course-info/${course?._id}`)}
                     />
                     <MDTypography variant="h6" fontWeight="medium">
-                      Teacher
+                      {course && course.name}
                     </MDTypography>
                   </Grid>
                   <Grid item xs={12} md={7} lg={3}>
@@ -125,8 +142,11 @@ function Invoice() {
                                   color="success"
                                   href={selectedEvent.url}
                                   target="_blank"
+                                  disabled={new Date(selectedEvent.start) > new Date()} // check if start date is in the future
                                 >
-                                  Join call
+                                  {new Date(selectedEvent.start) > new Date()
+                                    ? "Call not started yet"
+                                    : "Join call"}
                                 </MDButton>
                               ) : (
                                 <MDButton
@@ -137,8 +157,11 @@ function Invoice() {
                                       state: sendEvent,
                                     })
                                   }
+                                  disabled={new Date(selectedEvent.start) > new Date()} // check if start date is in the future
                                 >
-                                  Join exam
+                                  {new Date(selectedEvent.start) > new Date()
+                                    ? "Exam not available"
+                                    : "Join exam"}
                                 </MDButton>
                               )}
                             </MDBox>
