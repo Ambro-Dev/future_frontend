@@ -27,8 +27,10 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import image from "assets/images/icons/flags/EN.png";
 import FileItem from "examples/Items/FileItem";
 import useAuth from "hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 function UploadFile({ courseId }) {
+  const { t } = useTranslation("translation", { keyPrefix: "courseinfo" });
   const { auth } = useAuth();
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
@@ -88,9 +90,9 @@ function UploadFile({ courseId }) {
           fontWeight="medium"
           pt={1}
         >
-          Files
+          {t("files")}
         </MDTypography>
-        {auth.roles.includes(5150) && <MDButton onClick={handleOpen}>Add File</MDButton>}
+        {auth.roles.includes(5150) && <MDButton onClick={handleOpen}>{t("addfile")}</MDButton>}
         <DropzoneDialog
           open={open}
           onSave={handleSave}
@@ -129,7 +131,7 @@ function UploadFile({ courseId }) {
             );
           })
         ) : (
-          <MDBox>No files yet</MDBox>
+          <MDBox>{t("nofiles")}</MDBox>
         )}
       </MDBox>
     </Card>

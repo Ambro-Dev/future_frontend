@@ -33,7 +33,7 @@ function Footer({ light }) {
             color={light ? "white" : "text"}
             fontSize={size.sm}
           >
-            &copy; {new Date().getFullYear()}, made by Gwarant
+            &copy; 2022, made by Gwarant-Service
           </MDBox>
           <MDBox
             component="ul"

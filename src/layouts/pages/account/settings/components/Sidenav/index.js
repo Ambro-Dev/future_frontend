@@ -17,14 +17,16 @@ import MDTypography from "components/MDTypography";
 
 // Distance Learning React context
 import { useMaterialUIController } from "context";
+import { useTranslation } from "react-i18next";
 
 function Sidenav() {
+  const { t } = useTranslation("translation", { keyPrefix: "settings" });
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
   const sidenavItems = [
-    { icon: "person", label: "change profile image", href: "profile" },
-    { icon: "lock", label: "change password", href: "change-password" },
+    { icon: "person", label: [t("changepi")], href: "profile" },
+    { icon: "lock", label: [t("changepass")], href: "change-password" },
   ];
 
   const renderSidenavItems = sidenavItems.map(({ icon, label, href }, key) => {

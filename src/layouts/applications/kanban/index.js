@@ -22,9 +22,11 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import MDTypography from "components/MDTypography";
 import CategoriesList from "examples/Lists/CategoriesList";
 import MDButton from "components/MDButton";
+import { useTranslation } from "react-i18next";
 import About from "./components/About";
 
 function Kanban() {
+  const { t } = useTranslation("translation", { keyPrefix: "courses" });
   const { auth } = useAuth();
   const [courses, setCourses] = useState([]);
   const axiosPrivate = useAxiosPrivate();
@@ -109,19 +111,19 @@ function Kanban() {
                 {name === "" || description === "" ? (
                   <>
                     <MDButton color="success" circular disabled onClick={handleSave}>
-                      Save
+                      {t("save")}
                     </MDButton>
                     <MDButton color="error" circular onClick={handleClose} sx={{ ml: 1 }}>
-                      Cancel
+                      {t("cancel")}
                     </MDButton>
                   </>
                 ) : (
                   <>
                     <MDButton color="success" circular onClick={handleSave}>
-                      Save
+                      {t("save")}
                     </MDButton>
                     <MDButton color="error" circular onClick={handleClose} sx={{ ml: 1 }}>
-                      Cancel
+                      {t("cancel")}
                     </MDButton>
                   </>
                 )}
@@ -136,7 +138,7 @@ function Kanban() {
               </MDBox>
             ) : (
               <MDButton color="success" circular onClick={handleOpen} sx={{ mb: 1 }}>
-                Add course
+                {t("addcourse")}
               </MDButton>
             )}
           </MDBox>
@@ -145,7 +147,7 @@ function Kanban() {
         {courses.length > 0 ? (
           <MDBox py={3}>
             <CategoriesList
-              title="Courses"
+              title={t("courses")}
               categories={courses.map((course) => ({
                 color: "dark",
                 image: course.pic,
@@ -155,7 +157,7 @@ function Kanban() {
                     {course.teacherId.name} {course.teacherId.surname}
                     {"   "}
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                      {course.members.length} members
+                      {course.members.length} {t("members")}
                     </MDTypography>
                   </>
                 ),
@@ -164,7 +166,7 @@ function Kanban() {
             />
           </MDBox>
         ) : (
-          <MDBox py={3}>You have no courses</MDBox>
+          <MDBox py={3}>{t("nocourses")}</MDBox>
         )}
         <Footer />
       </DashboardLayout>

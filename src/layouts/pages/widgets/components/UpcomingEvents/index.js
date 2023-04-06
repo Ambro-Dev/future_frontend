@@ -22,8 +22,10 @@ import PropTypes from "prop-types";
 import MDButton from "components/MDButton";
 import { useNavigate } from "react-router-dom";
 import useAuth from "hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 function UpcomingEvents({ events, courseId }) {
+  const { t } = useTranslation("translation", { keyPrefix: "courseinfo" });
   const { auth } = useAuth();
   const navigate = useNavigate();
 
@@ -46,33 +48,33 @@ function UpcomingEvents({ events, courseId }) {
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
         <MDTypography variant="h6" fontWeight="medium" pt={1}>
-          Upcoming Events
+          {t("upcevents")}
         </MDTypography>
         {auth.roles.includes(5150) && (
           <MDButton color="success" circular onClick={handleOpen}>
-            Add Event
+            {t("addevent")}
           </MDButton>
         )}
       </MDBox>
       <MDBox sx={{ overflow: "auto" }}>
         {events && events.length > 0 ? (
           events.map((event, index) => {
-            const formattedStartDate = new Date(event.start).toLocaleDateString("us-US", {
+            const formattedStartDate = new Date(event.start).toLocaleDateString(`${t("date")}`, {
               year: "numeric",
               month: "short",
               day: "numeric",
             });
-            const formattedStartTime = new Date(event.start).toLocaleTimeString("en-US", {
+            const formattedStartTime = new Date(event.start).toLocaleTimeString(`${t("date")}`, {
               hour: "numeric",
               minute: "numeric",
               hour12: true,
             });
-            const formattedEndDate = new Date(event.end).toLocaleDateString("us-US", {
+            const formattedEndDate = new Date(event.end).toLocaleDateString(`${t("date")}`, {
               year: "numeric",
               month: "short",
               day: "numeric",
             });
-            const formattedEndTime = new Date(event.end).toLocaleTimeString("en-US", {
+            const formattedEndTime = new Date(event.end).toLocaleTimeString(`${t("date")}`, {
               hour: "numeric",
               minute: "numeric",
               hour12: true,
@@ -96,7 +98,7 @@ function UpcomingEvents({ events, courseId }) {
             );
           })
         ) : (
-          <MDBox p={2}>No events yet</MDBox>
+          <MDBox p={2}>{t("noevents")}</MDBox>
         )}
       </MDBox>
     </Card>

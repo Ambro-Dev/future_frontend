@@ -110,7 +110,7 @@ function Overview() {
                 type: "internal",
                 route: "/chat",
                 color: "info",
-                label: "message",
+                label: [t("message")],
               },
             };
           });
@@ -154,20 +154,24 @@ function Overview() {
               </Grid>
               <Grid item xs={12} xl={4}>
                 {conversationList && conversationList.length > 0 ? (
-                  <ProfilesList title="conversations" profiles={conversationList} shadow={false} />
+                  <ProfilesList
+                    title={t("conversations")}
+                    profiles={conversationList}
+                    shadow={false}
+                  />
                 ) : (
-                  <MDBox>No conversations</MDBox>
+                  <MDBox>{t("noconversations")}</MDBox>
                 )}
               </Grid>
             </Grid>
           </MDBox>
           <MDBox pt={2} px={2} lineHeight={1.25}>
             <MDTypography variant="h6" fontWeight="medium">
-              Courses
+              {t("courses")}
             </MDTypography>
             <MDBox mb={1}>
               <MDTypography variant="button" color="text">
-                All my Courses
+                {t("allcourses")}
               </MDTypography>
             </MDBox>
           </MDBox>
@@ -184,7 +188,7 @@ function Overview() {
                         type: "internal",
                         route: `/courses/course-info/${course._id}`,
                         color: "info",
-                        label: "go to course",
+                        label: `${t("gotocourse")}`,
                       }}
                     />
                   </Grid>

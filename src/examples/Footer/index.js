@@ -53,7 +53,7 @@ function Footer({ company, links }) {
         fontSize={size.sm}
         px={1.5}
       >
-        &copy; {new Date().getFullYear()}, made by
+        &copy; 2022, made by
         <Link href={href} target="_blank">
           <MDTypography variant="button" fontWeight="medium">
             &nbsp;{name}&nbsp;
@@ -85,7 +85,7 @@ function Footer({ company, links }) {
 
 // Setting default values for the props of Footer
 Footer.defaultProps = {
-  company: { href: "https://mans.org.pl/", name: "Gwarant" },
+  company: { href: "https://gwarant-service.pl/", name: "Gwarant-Service" },
   links: [
     { href: "https://mans.org.pl/", name: "MANS" },
     { href: "https://mans.org.pl/", name: "About Us" },

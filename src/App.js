@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
@@ -29,7 +30,6 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
 // Distance Learning React routes
-import routes from "routes";
 
 // Distance Learning React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -47,8 +47,13 @@ import Invoice from "layouts/pages/account/invoice";
 import NewProduct from "layouts/ecommerce/products/new-product";
 import EditProduct from "layouts/ecommerce/products/edit-product";
 import Wizard from "layouts/applications/wizard";
+import { useTranslation } from "react-i18next";
+import routespl from "./routespl";
+import routesen from "./routesen";
 
 export default function App() {
+  const { i18n } = useTranslation();
+  const [routes, setRoutes] = useState(routespl);
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
@@ -60,6 +65,24 @@ export default function App() {
     whiteSidenav,
     darkMode,
   } = controller;
+
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      if (i18n.language === "en") {
+        setRoutes(routesen);
+      }
+      if (i18n.language === "pl") {
+        setRoutes(routespl);
+      }
+      console.log(routes);
+    };
+
+    i18n.on("languageChanged", handleLanguageChange);
+
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
+  }, [i18n]);
 
   // eslint-disable-next-line no-unused-vars
   const ROLES = {

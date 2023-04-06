@@ -33,6 +33,7 @@ import useAuth from "hooks/useAuth";
 import MDTypography from "components/MDTypography";
 import MDEditor from "components/MDEditor";
 import { Card } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import OrderInfo from "./components/OrderInfo";
 import OrderList from "./components/order-list";
 import UploadFile from "./components/UploadFile/index";
@@ -41,6 +42,7 @@ import CourseEdit from "./components/CourseEdit";
 // Data
 
 function Widgets() {
+  const { t } = useTranslation("translation", { keyPrefix: "courseinfo" });
   const { auth } = useAuth();
   const navigate = useNavigate();
   const params = useParams();
@@ -145,7 +147,7 @@ function Widgets() {
                           fontWeight="medium"
                           color="text"
                         >
-                          Description / Info
+                          {t("descinfo")}
                         </MDTypography>
                       </MDBox>
                       <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
@@ -161,7 +163,7 @@ function Widgets() {
                           fontWeight="medium"
                           color="text"
                         >
-                          Description / Info
+                          {t("descinfo")}
                         </MDTypography>
                       </MDBox>
                       <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
@@ -177,7 +179,7 @@ function Widgets() {
                   <MDBox p={2}>
                     <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
                       <MDTypography component="label" variant="h6" fontWeight="medium" color="text">
-                        Description / Info
+                        {t("descinfo")}
                       </MDTypography>
                     </MDBox>
                     <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
@@ -197,11 +199,11 @@ function Widgets() {
           <Grid item xs={12} lg={5}>
             {useMemo(() => (
               <Calendar
-                header={{ title: "calendar" }}
+                header={{ title: `${t("caltitle")}` }}
                 initialView="dayGridMonth"
                 events={calendarEventsData}
                 eventClick={handleOpen}
-                locale="en"
+                locale={t("callang")}
               />
             ))}
           </Grid>

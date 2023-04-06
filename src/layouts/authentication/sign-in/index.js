@@ -22,13 +22,15 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import axios from "api/axios";
 import socketio from "socket.io-client";
 
-import appIcon from "assets/images/apple-icon.png";
+import appIcon from "assets/images/logo/logo-mans.png";
+import { useTranslation } from "react-i18next";
 
 const SOCKET_PORT = "http://localhost:5000";
 
 const LOGIN_URL = "/auth";
 
 function Login() {
+  const { t } = useTranslation("translation", { keyPrefix: "login" });
   const { setSocket } = useContext(SocketContext);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -121,7 +123,7 @@ function Login() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="white"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -132,11 +134,11 @@ function Login() {
         >
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={6}>
-              <MDBox component="img" src={appIcon} />
+              <MDBox component="img" src={appIcon} sx={{ height: 152, width: 152 }} />
             </Grid>
             <Grid item xs={6}>
-              <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                Sign in
+              <MDTypography variant="h4" fontWeight="medium" color="dark" mt={7}>
+                {t("signin")}
               </MDTypography>
             </Grid>
           </Grid>
@@ -156,7 +158,7 @@ function Login() {
                 id="email"
                 ref={emailRef}
                 value={email}
-                label="Email"
+                label={t("email")}
                 onChange={(e) => setEmail(e.target.value)}
                 fullWidth
                 required
@@ -166,7 +168,7 @@ function Login() {
             <MDBox mb={2}>
               <MDInput
                 type="password"
-                label="Password"
+                label={t("password")}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -183,7 +185,7 @@ function Login() {
                 onClick={handleSetRememberMe}
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
-                &nbsp;&nbsp;Remember me
+                &nbsp;&nbsp;{t("remember")}
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
@@ -194,7 +196,7 @@ function Login() {
                 onClick={handleSubmit}
                 fullWidth
               >
-                sign in
+                {t("signin")}
               </MDButton>
             </MDBox>
           </MDBox>
