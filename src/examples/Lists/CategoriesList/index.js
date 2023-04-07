@@ -22,9 +22,8 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { Avatar } from "@mui/material";
 
-const REACT_APP_SERVER_URL = "http://localhost:5000";
 function CategoriesList({ title, categories }) {
-  const serverUrl = REACT_APP_SERVER_URL;
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const renderItems = categories.map(({ color, image, name, description, route }, key) => (
     <MDBox
       key={name}

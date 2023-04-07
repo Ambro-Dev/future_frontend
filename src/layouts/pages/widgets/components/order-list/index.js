@@ -69,7 +69,6 @@ function OrderList({ courseId }) {
           headers: { "Content-Type": "application/json", Accept: "aplication/json" },
         });
         setUsers(data);
-        console.log(data);
         const processedData = data.map((user) => ({
           name: user.name,
           surname: user.surname,
@@ -107,7 +106,6 @@ function OrderList({ courseId }) {
           picture: imageUrls[index],
         }));
         setListUsers(tableData);
-        console.log(tableData);
       } catch (error) {
         console.error(error);
       }

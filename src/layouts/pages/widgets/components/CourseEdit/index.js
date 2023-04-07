@@ -22,12 +22,10 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
-const REACT_APP_SERVER_URL = "http://localhost:5000";
-
 function CourseEdit({ courseId, setEditing, handleSave, editing }) {
   const [course, setCourse] = useState();
   const axiosPrivate = useAxiosPrivate();
-  const serverUrl = REACT_APP_SERVER_URL;
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [pictureUrl, setPictureUrl] = useState();
 
   useEffect(() => {

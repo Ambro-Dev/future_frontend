@@ -28,6 +28,7 @@ import image from "assets/images/icons/flags/EN.png";
 import FileItem from "examples/Items/FileItem";
 import useAuth from "hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import MDSnackbar from "components/MDSnackbar";
 
 function UploadFile({ courseId }) {
   const { t } = useTranslation("translation", { keyPrefix: "courseinfo" });
@@ -38,6 +39,24 @@ function UploadFile({ courseId }) {
   const [refreshFiles, setRefreshFiles] = useState(false);
   const [courseFiles, setCourseFiles] = useState(null);
   const axiosPrivate = useAxiosPrivate();
+
+  const [successSB, setSuccessSB] = useState(false);
+  const openSuccessSB = () => setSuccessSB(true);
+  const closeSuccessSB = () => setSuccessSB(false);
+
+  const renderSuccessSB = (
+    <MDSnackbar
+      color="success"
+      icon="check"
+      title="Upload File"
+      content="File uploaded successfully!"
+      dateTime="now"
+      open={successSB}
+      onClose={closeSuccessSB}
+      close={closeSuccessSB}
+      bgWhite
+    />
+  );
 
   const handleDownload = (file) => {
     axiosPrivate
@@ -64,12 +83,15 @@ function UploadFile({ courseId }) {
     setOpen(false);
     const formData = new FormData();
     formData.append("file", files[0]);
-    const response = await axiosPrivate.post(`/files/${courseId}/upload`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(response.data);
+    await axiosPrivate
+      .post(`/files/${courseId}/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => {
+        openSuccessSB();
+      });
     setRefreshFiles(!refreshFiles);
   };
 
@@ -113,6 +135,7 @@ function UploadFile({ courseId }) {
           onClose={handleClose}
         />
       </MDBox>
+      {renderSuccessSB}
       <MDBox p={2} sx={{ overflow: "auto" }}>
         {courseFiles ? (
           courseFiles.map((file) => {

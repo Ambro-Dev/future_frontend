@@ -33,11 +33,9 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { Backdrop, CircularProgress } from "@mui/material";
 
-const REACT_APP_SERVER_URL = "http://localhost:5000";
-
 function Overview() {
   const { t } = useTranslation("translation", { keyPrefix: "profile" });
-  const serverUrl = REACT_APP_SERVER_URL;
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const { auth } = useAuth();
   const [courses, setCourses] = useState([]);
   const axiosPrivate = useAxiosPrivate();
@@ -70,7 +68,6 @@ function Overview() {
       try {
         const { data } = await axiosPrivate.get(`/users/teacher/${auth.userId}/courses`);
         setCourses(data);
-        console.log(data);
         setLoading(false);
       } catch (err) {
         console.error(err);

@@ -29,10 +29,8 @@ import { useEffect, useState } from "react";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
-const REACT_APP_SERVER_URL = "http://localhost:5000";
-
 function Invoice() {
-  const serverUrl = REACT_APP_SERVER_URL;
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [course, setCourse] = useState();
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();

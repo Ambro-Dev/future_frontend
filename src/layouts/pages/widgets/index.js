@@ -56,7 +56,6 @@ function Widgets() {
 
   const handleOpen = async (info) => {
     info.jsEvent.preventDefault();
-    console.log(info.event);
     const selectedEvent = {
       title: info.event.title,
       start: info.event.start,
@@ -70,7 +69,6 @@ function Widgets() {
   };
 
   useEffect(() => {
-    console.log(courseId);
     // Make API call using Axios
     axiosPrivate
       .get(`/events/${courseId}`)
@@ -86,7 +84,7 @@ function Widgets() {
         setNextEvents(futureEvents);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
 
     axiosPrivate
@@ -97,7 +95,7 @@ function Widgets() {
         setDescription(data.description);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
 
     socket.emit("join-course", courseId);

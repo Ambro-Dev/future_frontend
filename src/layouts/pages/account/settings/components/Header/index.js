@@ -38,16 +38,11 @@ function Header() {
     setOpen(false);
     const formData = new FormData();
     formData.append("picture", files[0]);
-    const response = await axiosPrivate.post(
-      `/profile-picture/users/${auth.userId}/picture`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    console.log(response.data);
+    await axiosPrivate.post(`/profile-picture/users/${auth.userId}/picture`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   };
 
   const handleOpen = () => {

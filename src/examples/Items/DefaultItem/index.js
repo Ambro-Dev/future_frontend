@@ -61,7 +61,6 @@ const DefaultItem = forwardRef(
         _id: event,
         url,
       };
-      console.log(selectedEvent);
       navigate("/pages/account/invoice", { state: selectedEvent });
     };
     return (

@@ -5,10 +5,8 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import PropTypes from "prop-types";
 
-const REACT_APP_SERVER_URL = "http://localhost:5000";
-
 function NewEvent(props) {
-  const serverUrl = REACT_APP_SERVER_URL;
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
 
   const imageOptions = [
     "/storage/courses/course_images/course_image_01.jpg",

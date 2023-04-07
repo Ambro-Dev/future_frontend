@@ -25,10 +25,6 @@ import socketio from "socket.io-client";
 import appIcon from "assets/images/logo/logo-mans.png";
 import { useTranslation } from "react-i18next";
 
-const SOCKET_PORT = "http://localhost:5000";
-
-const LOGIN_URL = "/auth";
-
 function Login() {
   const { t } = useTranslation("translation", { keyPrefix: "login" });
   const { setSocket } = useContext(SocketContext);
@@ -71,7 +67,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        LOGIN_URL,
+        process.env.REACT_APP_LOGIN_URL,
         { email, password },
         {
           headers: { "Content-Type": "application/json" },
@@ -95,7 +91,7 @@ function Login() {
         accessToken,
         picture,
       });
-      const newSocket = socketio.connect(SOCKET_PORT);
+      const newSocket = socketio.connect(process.env.REACT_APP_SERVER_URL);
       setSocket(newSocket);
       setEmail("");
       setPassword("");

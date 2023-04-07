@@ -74,7 +74,6 @@ export default function App() {
       if (i18n.language === "pl") {
         setRoutes(routespl);
       }
-      console.log(routes);
     };
 
     i18n.on("languageChanged", handleLanguageChange);

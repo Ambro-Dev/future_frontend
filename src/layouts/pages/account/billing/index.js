@@ -32,7 +32,6 @@ function Billing() {
       try {
         const { data } = await axiosPrivate.get(`/events/exam/${auth.userId}/results`);
         setResults(data);
-        console.log(data);
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -44,7 +43,6 @@ function Billing() {
       try {
         const { data } = await axiosPrivate.get(`/users/teacher/${auth.userId}/courses`);
         setResults(data);
-        console.log(data);
         setLoading(false);
       } catch (err) {
         console.error(err);

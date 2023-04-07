@@ -7,7 +7,6 @@ import availableImages from "./availableImages";
 
 function CourseImageSelector() {
   const [selectedImage, setSelectedImage] = useState(null);
-  console.log(availableImages);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);

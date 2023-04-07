@@ -5,7 +5,6 @@ import Card from "@mui/material/Card";
 
 // Distance Learning React components
 import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
 
 // Distance Learning React examples
 import DataTable from "examples/Tables/DataTable";
@@ -36,13 +35,6 @@ function Users() {
           {users.length > 0 && (
             <MDBox>
               <Card>
-                <MDButton
-                  onClick={() => {
-                    console.log(users);
-                  }}
-                >
-                  Log users
-                </MDButton>
                 <DataTable
                   table={{
                     columns: [

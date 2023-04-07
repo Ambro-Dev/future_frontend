@@ -26,10 +26,8 @@ import NewEvent from "../NewCourse";
 
 // Images
 
-const REACT_APP_SERVER_URL = "http://localhost:5000";
-
 function About({ setDescription, setName, name, description, setPic }) {
-  const serverUrl = REACT_APP_SERVER_URL;
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
