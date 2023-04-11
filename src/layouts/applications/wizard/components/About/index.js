@@ -17,18 +17,20 @@ import MDTypography from "components/MDTypography";
 
 // Wizard application components
 import FormField from "layouts/applications/wizard/components/FormField";
+import { useTranslation } from "react-i18next";
 
 function About({ setDescription, setName, name, description }) {
+  const { t } = useTranslation("translation", { keyPrefix: "wizard" });
   return (
     <MDBox>
       <MDBox width="82%" textAlign="center" mx="auto" my={4}>
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
-            Let&apos;s start with the basic information
+            {t("infostart")}
           </MDTypography>
         </MDBox>
         <MDTypography variant="body2" color="text">
-          Add course name and description
+          {t("infodesc")}
         </MDTypography>
       </MDBox>
       <MDBox mt={2}>
@@ -36,7 +38,7 @@ function About({ setDescription, setName, name, description }) {
           <MDBox mb={2}>
             <FormField
               type="text"
-              label="Name"
+              label={t("infoname")}
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -45,7 +47,7 @@ function About({ setDescription, setName, name, description }) {
           <MDBox mb={2}>
             <FormField
               type="text"
-              label="Description"
+              label={t("infodescription")}
               multiline
               required
               value={description}

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /**
 =========================================================
 * Distance Learning React - v1.1.0
@@ -85,7 +86,7 @@ MDTypography.propTypes = {
     "bottom",
   ]),
   textGradient: PropTypes.bool,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   opacity: PropTypes.number,
 };
 

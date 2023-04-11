@@ -1,18 +1,18 @@
-import { createContext, useState, useMemo } from "react";
-import PropTypes from "prop-types";
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-no-constructed-context-values */
+import { createContext, useState } from "react";
 
 const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
   const [auth, setAuth] = useState({});
+  const [persist, setPersist] = useState(JSON.parse(localStorage.getItem("persist")) || false);
 
-  const authValue = useMemo(() => ({ auth, setAuth }), [auth, setAuth]);
-
-  return <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ auth, setAuth, persist, setPersist }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
-
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default AuthContext;

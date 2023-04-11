@@ -4,8 +4,10 @@ import Modal from "@mui/material/Modal";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 function NewEvent(props) {
+  const { t } = useTranslation("translation", { keyPrefix: "courses" });
   const serverUrl = process.env.REACT_APP_SERVER_URL;
 
   const imageOptions = [
@@ -55,7 +57,7 @@ function NewEvent(props) {
         onSubmit={setSelectedAvatar}
         sx={style}
       >
-        <MDBox id="modal-modal-title">Choose an avatar:</MDBox>
+        <MDBox id="modal-modal-title">{t("avatar")}</MDBox>
         <MDBox id="modal-modal-description">
           {imageOptions.map((avatar) => (
             <MDBox
@@ -69,7 +71,7 @@ function NewEvent(props) {
             />
           ))}
         </MDBox>
-        <MDButton onClick={onClose}>Close</MDButton>
+        <MDButton onClick={onClose}>{t("close")}</MDButton>
       </MDBox>
     </Modal>
   );

@@ -22,11 +22,11 @@ import MDAccordion from "components/MDAccordion";
 import { AccordionDetails, AccordionSummary } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-function GradesList({ title, userResults, index }) {
+function TeacherGrades({ title, userResults }) {
   const { t } = useTranslation("translation", { keyPrefix: "grades" });
-  const renderItems = Object.entries(userResults).map(([courseName, exams]) => (
+  const renderItems = userResults.map(({ courseName, examId, examTitle, results }) => (
     <MDBox
-      key={`${courseName}`}
+      key={`${examId}-${courseName}`}
       component="li"
       display="flex"
       flexDirection="column"
@@ -35,34 +35,31 @@ function GradesList({ title, userResults, index }) {
       pr={2}
       mb={2}
     >
-      <MDAccordion key={`${courseName}`} sx={{ width: "100%" }}>
-        <AccordionSummary expandIcon={<ExpandMore />} aria-controls={`panel${index}-content`}>
+      <MDAccordion key={examId} sx={{ width: "100%" }}>
+        <AccordionSummary expandIcon={<ExpandMore />} aria-controls={`panel${examId}-content`}>
           <MDBox ml={2} mt={0.5} lineHeight={1.4}>
             <MDTypography display="block" variant="button" fontWeight="medium">
-              {courseName}
+              {courseName} - {examTitle}
             </MDTypography>
           </MDBox>
         </AccordionSummary>
         <AccordionDetails>
-          {exams.map(({ examTitle, results }) => (
+          {results.map(({ userId, userName, userSurname, totalScore, maxScore }) => (
             <Card sx={{ marginTop: 1 }}>
-              {results &&
-                results.map(({ userId, json }) => (
-                  <MDBox p={1} key={`${courseName}-${examTitle}-${userId}`} display="flex">
-                    <MDBox ml={2} mt={2} lineHeight={1.4}>
-                      <MDTypography display="block" variant="button" fontWeight="medium">
-                        {examTitle}
-                      </MDTypography>
-                    </MDBox>
-                    <MDBox p={1}>
-                      <MDBox width="100%" overflow="auto">
-                        <MDTypography variant="button" fontWeight="regular">
-                          {t("score")} {json.totalScore} / {json.maxScore}
-                        </MDTypography>
-                      </MDBox>
-                    </MDBox>
+              <MDBox p={1} key={`${examId}-${userId}`} display="flex">
+                <MDBox ml={2} mt={2} lineHeight={1.4}>
+                  <MDTypography display="block" variant="button" fontWeight="medium">
+                    {userName} {userSurname}
+                  </MDTypography>
+                </MDBox>
+                <MDBox p={1}>
+                  <MDBox width="100%" overflow="auto">
+                    <MDTypography variant="button" fontWeight="regular">
+                      {t("score")} {totalScore} / {maxScore}
+                    </MDTypography>
                   </MDBox>
-                ))}
+                </MDBox>
+              </MDBox>
             </Card>
           ))}
         </AccordionDetails>
@@ -87,8 +84,8 @@ function GradesList({ title, userResults, index }) {
 }
 
 // Typechecking props for the CategoriesList
-GradesList.propTypes = {
+TeacherGrades.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default GradesList;
+export default TeacherGrades;

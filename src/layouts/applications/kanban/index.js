@@ -136,7 +136,7 @@ function Kanban() {
               </MDBox>
             ) : (
               <MDButton color="success" circular onClick={handleOpen} sx={{ mb: 1 }}>
-                {t("addcourse")}
+                {t("add")}
               </MDButton>
             )}
           </MDBox>

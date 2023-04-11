@@ -21,8 +21,10 @@ import PropTypes from "prop-types";
 // Images
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
+import { useTranslation } from "react-i18next";
 
 function CourseEdit({ courseId, setEditing, handleSave, editing }) {
+  const { t } = useTranslation("translation", { keyPrefix: "courseedit" });
   const [course, setCourse] = useState();
   const axiosPrivate = useAxiosPrivate();
   const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -46,17 +48,23 @@ function CourseEdit({ courseId, setEditing, handleSave, editing }) {
             <MDTypography variant="h6" fontWeight="medium">
               {course?.name}
             </MDTypography>
-            <MDBadge variant="gradient" color="info" size="xs" badgeContent="course" container />
+            <MDBadge
+              variant="gradient"
+              color="info"
+              size="xs"
+              badgeContent={t("badge")}
+              container
+            />
           </MDBox>
         </MDBox>
       </Grid>
       <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
         {editing ? (
           <MDButton color="success" onClick={handleSave}>
-            Save
+            {t("save")}
           </MDButton>
         ) : (
-          <MDButton onClick={setEditing}>Edit Course</MDButton>
+          <MDButton onClick={setEditing}>{t("edit")}</MDButton>
         )}
       </Grid>
     </Grid>

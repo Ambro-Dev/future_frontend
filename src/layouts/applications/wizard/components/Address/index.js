@@ -14,6 +14,7 @@ import Grid from "@mui/material/Grid";
 // Distance Learning React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import { useTranslation } from "react-i18next";
 import FormField from "../FormField";
 
 // Wizard application components
@@ -28,17 +29,17 @@ function Address({
   eventEndTime,
   eventStartTime,
 }) {
+  const { t } = useTranslation("translation", { keyPrefix: "wizard" });
   return (
     <MDBox>
       <MDBox width="80%" textAlign="center" mx="auto" my={4}>
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
-            Are you living in a nice area?
+            {t("dateifo")}
           </MDTypography>
         </MDBox>
         <MDTypography variant="body2" color="text">
-          One thing I love about the later sunsets is the chance to go for a walk through the
-          neighborhood woods before dinner
+          {t("datedesc")}
         </MDTypography>
       </MDBox>
       <MDBox mt={2}>
@@ -46,7 +47,7 @@ function Address({
           <Grid item xs={12} md={7}>
             <FormField
               type="date"
-              label="Start date"
+              label={t("startdate")}
               InputLabelProps={{ shrink: true }}
               required
               value={eventStartDate}
@@ -56,7 +57,7 @@ function Address({
           <Grid item xs={12} md={5}>
             <FormField
               type="time"
-              label="Start time"
+              label={t("starttime")}
               InputLabelProps={{ shrink: true }}
               required
               value={eventStartTime}
@@ -66,7 +67,7 @@ function Address({
           <Grid item xs={12} md={7}>
             <FormField
               type="date"
-              label="End date"
+              label={t("enddate")}
               InputLabelProps={{ shrink: true }}
               required
               value={eventEndDate}
@@ -76,7 +77,7 @@ function Address({
           <Grid item xs={12} md={5}>
             <FormField
               type="time"
-              label="End time"
+              label={t("endtime")}
               InputLabelProps={{ shrink: true }}
               required
               value={eventEndTime}

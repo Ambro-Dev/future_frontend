@@ -23,11 +23,14 @@ import MDButton from "components/MDButton";
 import { useNavigate } from "react-router-dom";
 import useAuth from "hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 function UpcomingEvents({ events, courseId }) {
+  const { i18n } = useTranslation();
   const { t } = useTranslation("translation", { keyPrefix: "courseinfo" });
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const [language, setLanguage] = useState("pl");
 
   const handleOpen = async (e) => {
     e.preventDefault();
@@ -37,6 +40,18 @@ function UpcomingEvents({ events, courseId }) {
 
     navigate("/applications/wizard", { state: course });
   };
+
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setLanguage(i18n.language);
+    };
+
+    i18n.on("languageChanged", handleLanguageChange);
+
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
+  }, [i18n]);
 
   return (
     <Card sx={{ height: "500px" }}>
@@ -67,7 +82,7 @@ function UpcomingEvents({ events, courseId }) {
             const formattedStartTime = new Date(event.start).toLocaleTimeString(`${t("date")}`, {
               hour: "numeric",
               minute: "numeric",
-              hour12: true,
+              hour12: language === "en",
             });
             const formattedEndDate = new Date(event.end).toLocaleDateString(`${t("date")}`, {
               year: "numeric",
@@ -77,7 +92,7 @@ function UpcomingEvents({ events, courseId }) {
             const formattedEndTime = new Date(event.end).toLocaleTimeString(`${t("date")}`, {
               hour: "numeric",
               minute: "numeric",
-              hour12: true,
+              hour12: language === "en",
             });
             return (
               <MDBox key={event._id}>

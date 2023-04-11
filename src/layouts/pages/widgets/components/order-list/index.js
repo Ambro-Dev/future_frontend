@@ -22,6 +22,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import MDTypography from "components/MDTypography";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Set up the fonts
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -29,6 +30,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 // Data
 
 function OrderList({ courseId }) {
+  const { t } = useTranslation("translation", { keyPrefix: "memberslist" });
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [imageUrls, setImageUrls] = useState([]);
@@ -152,13 +154,13 @@ function OrderList({ courseId }) {
               <MDBox ml={1}>
                 <MDButton variant="outlined" color="dark" onClick={() => exportCSV(csvList)}>
                   <Icon>description</Icon>
-                  &nbsp;export csv
+                  &nbsp;{t("exportcsv")}
                 </MDButton>
               </MDBox>
               <MDBox ml={1}>
                 <MDButton variant="outlined" color="dark" onClick={handlePdfExport}>
                   <Icon>picture_as_pdf</Icon>
-                  &nbsp;Export PDF
+                  &nbsp;{t("exportpdf")}
                 </MDButton>
               </MDBox>
             </MDBox>
@@ -169,30 +171,30 @@ function OrderList({ courseId }) {
                 <Card>
                   <MDBox pt={2} px={2} lineHeight={1}>
                     <MDTypography variant="h6" fontWeight="medium">
-                      Members
+                      {t("members")}
                     </MDTypography>
                   </MDBox>
                   <DataTable
                     table={{
                       columns: [
                         {
-                          Header: "picture",
+                          Header: [t("picture")],
                           accessor: "picture",
                           width: "10%",
                           Cell: ({ row }) => <MDAvatar src={row.original.picture} size="sm" />,
                         },
-                        { Header: "name", accessor: "name" },
-                        { Header: "surname", accessor: "surname" },
-                        { Header: "studentNumber", accessor: "studentNumber" },
+                        { Header: [t("name")], accessor: "name" },
+                        { Header: [t("surname")], accessor: "surname" },
+                        { Header: [t("studentnumber")], accessor: "studentNumber" },
                         {
-                          Header: "actions",
+                          Header: [t("actions")],
                           accessor: "actions",
                           Cell: ({ row }) => (
                             <MDButton
                               onClick={() => navigate("/chat")}
                               disabled={row.original.studentNumber === auth.studentNumber}
                             >
-                              Message
+                              {t("message")}
                             </MDButton>
                           ),
                         },
@@ -208,7 +210,7 @@ function OrderList({ courseId }) {
           </MDBox>
         </MDBox>
       ) : (
-        <MDBox>Still loading</MDBox>
+        <MDBox>{t("stillloading")}</MDBox>
       )}
     </MDBox>
   );

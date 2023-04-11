@@ -49,8 +49,8 @@ function BasicLayout({ image, children }) {
             {children}
           </Grid>
         </Grid>
+        <Footer light />
       </MDBox>
-      <Footer light />
     </PageLayout>
   );
 }

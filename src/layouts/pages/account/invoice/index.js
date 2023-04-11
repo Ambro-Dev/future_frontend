@@ -28,8 +28,10 @@ import { Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
+import { useTranslation } from "react-i18next";
 
 function Invoice() {
+  const { t } = useTranslation("translation", { keyPrefix: "seeevent" });
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [course, setCourse] = useState();
   const axiosPrivate = useAxiosPrivate();
@@ -116,7 +118,7 @@ function Invoice() {
                                     })
                                   }
                                 >
-                                  Edit Exam
+                                  {t("edit")}
                                 </MDButton>
                               ) : (
                                 <MDButton
@@ -125,11 +127,11 @@ function Invoice() {
                                   href={selectedEvent.url}
                                   target="_blank"
                                 >
-                                  Join call
+                                  {t("join")}
                                 </MDButton>
                               )}
                               <MDButton variant="gradient" color="error" sx={{ ml: 1 }}>
-                                Delete Event
+                                {t("delete")}
                               </MDButton>
                             </>
                           ) : (
@@ -143,8 +145,8 @@ function Invoice() {
                                   disabled={new Date(selectedEvent.start) > new Date()} // check if start date is in the future
                                 >
                                   {new Date(selectedEvent.start) > new Date()
-                                    ? "Call not started yet"
-                                    : "Join call"}
+                                    ? [t("eventnotstarted")]
+                                    : [t("join")]}
                                 </MDButton>
                               ) : (
                                 <MDButton
@@ -158,8 +160,8 @@ function Invoice() {
                                   disabled={new Date(selectedEvent.start) > new Date()} // check if start date is in the future
                                 >
                                   {new Date(selectedEvent.start) > new Date()
-                                    ? "Exam not available"
-                                    : "Join exam"}
+                                    ? [t("examnotavailable")]
+                                    : [t("join")]}
                                 </MDButton>
                               )}
                             </MDBox>
@@ -177,7 +179,7 @@ function Invoice() {
                         color={darkMode ? "text" : "secondary"}
                         fontWeight="regular"
                       >
-                        Title
+                        {t("title")}
                       </MDTypography>
                       <MDTypography variant="h5" fontWeight="medium">
                         {selectedEvent.title}
@@ -198,7 +200,7 @@ function Invoice() {
                             color={darkMode ? "text" : "secondary"}
                             fontWeight="regular"
                           >
-                            Start time:
+                            {t("start")}
                           </MDTypography>
                         </MDBox>
                         <MDBox width="50%">
@@ -220,7 +222,7 @@ function Invoice() {
                             color={darkMode ? "text" : "secondary"}
                             fontWeight="regular"
                           >
-                            End time:
+                            {t("end")}
                           </MDTypography>
                         </MDBox>
                         <MDBox width="50%">
@@ -242,7 +244,7 @@ function Invoice() {
                     color={darkMode ? "text" : "secondary"}
                     fontWeight="regular"
                   >
-                    Description
+                    {t("description")}
                   </MDTypography>
                   <Divider variant="middle" />
                   <MDTypography variant="button" fontWeight="regular">
@@ -257,7 +259,7 @@ function Invoice() {
                   <Grid item xs={12} lg={5}>
                     <Divider variant="middle" />
                     <MDTypography variant="h6" fontWeight="regular">
-                      Files
+                      {t("files")}
                     </MDTypography>
                     <MDBox mt={1} mb={2} lineHeight={0}>
                       <AttachFileIcon fontSize="large" />
@@ -273,7 +275,7 @@ function Invoice() {
                       mt={{ xs: 2, md: 0 }}
                     >
                       <MDButton variant="gradient" color="warning" onClick={handleClick}>
-                        Close
+                        {t("close")}
                       </MDButton>
                     </MDBox>
                   </Grid>

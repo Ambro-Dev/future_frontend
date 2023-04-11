@@ -23,8 +23,10 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import useAuth from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function OrderInfo({ courseId }) {
+  const { t } = useTranslation("translation", { keyPrefix: "editinfo" });
   const navigate = useNavigate();
   const [imageIrl, setImageUrl] = useState();
   const { auth } = useAuth();
@@ -61,7 +63,7 @@ function OrderInfo({ courseId }) {
               variant="gradient"
               color="success"
               size="xs"
-              badgeContent="teacher"
+              badgeContent={t("badge")}
               container
             />
           </MDBox>
@@ -69,11 +71,11 @@ function OrderInfo({ courseId }) {
       </Grid>
       <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
         <MDButton variant="gradient" color="dark" size="small" onClick={() => navigate("/chat")}>
-          send message
+          {t("sendmessage")}
         </MDButton>
         <MDBox mt={0.5}>
           <MDTypography variant="button" color="text">
-            Have You got any questions?
+            {t("questions")}
           </MDTypography>
         </MDBox>
       </Grid>

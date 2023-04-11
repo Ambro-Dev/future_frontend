@@ -26,6 +26,7 @@ import MDButton from "components/MDButton";
 import { ExpandMore } from "@mui/icons-material";
 import MDAccordion from "components/MDAccordion";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const icons = {
   success: lesson,
@@ -51,6 +52,7 @@ const DefaultItem = forwardRef(
     ref
   ) => {
     const navigate = useNavigate();
+    const { t } = useTranslation("translation", { keyPrefix: "defaultitem" });
 
     const handleOpen = () => {
       const selectedEvent = {
@@ -85,7 +87,7 @@ const DefaultItem = forwardRef(
                   <MDBox p={1}>
                     <MDBox width="100%" overflow="auto">
                       <MDTypography variant="h6" color="text" fontWeight="regular">
-                        Description
+                        {t("description")}
                       </MDTypography>
                       <MDTypography variant="button" fontWeight="regular">
                         {eventdescription}
@@ -97,7 +99,7 @@ const DefaultItem = forwardRef(
                     <MDBox mt={1}>
                       <MDTypography component="span" variant="h6" fontWeight="regular" color="text">
                         <MDButton variant="gradient" color="success" onClick={() => handleOpen()}>
-                          View
+                          {t("view")}
                         </MDButton>
                       </MDTypography>
                     </MDBox>

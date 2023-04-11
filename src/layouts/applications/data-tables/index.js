@@ -25,12 +25,15 @@ import "./styles/styles.css";
 import Lottie from "lottie-react-web";
 import conversationAnimation from "assets/images/illustrations/981-consultation-flat-edited.json";
 import messageAnimation from "assets/images/illustrations/177-envelope-mail-send-flat-edited.json";
+import { useTranslation } from "react-i18next";
 
 // Connect to the Socket.io server
 
 // Data
 
 function DataTables() {
+  const { i18n } = useTranslation();
+  const { t } = useTranslation("translation", { keyPrefix: "messages" });
   const { socket } = useContext(SocketContext);
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
@@ -42,6 +45,7 @@ function DataTables() {
   const [messageText, setMessageText] = useState("");
   const messagesContainerRef = useRef();
   const sendRef = useRef();
+  const [language, setLanguage] = useState("pl");
 
   useEffect(() => {
     // Fetch the list of conversations from the server
@@ -135,6 +139,18 @@ function DataTables() {
     }
   };
 
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setLanguage(i18n.language);
+    };
+
+    i18n.on("languageChanged", handleLanguageChange);
+
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
+  }, [i18n]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -150,17 +166,17 @@ function DataTables() {
                     getOptionLabel={(user) => `${user.name} ${user.surname} ${user.studentNumber}`}
                     onChange={(event, value) => setQuery(value ? value._id : "")}
                     sx={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Search users..." />}
+                    renderInput={(params) => <TextField {...params} label={t("search")} />}
                   />
                 </MDBox>
               </Toolbar>
               <MDBox pl={3}>
-                <MDButton onClick={() => handleUserClick(query)}>Create new conversation</MDButton>
+                <MDButton onClick={() => handleUserClick(query)}>{t("create")}</MDButton>
               </MDBox>
             </MDBox>
             <MDBox mb={3}>
               <MDTypography pb={1} variant="h5">
-                Conversations:
+                {t("conversations")}
               </MDTypography>
               {conversationsList.map((conversation) => (
                 <MDBox key={conversation._id} pt={1}>
@@ -198,7 +214,7 @@ function DataTables() {
                         Object.values(messagesList).map((message) => {
                           const sender = usersList.find((user) => user._id === message.sender);
                           const formattedDate = new Date(message.createdAt).toLocaleDateString(
-                            "us-US",
+                            [t("lang")],
                             {
                               year: "numeric",
                               month: "short",
@@ -206,11 +222,11 @@ function DataTables() {
                             }
                           );
                           const formattedTime = new Date(message.createdAt).toLocaleTimeString(
-                            "en-US",
+                            [t("lang")],
                             {
                               hour: "numeric",
                               minute: "numeric",
-                              hour12: false,
+                              hour12: language === "en",
                             }
                           );
                           return (
@@ -254,7 +270,7 @@ function DataTables() {
                               fontWeight="medium"
                               textTransform="uppercase"
                             >
-                              No messages yet
+                              {t("nomessages")}
                             </MDTypography>
                           </Grid>
                           <Grid item xs={12} xl={6} sx={{ height: "300px" }}>
@@ -284,7 +300,7 @@ function DataTables() {
                         onChange={(e) => setMessageText(e.target.value)}
                         fullWidth
                       />
-                      <MDButton type="submit">Send</MDButton>
+                      <MDButton type="submit">{t("send")}</MDButton>
                     </MDBox>
                   </>
                 ) : (
@@ -298,7 +314,7 @@ function DataTables() {
                       display="flex"
                     >
                       <MDTypography variant="h5" fontWeight="medium" textTransform="uppercase">
-                        Select conversation or search user and create a new one
+                        {t("select")}
                       </MDTypography>
                     </Grid>
                     <Grid item xs={12} xl={6} sx={{ height: "400px" }}>

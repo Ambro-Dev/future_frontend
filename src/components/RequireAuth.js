@@ -9,7 +9,7 @@ function RequireAuth({ allowedRoles }) {
 
   return auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
     <Outlet />
-  ) : auth?.user ? (
+  ) : auth?.accessToken ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/authentication/sign-in" state={{ from: location }} replace />

@@ -50,6 +50,7 @@ import Wizard from "layouts/applications/wizard";
 import { useTranslation } from "react-i18next";
 import routespl from "./routespl";
 import routesen from "./routesen";
+import routesru from "./routesru";
 
 export default function App() {
   const { i18n } = useTranslation();
@@ -73,6 +74,9 @@ export default function App() {
       }
       if (i18n.language === "pl") {
         setRoutes(routespl);
+      }
+      if (i18n.language === "ru") {
+        setRoutes(routesru);
       }
     };
 

@@ -34,6 +34,7 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { Backdrop, CircularProgress } from "@mui/material";
 
 function Overview() {
+  const { i18n } = useTranslation();
   const { t } = useTranslation("translation", { keyPrefix: "profile" });
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const { auth } = useAuth();
@@ -90,7 +91,7 @@ function Overview() {
 
             // extract text of last message and shorten it
             const lastMessage = conversation.messages[0];
-            const shortenedDescription = lastMessage.text.slice(0, 30);
+            const shortenedDescription = lastMessage?.text?.slice(0, 30) || " ";
             const otherUser = conversation.members.find((member) => member._id !== auth.userId);
 
             if (!otherUser) {
@@ -116,7 +117,7 @@ function Overview() {
       });
     };
     getConversations();
-  }, [auth.userId]);
+  }, [i18n]);
 
   if (!loading) {
     return (

@@ -22,11 +22,13 @@ import MDButton from "components/MDButton";
 // Wizard application components
 import FormField from "layouts/applications/wizard/components/FormField";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import NewEvent from "../NewCourse";
 
 // Images
 
 function About({ setDescription, setName, name, description, setPic }) {
+  const { t } = useTranslation("translation", { keyPrefix: "courses" });
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
@@ -50,11 +52,11 @@ function About({ setDescription, setName, name, description, setPic }) {
       <MDBox width="82%" textAlign="center" mx="auto" my={4}>
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
-            Add course name and description
+            {t("courseinfo")}
           </MDTypography>
         </MDBox>
         <MDTypography variant="body2" color="text">
-          Change image if You like
+          {t("courseimage")}
         </MDTypography>
       </MDBox>
       <MDBox mt={2}>
@@ -91,7 +93,7 @@ function About({ setDescription, setName, name, description, setPic }) {
             <MDBox mb={2}>
               <FormField
                 type="text"
-                label="Name"
+                label={t("coursename")}
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -100,7 +102,7 @@ function About({ setDescription, setName, name, description, setPic }) {
             <MDBox mb={2}>
               <FormField
                 type="text"
-                label="Description"
+                label={t("coursedesc")}
                 multiline
                 required
                 value={description}
