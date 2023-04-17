@@ -19,8 +19,26 @@ import MDTypography from "components/MDTypography";
 // Distance Learning React examples
 import DefaultItem from "examples/Items/DefaultItem";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function NextEvents({ events }) {
+  const [language, setLanguage] = useState("pl");
+  const { i18n } = useTranslation();
+  const { t } = useTranslation("translation", { keyPrefix: "calendar" });
+
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setLanguage(i18n.language);
+    };
+
+    i18n.on("languageChanged", handleLanguageChange);
+
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
+  }, [i18n]);
+
   return (
     <Card sx={{ height: "600px" }}>
       <MDBox
@@ -31,31 +49,31 @@ function NextEvents({ events }) {
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
         <MDTypography variant="h6" fontWeight="medium" pt={1}>
-          Next Events
+          {t("nextevents")}
         </MDTypography>
       </MDBox>
       <MDBox sx={{ overflow: "auto" }}>
         {events && events.length > 0 ? (
           events.map((event, index) => {
-            const formattedStartDate = new Date(event.start).toLocaleDateString("us-US", {
+            const formattedStartDate = new Date(event.start).toLocaleDateString([t("date")], {
               year: "numeric",
               month: "short",
               day: "numeric",
             });
-            const formattedStartTime = new Date(event.start).toLocaleTimeString("en-US", {
+            const formattedStartTime = new Date(event.start).toLocaleTimeString([t("date")], {
               hour: "numeric",
               minute: "numeric",
-              hour12: true,
+              hour12: language === "en",
             });
-            const formattedEndDate = new Date(event.end).toLocaleDateString("us-US", {
+            const formattedEndDate = new Date(event.end).toLocaleDateString([t("date")], {
               year: "numeric",
               month: "short",
               day: "numeric",
             });
-            const formattedEndTime = new Date(event.end).toLocaleTimeString("en-US", {
+            const formattedEndTime = new Date(event.end).toLocaleTimeString([t("date")], {
               hour: "numeric",
               minute: "numeric",
-              hour12: true,
+              hour12: language === "en",
             });
             return (
               <MDBox key={event._id}>
@@ -76,7 +94,7 @@ function NextEvents({ events }) {
             );
           })
         ) : (
-          <MDBox p={2}>No events yet</MDBox>
+          <MDBox p={2}>{t("noevents")}</MDBox>
         )}
       </MDBox>
     </Card>

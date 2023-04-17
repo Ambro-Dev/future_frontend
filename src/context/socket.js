@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState } from "react";
 
-export const SocketContext = createContext();
+export const SocketContext = createContext({});
 
 export function SocketProvider({ children }) {
   const [socket, setSocket] = useState(null);

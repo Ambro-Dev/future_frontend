@@ -1,7 +1,11 @@
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-console */
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
 import MDBox from "components/MDBox";
+import MDButton from "components/MDButton";
 
 // Distance Learning React examples
 import DataTable from "examples/Tables/DataTable";
@@ -34,7 +38,17 @@ function Courses() {
               <Card>
                 <DataTable
                   table={{
-                    columns: [{ Header: "name", accessor: "name" }],
+                    columns: [
+                      { Header: "name", accessor: "name" },
+                      {
+                        Header: "action",
+                        accessor: "actions",
+                        width: "15%",
+                        Cell: ({ row }) => (
+                          <MDButton onClick={() => console.log(row)}>Edit</MDButton>
+                        ),
+                      },
+                    ],
                     rows: courses,
                   }}
                   entriesPerPage={false}

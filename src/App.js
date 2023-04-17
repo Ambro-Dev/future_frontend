@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -48,6 +48,9 @@ import NewProduct from "layouts/ecommerce/products/new-product";
 import EditProduct from "layouts/ecommerce/products/edit-product";
 import Wizard from "layouts/applications/wizard";
 import { useTranslation } from "react-i18next";
+import PersistLogin from "components/PersistLogin";
+import { SocketContext } from "context/socket";
+import io from "socket.io-client";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -56,6 +59,7 @@ export default function App() {
   const { i18n } = useTranslation();
   const [routes, setRoutes] = useState(routespl);
   const [controller, dispatch] = useMaterialUIController();
+  const { setSocket } = useContext(SocketContext);
   const {
     miniSidenav,
     direction,
@@ -86,6 +90,15 @@ export default function App() {
       i18n.off("languageChanged", handleLanguageChange);
     };
   }, [i18n]);
+
+  useEffect(() => {
+    const newSocket = io(process.env.REACT_APP_SERVER_URL);
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
 
   // eslint-disable-next-line no-unused-vars
   const ROLES = {
@@ -200,29 +213,31 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
-          {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/profile-overview" />} />
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
-          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-            <Route path="/admin" element={<PricingPage />} key="admin-page" />
-          </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
-            <Route
-              path="/ecommerce/products/edit-product"
-              element={<EditProduct />}
-              key="edit-product"
-            />
-            <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
-          </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
-            <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
-            <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
-            <Route
-              path="/ecommerce/products/new-product"
-              element={<NewProduct />}
-              key="new-product"
-            />
+          <Route element={<PersistLogin />}>
+            {getRoutes(routes)}
+            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+              <Route path="/admin" element={<PricingPage />} key="admin-page" />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+              <Route
+                path="/ecommerce/products/edit-product"
+                element={<EditProduct />}
+                key="edit-product"
+              />
+              <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
+              <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
+              <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
+              <Route
+                path="/ecommerce/products/new-product"
+                element={<NewProduct />}
+                key="new-product"
+              />
+            </Route>
           </Route>
         </Routes>
       </ThemeProvider>
@@ -246,29 +261,31 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/profile-overview" />} />
         <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
-        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-          <Route path="/admin" element={<PricingPage />} key="admin-page" />
-        </Route>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
-          <Route
-            path="/ecommerce/products/edit-product"
-            element={<EditProduct />}
-            key="edit-product"
-          />
-          <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
-        </Route>
-        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-          <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
-          <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
-          <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
-          <Route
-            path="/ecommerce/products/new-product"
-            element={<NewProduct />}
-            key="new-product"
-          />
+        <Route element={<PersistLogin />}>
+          {getRoutes(routes)}
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+            <Route path="/admin" element={<PricingPage />} key="admin-page" />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+            <Route
+              path="/ecommerce/products/edit-product"
+              element={<EditProduct />}
+              key="edit-product"
+            />
+            <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
+            <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
+            <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
+            <Route
+              path="/ecommerce/products/new-product"
+              element={<NewProduct />}
+              key="new-product"
+            />
+          </Route>
         </Route>
       </Routes>
     </ThemeProvider>

@@ -161,7 +161,7 @@ function Invoice() {
                                 >
                                   {new Date(selectedEvent.start) > new Date()
                                     ? [t("examnotavailable")]
-                                    : [t("join")]}
+                                    : [t("joinexam")]}
                                 </MDButton>
                               )}
                             </MDBox>

@@ -31,7 +31,7 @@ function FormCreatorRenderComponent({ saveSurvey, surveyJSON }) {
   creator.JSON = surveyJSON;
   creator.locale = "pl";
 
-  surveyLocalization.supportedLocales = ["pl", "en", "ru"];
+  surveyLocalization.supportedLocales = ["pl", "en", "ru", "ua"];
 
   creator.toolbox.allowExpandMultipleCategories = true;
   creator.showSidebar = false;

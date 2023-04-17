@@ -51,6 +51,7 @@ import { useTranslation } from "react-i18next";
 import pl from "assets/images/icons/flags/PL.png";
 import en from "assets/images/icons/flags/EN.png";
 import ru from "assets/images/icons/flags/RU.png";
+import ua from "assets/images/icons/flags/UA.png";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -111,7 +112,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <NotificationItem
         icon={<MDBox component="img" src={pl} />}
-        title="Polish"
+        title="Polski"
         onClick={() => changeLanguage("pl")}
       />
       <NotificationItem
@@ -120,8 +121,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
         onClick={() => changeLanguage("en")}
       />
       <NotificationItem
+        icon={<MDBox component="img" src={ua} />}
+        title="Українська"
+        onClick={() => changeLanguage("ua")}
+      />
+      <NotificationItem
         icon={<MDBox component="img" src={ru} />}
-        title="Russian"
+        title="Русский"
         onClick={() => changeLanguage("ru")}
       />
     </Menu>

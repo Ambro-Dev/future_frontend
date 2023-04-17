@@ -28,8 +28,10 @@ import NextEvents from "layouts/applications/calendar/components/NextEvents";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import useAuth from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Calendar() {
+  const { t } = useTranslation("translation", { keyPrefix: "calendar" });
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [calendarEventsData, setCalendarEventsData] = useState([]);
@@ -81,7 +83,7 @@ function Calendar() {
                   initialView="dayGridMonth"
                   events={calendarEventsData}
                   eventClick={handleOpen}
-                  locale="en"
+                  locale={t("locale")}
                 />
               ),
               [calendarEventsData]

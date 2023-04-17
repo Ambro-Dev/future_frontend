@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect } from "react";
 import useAuth from "hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -15,24 +15,18 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-import { SocketContext } from "context/socket";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import axios from "api/axios";
-import socketio from "socket.io-client";
 
 import appIcon from "assets/images/logo/logo-mans.png";
 import { useTranslation } from "react-i18next";
 
 function Login() {
   const { t } = useTranslation("translation", { keyPrefix: "login" });
-  const { setSocket } = useContext(SocketContext);
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -91,8 +85,6 @@ function Login() {
         accessToken,
         picture,
       });
-      const newSocket = socketio.connect(process.env.REACT_APP_SERVER_URL);
-      setSocket(newSocket);
       setEmail("");
       setPassword("");
       if (roles.includes(1001)) {
@@ -113,6 +105,14 @@ function Login() {
       errRef.current.focus();
     }
   };
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   return (
     <BasicLayout image={bgImage}>
@@ -173,12 +173,12 @@ function Login() {
               />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
+              <Switch checked={persist} onChange={togglePersist} />
               <MDTypography
                 variant="button"
                 fontWeight="regular"
                 color="text"
-                onClick={handleSetRememberMe}
+                onClick={togglePersist}
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
                 &nbsp;&nbsp;{t("remember")}

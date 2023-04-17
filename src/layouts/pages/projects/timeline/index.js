@@ -26,7 +26,7 @@ export default function App() {
       apiKey,
 
       containerId: null,
-      redirectOnLeave: "http://localhost:3000/",
+      redirectOnLeave: "https://mans.org.pl",
 
       micEnabled: true,
       webcamEnabled: true,
@@ -61,7 +61,7 @@ export default function App() {
         enabled: true,
         logoURL: "http://localhost:3000/static/media/logo-ct.9b8693ea4783e10fad4b.png",
         name: "Distance Learning",
-        poweredBy: false,
+        poweredBy: true,
       },
 
       permissions: {
@@ -72,7 +72,7 @@ export default function App() {
         drawOnWhiteboard: true, // Can draw on whiteboard
         toggleWhiteboard: true, // Can toggle whiteboard
         toggleRecording: true, // Can toggle meeting recording
-        toggleLivestream: true, // can toggle live stream
+        toggleLivestream: false, // can toggle live stream
         removeParticipant: true, // Can remove participant
         endMeeting: true, // Can end meeting
         changeLayout: true, // can change layout

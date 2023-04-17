@@ -17,20 +17,23 @@ import { SocketContext } from "context/socket";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import axios from "api/axios";
-
-const LOGOUT_URL = "/logout";
+import { useTranslation } from "react-i18next";
+import useAuth from "hooks/useAuth";
 
 function Logout() {
+  const { t } = useTranslation("translation", { keyPrefix: "logout" });
   const { socket, setSocket } = useContext(SocketContext);
   const { setAuth } = useContext(AuthContext);
+  const { setPersist } = useAuth();
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
 
   const logout = async () => {
-    socket.disconnect();
+    socket?.disconnect();
     setSocket(null);
-    axios.get(LOGOUT_URL);
+    axios.get(process.env.REACT_APP_LOGOUT_URL);
+    setPersist(false);
     setAuth({});
     navigate("/authentication/sign-in");
   };
@@ -50,19 +53,19 @@ function Logout() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Are You shure You want to logout?
+            {t("sure")}
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" onClick={logout} fullWidth>
-                Logout
+                {t("logout")}
               </MDButton>
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" onClick={goBack} fullWidth>
-                Cancle
+                {t("cancel")}
               </MDButton>
             </MDBox>
           </MDBox>
