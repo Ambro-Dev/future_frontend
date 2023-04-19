@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect, useMemo, useContext } from "react";
 
 // react-router components
@@ -51,6 +50,7 @@ import { useTranslation } from "react-i18next";
 import PersistLogin from "components/PersistLogin";
 import { SocketContext } from "context/socket";
 import io from "socket.io-client";
+import Unauthorized from "components/Unauthorized";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -159,8 +159,15 @@ export default function App() {
       }
 
       if (route.route) {
+        if (route.key === "logout") {
+          return (
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route exact path={route.route} element={route.component} key={route.key} />
+            </Route>
+          );
+        }
         return (
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
             <Route exact path={route.route} element={route.component} key={route.key} />
           </Route>
         );
@@ -213,8 +220,8 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
-          <Route path="*" element={<Navigate to="/profile-overview" />} />
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route element={<PersistLogin />}>
             {getRoutes(routes)}
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
@@ -228,7 +235,8 @@ export default function App() {
               />
               <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
             </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
+              <Route path="*" element={<Navigate to="/profile-overview" />} />
               <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
               <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
               <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
@@ -261,8 +269,8 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        <Route path="*" element={<Navigate to="/profile-overview" />} />
         <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
+        <Route path="/unauthorized" element={<Unauthorized />} />
         <Route element={<PersistLogin />}>
           {getRoutes(routes)}
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
@@ -276,7 +284,8 @@ export default function App() {
             />
             <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
+            <Route path="*" element={<Navigate to="/profile-overview" />} />
             <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
             <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
             <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />

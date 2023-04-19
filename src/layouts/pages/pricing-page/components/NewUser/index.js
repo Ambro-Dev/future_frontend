@@ -18,22 +18,31 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import axios from "api/axios";
 import MDSnackbar from "components/MDSnackbar";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&*]).{8,24}$/;
+const NAME_REGEX = /^[a-zA-Z]+$/;
+const NUMBER_REGEX = /^\d+$/;
 
-function NewUser({ visible, setVisible }) {
+function NewUser({ visible, setVisible, loading, setLoading }) {
   const [name, setName] = useState("");
+  const [validName, setValidName] = useState(false);
+
   const [surname, setSurname] = useState("");
+  const [validSurname, setValidSurname] = useState(false);
+
   const [studentNumber, setStudentNumber] = useState("");
+  const [validStudentNumber, setValidStudentNumber] = useState(false);
+
   const [successSB, setSuccessSB] = useState(false);
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState({});
   const emailRef = useRef();
   const errRef = useRef();
+  const [visibleRole, setVisibleRole] = useState("");
 
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
@@ -42,7 +51,6 @@ function NewUser({ visible, setVisible }) {
   const [validPwd, setValidPwd] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
 
   const openSuccessSB = () => setSuccessSB(true);
   const closeSuccessSB = () => setSuccessSB(false);
@@ -62,16 +70,24 @@ function NewUser({ visible, setVisible }) {
   );
 
   useEffect(() => {
-    openSuccessSB();
-  }, [success]);
-
-  useEffect(() => {
     emailRef.current.focus();
   }, []);
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
   }, [email]);
+
+  useEffect(() => {
+    setValidName(NAME_REGEX.test(name));
+  }, [name]);
+
+  useEffect(() => {
+    setValidStudentNumber(NUMBER_REGEX.test(studentNumber));
+  }, [studentNumber]);
+
+  useEffect(() => {
+    setValidSurname(NAME_REGEX.test(surname));
+  }, [surname]);
 
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
@@ -104,14 +120,16 @@ function NewUser({ visible, setVisible }) {
       // TODO: remove console.logs before deployment
       console.log(JSON.stringify(response?.data));
       // console.log(JSON.stringify(response))
-      setSuccess(true);
       // clear state and controlled inputs
       setEmail("");
       setPwd("");
       setName("");
       setSurname("");
       setStudentNumber("");
-      setRole("");
+      setRole({});
+      setVisibleRole("");
+      setLoading(!loading);
+      openSuccessSB();
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -121,6 +139,24 @@ function NewUser({ visible, setVisible }) {
         setErrMsg("Registration Failed");
       }
       errRef.current.focus();
+    }
+  };
+
+  const handleRoleChange = (event) => {
+    setVisibleRole(event.target.value);
+    if (event.target.value === "Student") {
+      setRole({ Student: 1984 });
+      if (studentNumber === "") setValidStudentNumber(false);
+    }
+    if (event.target.value === "Teacher") {
+      setRole({ Teacher: 5150 });
+      setStudentNumber("");
+      setValidStudentNumber(true);
+    }
+    if (event.target.value === "Admin") {
+      setRole({ Admin: 1001 });
+      setStudentNumber("");
+      setValidStudentNumber(true);
     }
   };
 
@@ -142,7 +178,7 @@ function NewUser({ visible, setVisible }) {
         textAlign="center"
       >
         <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-          Create new email
+          Create new user
         </MDTypography>
         <MDTypography display="block" variant="button" color="white" my={1}>
           Fill all the fields
@@ -155,17 +191,17 @@ function NewUser({ visible, setVisible }) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             sx={{ paddingTop: 2, paddingBottom: 2 }}
-            value={role}
+            value={visibleRole}
             label="Role"
-            onChange={(e) => setRole(e.target.value)}
+            onChange={handleRoleChange}
           >
-            <MenuItem value={{ Student: 1984 }}>Student</MenuItem>
-            <MenuItem value={{ Teacher: 5150 }}>Teacher</MenuItem>
-            <MenuItem value={{ Admin: 1001 }}>Admin</MenuItem>
+            <MenuItem value="Student">Student</MenuItem>
+            <MenuItem value="Teacher">Teacher</MenuItem>
+            <MenuItem value="Admin">Admin</MenuItem>
           </Select>
         </FormControl>
         <MDBox component="form" role="form">
-          <MDBox mb={2}>
+          <MDBox mb={2} display="flex">
             <MDInput
               type="text"
               label="Name"
@@ -175,8 +211,10 @@ function NewUser({ visible, setVisible }) {
               onChange={(e) => setName(e.target.value)}
               fullWidth
             />
+            <CheckIcon color="success" style={{ display: validName ? "block" : "none" }} />
+            <CloseIcon color="error" style={{ display: validName || !name ? "none" : "block" }} />
           </MDBox>
-          <MDBox mb={2}>
+          <MDBox mb={2} display="flex">
             <MDInput
               type="text"
               label="Surname"
@@ -186,8 +224,19 @@ function NewUser({ visible, setVisible }) {
               onChange={(e) => setSurname(e.target.value)}
               fullWidth
             />
+            <CheckIcon color="success" style={{ display: validSurname ? "block" : "none" }} />
+            <CloseIcon
+              color="error"
+              style={{ display: validSurname || !surname ? "none" : "block" }}
+            />
           </MDBox>
-          <MDBox mb={2}>
+          <MDBox
+            mb={2}
+            display="flex"
+            style={{
+              display: visibleRole === "Teacher" || visibleRole === "Admin" ? "none" : "block",
+            }}
+          >
             <MDInput
               type="text"
               label="Student Number"
@@ -196,10 +245,14 @@ function NewUser({ visible, setVisible }) {
               onChange={(e) => setStudentNumber(e.target.value)}
               fullWidth
               required={role === "Student"}
-              style={{ display: role === "Teacher" || role === "Admin" ? "none" : "block" }}
+            />
+            <CheckIcon color="success" style={{ display: validStudentNumber ? "block" : "none" }} />
+            <CloseIcon
+              color="error"
+              style={{ display: validStudentNumber || !studentNumber ? "none" : "block" }}
             />
           </MDBox>
-          <MDBox mb={2}>
+          <MDBox mb={2} display="flex">
             <MDInput
               type="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -211,16 +264,12 @@ function NewUser({ visible, setVisible }) {
               label="Email"
               variant="standard"
               fullWidth
-            >
-              <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
-              <FontAwesomeIcon
-                icon={faTimes}
-                className={validEmail || !email ? "hide" : "invalid"}
-              />
-            </MDInput>
+            />
+            <CheckIcon color="success" style={{ display: validEmail ? "block" : "none" }} />
+            <CloseIcon color="error" style={{ display: validEmail || !email ? "none" : "block" }} />
           </MDBox>
 
-          <MDBox mb={2}>
+          <MDBox mb={2} display="flex">
             <MDInput
               type="password"
               label="Password"
@@ -232,16 +281,26 @@ function NewUser({ visible, setVisible }) {
               aria-describedby="pwdnote"
               fullWidth
               helperText="8 to 24 characters. Must include uppercase and lowercase letters, a number and a special character. Allowed special characters: ! @ # $ % & *"
-            >
-              <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
-              <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
-            </MDInput>
+            />
+            <CheckIcon color="success" style={{ display: validPwd ? "block" : "none" }} />
+            <CloseIcon color="error" style={{ display: validPwd || !pwd ? "none" : "block" }} />
           </MDBox>
           <MDBox mt={4} mb={1}>
             <MDButton
               variant="gradient"
               color="success"
-              disabled={!!(!validEmail || !validPwd || !name || !surname || !role)}
+              disabled={
+                !!(
+                  !validEmail ||
+                  !validPwd ||
+                  !name ||
+                  !surname ||
+                  !role ||
+                  !validName ||
+                  !validSurname ||
+                  !validStudentNumber
+                )
+              }
               onClick={handleSubmit}
               fullWidth
             >
