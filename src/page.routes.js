@@ -28,7 +28,7 @@ Coded by Ambro-Dev
 
 const pageRoutes = [
   {
-    name: "Courses",
+    name: "Manage",
     collapse: [
       {
         name: "Manage Courses",
@@ -36,8 +36,8 @@ const pageRoutes = [
         icon: "widgets",
       },
       {
-        name: "Manage Files",
-        route: "/admin/courses",
+        name: "Manage Users",
+        route: "/admin/users",
         icon: "import_contacts",
       },
     ],

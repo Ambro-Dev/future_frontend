@@ -51,9 +51,12 @@ import PersistLogin from "components/PersistLogin";
 import { SocketContext } from "context/socket";
 import io from "socket.io-client";
 import Unauthorized from "components/Unauthorized";
+import AdminCourses from "layouts/pages/pricing-page/Courses";
+import AdminUsers from "layouts/pages/pricing-page/Users";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
+import routesua from "./routesua";
 
 export default function App() {
   const { i18n } = useTranslation();
@@ -81,6 +84,9 @@ export default function App() {
       }
       if (i18n.language === "ru") {
         setRoutes(routesru);
+      }
+      if (i18n.language === "ua") {
+        setRoutes(routesua);
       }
     };
 
@@ -226,6 +232,8 @@ export default function App() {
             {getRoutes(routes)}
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
               <Route path="/admin" element={<PricingPage />} key="admin-page" />
+              <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
+              <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
             </Route>
             <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
               <Route
@@ -275,6 +283,8 @@ export default function App() {
           {getRoutes(routes)}
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route path="/admin" element={<PricingPage />} key="admin-page" />
+            <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
+            <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
             <Route

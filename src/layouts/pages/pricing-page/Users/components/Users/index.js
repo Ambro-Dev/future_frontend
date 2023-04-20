@@ -23,7 +23,7 @@ function Users({ setVisible, visible, loading }) {
 
   useEffect(() => {
     axiosPrivate
-      .get("/users")
+      .get("admin/users")
       .then((response) => {
         setUsers(response.data);
         setDataLoading(false);
@@ -122,6 +122,7 @@ function Users({ setVisible, visible, loading }) {
                     columns: [
                       { Header: "name", accessor: "name" },
                       { Header: "surname", accessor: "surname" },
+                      { Header: "email", accessor: "email" },
                       {
                         Header: "Student Number",
                         accessor: "studentNumber",
