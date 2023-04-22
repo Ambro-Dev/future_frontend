@@ -12,13 +12,14 @@ import MDTypography from "components/MDTypography";
 // Distance Learning React examples
 import DataTable from "examples/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { DropzoneDialog } from "mui-file-dropzone";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Users({ setVisible, visible, loading }) {
+  const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [users, setUsers] = useState();
-  const [open, setOpen] = useState(false);
+
   const [dataLoading, setDataLoading] = useState(true);
 
   useEffect(() => {
@@ -33,47 +34,6 @@ function Users({ setVisible, visible, loading }) {
         setDataLoading(false);
       });
   }, [loading]);
-
-  const handleDownloadSchema = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axiosPrivate.get("/admin/student-schema", { responseType: "blob" });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "student-schema.csv");
-      document.body.appendChild(link);
-      link.click();
-    } catch (error) {
-      alert(error.response.data);
-    }
-  };
-
-  const handleSave = async (files) => {
-    setOpen(false);
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    await axiosPrivate
-      .post("/admin/import-students", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(() => {
-        alert("Users imported successfully");
-      })
-      .catch((error) => {
-        alert(error.response.data);
-      });
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   if (!dataLoading) {
     return (
@@ -96,22 +56,10 @@ function Users({ setVisible, visible, loading }) {
               <MDButton
                 color="primary"
                 variant="outlined"
+                onClick={() => navigate("/admin/users/import")}
                 sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
-                onClick={handleDownloadSchema}
               >
-                Import students (CSV)
-              </MDButton>
-              <MDButton onClick={handleOpen}>import Students</MDButton>
-              <DropzoneDialog
-                open={open}
-                onSave={handleSave}
-                acceptedFiles={["text/csv"]}
-                showPreviews
-                maxFileSize={10000000}
-                onClose={handleClose}
-              />
-              <MDButton color="primary" variant="outlined">
-                Import teachers (CSV)
+                Import Users
               </MDButton>
             </MDBox>
             <Divider />

@@ -9,7 +9,7 @@ import { Grid } from "@mui/material";
 import { useState } from "react";
 import Users from "./components/Users";
 import NewUser from "./components/NewUser";
-import ImportUsers from "./components/ImportUsers";
+import ImportUsers from "../ImportUsers";
 
 function AdminUsers() {
   const [visibleAddUser, setVisibleAddUser] = useState(false);
