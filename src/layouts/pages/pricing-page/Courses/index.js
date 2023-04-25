@@ -18,14 +18,14 @@ function AdminCourses() {
       <DefaultNavbar routes={pageRoutes} transparent />
       <MDBox my={3} mt={10} ml={1} mr={1}>
         <Grid container spacing={1}>
-          <Grid item xs={12} lg={!visibleAddCourse ? 12 : 6}>
+          <Grid item xs={12} lg={!visibleAddCourse ? 12 : 7}>
             <Courses
               setVisible={setVisibleAddCourse}
               visible={visibleAddCourse}
               loading={loading}
             />
           </Grid>
-          <Grid item xs={12} lg={6} style={{ display: visibleAddCourse ? "block" : "none" }}>
+          <Grid item xs={12} lg={5} style={{ display: visibleAddCourse ? "block" : "none" }}>
             <NewCourse
               setVisible={setVisibleAddCourse}
               visible={visibleAddCourse}

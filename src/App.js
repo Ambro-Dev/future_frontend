@@ -54,6 +54,7 @@ import Unauthorized from "components/Unauthorized";
 import AdminCourses from "layouts/pages/pricing-page/Courses";
 import AdminUsers from "layouts/pages/pricing-page/Users";
 import ImportUsers from "layouts/pages/pricing-page/ImportUsers";
+import EditCourse from "layouts/pages/pricing-page/Courses/components/EditCourse";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -240,6 +241,11 @@ export default function App() {
               />
               <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
               <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
+              <Route
+                path="/admin/courses/edit-course"
+                element={<EditCourse />}
+                key="admin-edit-course"
+              />
             </Route>
             <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
               <Route
@@ -292,6 +298,11 @@ export default function App() {
             <Route path="/admin/users/import" element={<ImportUsers />} key="admin-users-import" />
             <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
             <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
+            <Route
+              path="/admin/courses/edit-course"
+              element={<EditCourse />}
+              key="admin-edit-course"
+            />
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
             <Route
