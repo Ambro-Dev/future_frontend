@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 /**
@@ -26,6 +27,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
+import { CheckBox } from "@mui/icons-material";
 
 function EditCourse({ loading, setLoading }) {
   const axiosPrivate = useAxiosPrivate();
@@ -139,7 +141,7 @@ function EditCourse({ loading, setLoading }) {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            bgColor="secondary"
             borderRadius="lg"
             coloredShadow="success"
             mx={2}
@@ -176,6 +178,7 @@ function EditCourse({ loading, setLoading }) {
                           <MDInput
                             type="text"
                             label="Description"
+                            multiline
                             variant="standard"
                             value={description}
                             required
@@ -262,6 +265,17 @@ function EditCourse({ loading, setLoading }) {
                     display="flex"
                     flexDirection="column"
                   >
+                    <MDBox mt={4} mb={1} textAlign="center">
+                      <MDButton
+                        variant="gradient"
+                        color="error"
+                        onClick={() => {
+                          navigate(-1);
+                        }}
+                      >
+                        Cancel
+                      </MDButton>
+                    </MDBox>
                     <MDButton
                       sx={{ margin: 2 }}
                       variant="contained"
@@ -280,6 +294,18 @@ function EditCourse({ loading, setLoading }) {
                   <DataTable
                     table={{
                       columns: [
+                        {
+                          Header: "",
+                          accessor: "checkbox",
+                          Cell: ({ row }) => (
+                            <CheckBox
+                              checked={row.isSelected}
+                              onChange={() => {
+                                console.log(row);
+                              }}
+                            />
+                          ),
+                        },
                         { Header: "name", accessor: "name" },
                         { Header: "surname", accessor: "surname" },
                         { Header: "studentNumber", accessor: "studentNumber" },
@@ -300,17 +326,6 @@ function EditCourse({ loading, setLoading }) {
                     fullWidth
                   >
                     Create
-                  </MDButton>
-                </MDBox>
-                <MDBox mt={4} mb={1} textAlign="center">
-                  <MDButton
-                    variant="gradient"
-                    color="error"
-                    onClick={() => {
-                      navigate(-1);
-                    }}
-                  >
-                    Cancel
                   </MDButton>
                 </MDBox>
               </MDBox>
