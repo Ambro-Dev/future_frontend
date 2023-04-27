@@ -187,6 +187,7 @@ function DataTable({
                   width={column.width ? column.width : "auto"}
                   align={column.align ? column.align : "left"}
                   sorted={setSortedValue(column)}
+                  checkbox={column.isCheckbox}
                 >
                   {column.render("Header")}
                 </DataTableHeadCell>
@@ -269,6 +270,7 @@ DataTable.defaultProps = {
   pagination: { variant: "gradient", color: "info" },
   isSorted: true,
   noEndBorder: false,
+  isCheckbox: false,
 };
 
 // Typechecking props for the DataTable
@@ -298,6 +300,7 @@ DataTable.propTypes = {
   }),
   isSorted: PropTypes.bool,
   noEndBorder: PropTypes.bool,
+  isCheckbox: PropTypes.bool,
 };
 
 export default DataTable;

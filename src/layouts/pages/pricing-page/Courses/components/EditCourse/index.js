@@ -21,13 +21,12 @@ import MDButton from "components/MDButton";
 import { useEffect, useRef, useState } from "react";
 import MDSnackbar from "components/MDSnackbar";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { Autocomplete, Grid, TextField } from "@mui/material";
+import { Autocomplete, Checkbox, Grid, TextField } from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
 import { useLocation, useNavigate } from "react-router-dom";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
-import { CheckBox } from "@mui/icons-material";
 
 function EditCourse({ loading, setLoading }) {
   const axiosPrivate = useAxiosPrivate();
@@ -295,16 +294,22 @@ function EditCourse({ loading, setLoading }) {
                     table={{
                       columns: [
                         {
-                          Header: "",
+                          Header: (
+                            <MDBox>
+                              <Checkbox /> Select All
+                            </MDBox>
+                          ),
                           accessor: "checkbox",
                           Cell: ({ row }) => (
-                            <CheckBox
+                            <Checkbox
                               checked={row.isSelected}
                               onChange={() => {
                                 console.log(row);
                               }}
                             />
                           ),
+                          isCheckbox: true,
+                          width: 10,
                         },
                         { Header: "name", accessor: "name" },
                         { Header: "surname", accessor: "surname" },
