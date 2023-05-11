@@ -29,6 +29,8 @@ import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
 
 function EditCourse({ loading, setLoading }) {
+  const [manage, setManage] = useState(false);
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
@@ -65,7 +67,8 @@ function EditCourse({ loading, setLoading }) {
       axiosPrivate
         .get(`courses/${course.id}/members`)
         .then((response) => {
-          setMembers(response.data);
+          const newRows = response.data.map((row) => ({ ...row, isSelected: false }));
+          setMembers(newRows);
         })
         .catch((error) => {
           console.error(error);
@@ -127,6 +130,52 @@ function EditCourse({ loading, setLoading }) {
         setErrMsg("Registration Failed");
       }
       errRef.current.focus();
+    }
+  };
+
+  const handleSelectAll = (selected) => {
+    const newRows = members.map((row) => ({ ...row, isSelected: selected }));
+    setMembers(newRows);
+    if (selected) {
+      setSelectedRowIds(newRows.map((row) => row._id));
+    } else {
+      setSelectedRowIds([]);
+    }
+  };
+
+  const handleRemoveMembers = () => {
+    axiosPrivate
+      .post(`/admin/${course.id}/members`, { memberIds: selectedRowIds })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
+  const handleRowSelect = (rowId, isSelected) => {
+    if (isSelected) {
+      // add row ID to selectedRowIds if it's not already in the array
+      if (!selectedRowIds.includes(rowId)) {
+        setSelectedRowIds([...selectedRowIds, rowId]);
+      }
+      // set isSelected property of selected row to true
+      const newRows = members.map((row) => {
+        if (row._id === rowId) {
+          return { ...row, isSelected: true };
+        }
+        return row;
+      });
+      setMembers(newRows);
+    } else {
+      // remove row ID from selectedRowIds if it's in the array
+      setSelectedRowIds(selectedRowIds.filter((id) => id !== rowId));
+      // set isSelected property of deselected row to false
+      const newRows = members.map((row) => {
+        if (row._id === rowId) {
+          return { ...row, isSelected: false };
+        }
+        return row;
+      });
+      setMembers(newRows);
     }
   };
 
@@ -289,37 +338,69 @@ function EditCourse({ loading, setLoading }) {
                   </Grid>
                 </Grid>
                 <MDBox mt={5}>
-                  <MDButton color="success">Manage members</MDButton>
-                  <DataTable
-                    table={{
-                      columns: [
-                        {
-                          Header: (
-                            <MDBox>
-                              <Checkbox /> Select All
-                            </MDBox>
-                          ),
-                          accessor: "checkbox",
-                          Cell: ({ row }) => (
-                            <Checkbox
-                              checked={row.isSelected}
-                              onChange={() => {
-                                console.log(row);
-                              }}
-                            />
-                          ),
-                          isCheckbox: true,
-                          width: 10,
-                        },
-                        { Header: "name", accessor: "name" },
-                        { Header: "surname", accessor: "surname" },
-                        { Header: "studentNumber", accessor: "studentNumber" },
-                      ],
-                      rows: members,
-                    }}
-                    entriesPerPage={false}
-                    canSearch
-                  />
+                  <MDButton
+                    color={manage ? "warning" : "success"}
+                    onClick={() => setManage(!manage)}
+                  >
+                    {manage ? "Cancel" : "Manage members"}
+                  </MDButton>
+
+                  {manage ? (
+                    <>
+                      <MDButton
+                        sx={{ marginLeft: 3 }}
+                        color="error"
+                        disabled={!selectedRowIds.length}
+                        onClick={() => handleRemoveMembers()}
+                      >
+                        Remove selected members
+                      </MDButton>
+                      <DataTable
+                        table={{
+                          columns: [
+                            {
+                              Header: (
+                                <MDBox>
+                                  <Checkbox onChange={(e) => handleSelectAll(e.target.checked)} />
+                                  Select All
+                                </MDBox>
+                              ),
+                              accessor: "checkbox",
+                              Cell: ({ row }) => (
+                                <Checkbox
+                                  checked={row.original.isSelected}
+                                  onChange={(e) => {
+                                    handleRowSelect(row.original._id, e.target.checked);
+                                  }}
+                                />
+                              ),
+                              isCheckbox: true,
+                              width: 10,
+                            },
+                            { Header: "name", accessor: "name" },
+                            { Header: "surname", accessor: "surname" },
+                            { Header: "studentNumber", accessor: "studentNumber" },
+                          ],
+                          rows: members,
+                        }}
+                        entriesPerPage={false}
+                        canSearch
+                      />
+                    </>
+                  ) : (
+                    <DataTable
+                      table={{
+                        columns: [
+                          { Header: "name", accessor: "name" },
+                          { Header: "surname", accessor: "surname" },
+                          { Header: "studentNumber", accessor: "studentNumber" },
+                        ],
+                        rows: members,
+                      }}
+                      entriesPerPage={false}
+                      canSearch
+                    />
+                  )}
                 </MDBox>
 
                 <MDBox mt={4} mb={1}>
