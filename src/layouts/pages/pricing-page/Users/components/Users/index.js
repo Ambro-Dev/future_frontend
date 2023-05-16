@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
@@ -26,7 +27,16 @@ function Users({ setVisible, visible, loading }) {
     axiosPrivate
       .get("admin/users")
       .then((response) => {
-        setUsers(response.data);
+        const newRows = response.data.map((row) => {
+          if (Object.values(row.roles).includes(5150)) {
+            return { ...row, role: "Teacher" };
+          }
+          if (Object.values(row.roles).includes(1001)) {
+            return { ...row, role: "Admin" };
+          }
+          return { ...row, role: "Student" };
+        });
+        setUsers(newRows);
         setDataLoading(false);
       })
       .catch((err) => {
@@ -34,6 +44,16 @@ function Users({ setVisible, visible, loading }) {
         setDataLoading(false);
       });
   }, [loading]);
+
+  const openEdit = (row) => {
+    const user = {
+      id: row.original._id,
+      roles: row.original.roles,
+    };
+
+    navigate("/admin/users/edit-user", { state: user });
+    console.log(row.original);
+  };
 
   if (!dataLoading) {
     return (
@@ -76,19 +96,12 @@ function Users({ setVisible, visible, loading }) {
                         accessor: "studentNumber",
                         Cell: ({ value }) => value || "-",
                       },
-                      {
-                        Header: "Role",
-                        accessor: "roles",
-                        Cell: ({ value }) =>
-                          value.Student ? "Student" : value.Teacher ? "Teacher" : "-",
-                      },
+                      { Header: "Role", accessor: "role" },
                       {
                         Header: "action",
                         accessor: "actions",
                         width: "15%",
-                        Cell: ({ row }) => (
-                          <MDButton onClick={() => console.log(row.original)}>Edit</MDButton>
-                        ),
+                        Cell: ({ row }) => <MDButton onClick={() => openEdit(row)}>Edit</MDButton>,
                       },
                     ],
                     rows: users,
