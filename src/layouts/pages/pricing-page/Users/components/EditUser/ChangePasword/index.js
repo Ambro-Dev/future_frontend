@@ -114,13 +114,12 @@ function ChangePassword({ setChngPassword, chngPassword }) {
         variant="gradient"
         bgColor="info"
         borderRadius="lg"
-        coloredShadow="success"
         mx={2}
         mt={-3}
         p={3}
         mb={1}
         my={3}
-        textAlign="center"
+        textAlign="start"
       >
         <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
           Change Password
@@ -176,18 +175,17 @@ function ChangePassword({ setChngPassword, chngPassword }) {
               {!seePasswords ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </IconButton>
           </MDBox>
-          <MDBox mt={4} mb={1}>
+          <MDBox mt={4} mb={1} textAlign="start">
             <MDButton
               variant="gradient"
               color="success"
               disabled={!!(!validPwd || !validRepeatPwd)}
               onClick={handleSubmit}
-              fullWidth
             >
               Change password
             </MDButton>
           </MDBox>
-          <MDBox mt={4} mb={1} textAlign="center">
+          <MDBox mt={4} mb={1} textAlign="start">
             <MDButton
               variant="gradient"
               color="error"

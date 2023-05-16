@@ -404,38 +404,57 @@ function EditUser() {
                       Owner:
                     </MDTypography>
                   ) : (
-                    <MDButton
-                      color={manage ? "warning" : "success"}
-                      onClick={() => {
-                        setManage(!manage);
-                        setChngPassword(false);
-                      }}
-                    >
-                      {manage ? "Cancel" : "Manage courses"}
-                    </MDButton>
-                  )}
-
-                  {manage && (
-                    <>
-                      {!addCourse && (
-                        <MDButton
-                          sx={{ marginLeft: 3 }}
-                          color="error"
-                          disabled={!selectedUserRowIds.length}
-                          onClick={() => console.log(selectedUserRowIds, courses)}
-                        >
-                          Remove selected courses
-                        </MDButton>
-                      )}
-
-                      <MDButton
-                        sx={{ marginLeft: 3 }}
-                        color="success"
-                        onClick={() => setAddCourse(true)}
+                    <MDBox>
+                      <MDBox
+                        variant="gradient"
+                        bgColor="success"
+                        borderRadius="lg"
+                        coloredShadow="success"
+                        mt={-3}
+                        p={1}
+                        my={3}
+                        textAlign="center"
                       >
-                        Add user to courses
-                      </MDButton>
-                    </>
+                        <MDTypography variant="h5" fontWeight="medium" color="white" mt={1}>
+                          User courses
+                        </MDTypography>
+                      </MDBox>
+                      <MDBox sx={{ display: "flex" }}>
+                        <MDButton
+                          color={manage ? "warning" : "success"}
+                          onClick={() => {
+                            setManage(!manage);
+                            setChngPassword(false);
+                          }}
+                          sx={{ margin: 1 }}
+                          variant="outlined"
+                        >
+                          {manage ? "Cancel" : "Manage courses"}
+                        </MDButton>
+                        {manage && (
+                          <>
+                            {!addCourse && (
+                              <MDButton
+                                sx={{ margin: 1 }}
+                                color="error"
+                                disabled={!selectedUserRowIds.length}
+                                onClick={() => console.log(selectedUserRowIds, courses)}
+                              >
+                                Remove selected courses
+                              </MDButton>
+                            )}
+
+                            <MDButton
+                              color="info"
+                              onClick={() => setAddCourse(true)}
+                              sx={{ margin: 1 }}
+                            >
+                              Add user to courses
+                            </MDButton>
+                          </>
+                        )}
+                      </MDBox>
+                    </MDBox>
                   )}
 
                   {manage ? (
