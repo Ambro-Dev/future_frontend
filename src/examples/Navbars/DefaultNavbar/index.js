@@ -509,7 +509,7 @@ function DefaultNavbar({ routes, brand, transparent, light, action }) {
         <MDBox display="flex" justifyContent="space-between" alignItems="center">
           <MDBox
             component={Link}
-            to="/"
+            to="/admin"
             py={transparent ? 1.5 : 0.75}
             lineHeight={1}
             pl={{ xs: 0, lg: 1 }}

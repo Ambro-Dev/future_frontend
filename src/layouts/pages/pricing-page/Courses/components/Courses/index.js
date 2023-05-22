@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
-import { Divider } from "@mui/material";
+import { CircularProgress, Divider } from "@mui/material";
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
@@ -90,42 +90,42 @@ function Courses({ setVisible, visible, loading }) {
     console.log(row.original);
   };
 
-  if (!dataLoading) {
-    return (
-      <Card style={{ marginTop: 25 }}>
-        <MDBox>
-          <MDBox pt={2} px={2} lineHeight={1}>
-            <MDTypography variant="h6" fontWeight="medium" pb={1}>
-              Courses
-            </MDTypography>
-          </MDBox>
-          <MDBox pl={2}>
-            <MDButton
-              color="primary"
-              onClick={() => setVisible(!visible)}
-              sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
-            >
-              Add Course
-            </MDButton>
-            <MDButton
-              color="primary"
-              variant="outlined"
-              sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
-              onClick={handleDownloadSchema}
-            >
-              Import courses (CSV)
-            </MDButton>
-            <MDButton onClick={handleOpen}>import Courses</MDButton>
-            <DropzoneDialog
-              open={open}
-              onSave={handleSave}
-              acceptedFiles={["text/csv"]}
-              showPreviews
-              maxFileSize={10000000}
-              onClose={handleClose}
-            />
-          </MDBox>
-          <Divider />
+  return (
+    <Card style={{ marginTop: 25 }}>
+      <MDBox>
+        <MDBox pt={2} px={2} lineHeight={1}>
+          <MDTypography variant="h6" fontWeight="medium" pb={1}>
+            Courses
+          </MDTypography>
+        </MDBox>
+        <MDBox pl={2}>
+          <MDButton
+            color="primary"
+            onClick={() => setVisible(!visible)}
+            sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
+          >
+            Add Course
+          </MDButton>
+          <MDButton
+            color="primary"
+            variant="outlined"
+            sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
+            onClick={handleDownloadSchema}
+          >
+            Import courses (CSV)
+          </MDButton>
+          <MDButton onClick={handleOpen}>import Courses</MDButton>
+          <DropzoneDialog
+            open={open}
+            onSave={handleSave}
+            acceptedFiles={["text/csv"]}
+            showPreviews
+            maxFileSize={10000000}
+            onClose={handleClose}
+          />
+        </MDBox>
+        <Divider />
+        {!dataLoading ? (
           <MDBox>
             {courses.length > 0 && (
               <MDBox>
@@ -148,12 +148,21 @@ function Courses({ setVisible, visible, loading }) {
               </MDBox>
             )}
           </MDBox>
-        </MDBox>
-      </Card>
-    );
-  }
-
-  return <MDBox>DataLoading</MDBox>;
+        ) : (
+          <MDBox
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              textAlign: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </MDBox>
+        )}
+      </MDBox>
+    </Card>
+  );
 }
 
 export default Courses;

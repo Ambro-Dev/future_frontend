@@ -37,10 +37,14 @@ function EditCourse({ loading, setLoading }) {
   const location = useLocation();
   const course = location.state;
   const [name, setName] = useState("");
+  const [newName, setNewName] = useState("");
   const [description, setDescription] = useState("");
+  const [newDescription, setNewDescription] = useState("");
   const [teacher, setTeacher] = useState({});
+  const [newTeacher, setNewTeacher] = useState({});
   const [teachersList, setTeachersList] = useState([]);
   const [members, setMembers] = useState([]);
+  const [changed, setChanged] = useState(false);
 
   const [successSB, setSuccessSB] = useState(false);
   const errRef = useRef();
@@ -54,11 +58,14 @@ function EditCourse({ loading, setLoading }) {
     console.log(course);
     if (course) {
       setName(course.name);
+      setNewName(course.name);
       setDescription(course.description);
+      setNewDescription(course.description);
       axiosPrivate
         .get(`users/${course.teacherId}`)
         .then((response) => {
           setTeacher(response.data);
+          setNewTeacher(response.data);
         })
         .catch((error) => {
           console.error(error);
@@ -84,6 +91,11 @@ function EditCourse({ loading, setLoading }) {
         });
     }
   }, [loading]);
+
+  useEffect(() => {
+    const hasChanges = newDescription !== description || newName !== name || newTeacher !== teacher;
+    setChanged(hasChanges);
+  }, [newDescription, newName, newTeacher]);
 
   const renderSuccessSB = (
     <MDSnackbar
@@ -116,9 +128,7 @@ function EditCourse({ loading, setLoading }) {
       console.log(JSON.stringify(response?.data));
       // console.log(JSON.stringify(response))
       // clear state and controlled inputs
-      setName("");
-      setDescription("");
-      setTeacher("");
+      setChanged(false);
       setLoading(!loading);
       openSuccessSB();
     } catch (err) {
@@ -208,29 +218,29 @@ function EditCourse({ loading, setLoading }) {
             {course ? (
               <MDBox component="form" role="form">
                 <Grid container spacing={1}>
-                  <Grid item xs={10} lg={10}>
+                  <Grid item xs={8} lg={10}>
                     {edit ? (
-                      <>
-                        <MDBox mb={2} display="flex">
+                      <MDBox display="flex" flexDirection="column">
+                        <MDBox mb={2}>
                           <MDInput
                             type="text"
                             label="Name"
                             variant="standard"
                             required
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={newName}
+                            onChange={(e) => setNewName(e.target.value)}
                             fullWidth
                           />
                         </MDBox>
-                        <MDBox mb={2} display="flex">
+                        <MDBox mb={2}>
                           <MDInput
                             type="text"
                             label="Description"
                             multiline
                             variant="standard"
-                            value={description}
+                            value={newDescription}
                             required
-                            onChange={(e) => setDescription(e.target.value)}
+                            onChange={(e) => setNewDescription(e.target.value)}
                             fullWidth
                           />
                         </MDBox>
@@ -239,15 +249,18 @@ function EditCourse({ loading, setLoading }) {
                             disablePortal
                             options={teachersList}
                             getOptionLabel={(user) => `${user.name} ${user.surname}`}
-                            onChange={(event, value) => setTeacher(value ? value._id : "")}
+                            onChange={(event, value) => setNewTeacher(value ? value._id : "")}
                             renderInput={(params) => (
-                              <TextField {...params} label={`${teacher.name} ${teacher.surname}`} />
+                              <TextField
+                                {...params}
+                                label={`${newTeacher.name} ${newTeacher.surname}`}
+                              />
                             )}
                           />
                         </MDBox>
-                      </>
+                      </MDBox>
                     ) : (
-                      <>
+                      <MDBox display="flex" flexDirection="column">
                         <MDBox p={2}>
                           <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
                             <MDTypography
@@ -301,40 +314,56 @@ function EditCourse({ loading, setLoading }) {
                             </MDTypography>
                           </MDBox>
                         </MDBox>
-                      </>
+                      </MDBox>
                     )}
                   </Grid>
-                  <Grid
-                    item
-                    xs={2}
-                    lg={2}
-                    justifyContent="center"
-                    textAlign="center"
-                    display="flex"
-                    flexDirection="column"
-                  >
-                    <MDBox mt={4} mb={1} textAlign="center">
+                  <Grid item xs={4} lg={2} textAlign="center" display="flex" flexDirection="column">
+                    {!edit ? (
+                      <MDBox mt={4} mb={1} textAlign="center">
+                        <MDButton
+                          variant="gradient"
+                          color="error"
+                          onClick={() => {
+                            navigate(-1);
+                          }}
+                        >
+                          Go back
+                        </MDButton>
+                      </MDBox>
+                    ) : (
+                      <MDBox mt={4} mb={1} textAlign="center">
+                        <MDButton
+                          variant="contained"
+                          color="success"
+                          disabled={!changed || !newName || !newDescription || !newTeacher}
+                          onClick={() => handleSubmit()}
+                        >
+                          Save changes
+                        </MDButton>
+                      </MDBox>
+                    )}
+
+                    <MDBox mt={1} mb={1} textAlign="center">
                       <MDButton
-                        variant="gradient"
-                        color="error"
+                        variant="contained"
+                        color="warning"
                         onClick={() => {
-                          navigate(-1);
+                          setEdit(!edit);
+                          setNewName(name);
+                          setNewDescription(description);
+                          setNewTeacher(teacher);
                         }}
                       >
-                        Cancel
+                        {!edit ? "Edit" : "Cancel"}
                       </MDButton>
                     </MDBox>
-                    <MDButton
-                      sx={{ margin: 2 }}
-                      variant="contained"
-                      color="warning"
-                      onClick={() => setEdit(!edit)}
-                    >
-                      Edit
-                    </MDButton>
-                    <MDButton sx={{ margin: 2 }} variant="contained" color="error">
-                      Delete
-                    </MDButton>
+                    {edit && (
+                      <MDBox mt={1} mb={1} textAlign="center">
+                        <MDButton variant="contained" color="error">
+                          Delete
+                        </MDButton>
+                      </MDBox>
+                    )}
                   </Grid>
                 </Grid>
                 <MDBox mt={5}>
@@ -401,18 +430,6 @@ function EditCourse({ loading, setLoading }) {
                       canSearch
                     />
                   )}
-                </MDBox>
-
-                <MDBox mt={4} mb={1}>
-                  <MDButton
-                    variant="gradient"
-                    color="success"
-                    disabled={!!(!name || !description || !teacher)}
-                    onClick={handleSubmit}
-                    fullWidth
-                  >
-                    Create
-                  </MDButton>
                 </MDBox>
               </MDBox>
             ) : (

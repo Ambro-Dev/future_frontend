@@ -2,7 +2,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
-import { Divider } from "@mui/material";
+import { CircularProgress, Divider } from "@mui/material";
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
@@ -54,69 +54,81 @@ function Users({ setVisible, visible, loading }) {
     navigate("/admin/users/edit-user", { state: user });
     console.log(row.original);
   };
-
-  if (!dataLoading) {
-    return (
-      <Card style={{ marginTop: 25 }}>
+  return (
+    <Card style={{ marginTop: 25 }}>
+      <MDBox>
         <MDBox>
-          <MDBox>
-            <MDBox pt={2} px={2} lineHeight={1}>
-              <MDTypography variant="h6" fontWeight="medium" pb={1}>
-                Users
-              </MDTypography>
-            </MDBox>
-            <MDBox pl={2}>
-              <MDButton
-                color="primary"
-                onClick={() => setVisible(!visible)}
-                sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
-              >
-                Add User
-              </MDButton>
-              <MDButton
-                color="primary"
-                variant="outlined"
-                onClick={() => navigate("/admin/users/import")}
-                sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
-              >
-                Import Users
-              </MDButton>
-            </MDBox>
-            <Divider />
-            {users.length > 0 && (
-              <MDBox>
-                <DataTable
-                  table={{
-                    columns: [
-                      { Header: "name", accessor: "name" },
-                      { Header: "surname", accessor: "surname" },
-                      { Header: "email", accessor: "email" },
-                      {
-                        Header: "Student Number",
-                        accessor: "studentNumber",
-                        Cell: ({ value }) => value || "-",
-                      },
-                      { Header: "Role", accessor: "role" },
-                      {
-                        Header: "action",
-                        accessor: "actions",
-                        width: "15%",
-                        Cell: ({ row }) => <MDButton onClick={() => openEdit(row)}>Edit</MDButton>,
-                      },
-                    ],
-                    rows: users,
-                  }}
-                  canSearch
-                />
-              </MDBox>
-            )}
+          <MDBox pt={2} px={2} lineHeight={1}>
+            <MDTypography variant="h6" fontWeight="medium" pb={1}>
+              Users
+            </MDTypography>
           </MDBox>
+          <MDBox pl={2}>
+            <MDButton
+              color="primary"
+              onClick={() => setVisible(!visible)}
+              sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
+            >
+              Add User
+            </MDButton>
+            <MDButton
+              color="primary"
+              variant="outlined"
+              onClick={() => navigate("/admin/users/import")}
+              sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
+            >
+              Import Users
+            </MDButton>
+          </MDBox>
+          <Divider />
+          {!dataLoading ? (
+            <MDBox>
+              {users.length > 0 && (
+                <MDBox>
+                  <DataTable
+                    table={{
+                      columns: [
+                        { Header: "name", accessor: "name" },
+                        { Header: "surname", accessor: "surname" },
+                        { Header: "email", accessor: "email" },
+                        {
+                          Header: "Student Number",
+                          accessor: "studentNumber",
+                          Cell: ({ value }) => value || "-",
+                        },
+                        { Header: "Role", accessor: "role" },
+                        {
+                          Header: "action",
+                          accessor: "actions",
+                          width: "15%",
+                          Cell: ({ row }) => (
+                            <MDButton onClick={() => openEdit(row)}>Edit</MDButton>
+                          ),
+                        },
+                      ],
+                      rows: users,
+                    }}
+                    canSearch
+                  />
+                </MDBox>
+              )}
+            </MDBox>
+          ) : (
+            <MDBox
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                textAlign: "center",
+                alignItems: "center",
+              }}
+            >
+              <CircularProgress />
+            </MDBox>
+          )}
         </MDBox>
-      </Card>
-    );
-  }
-
-  return <MDBox>DataLoading</MDBox>;
+      </MDBox>
+    </Card>
+  );
 }
 
 export default Users;
