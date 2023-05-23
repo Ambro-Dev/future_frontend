@@ -189,6 +189,13 @@ function EditCourse({ loading, setLoading }) {
     }
   };
 
+  const deleteCourse = () => {
+    axiosPrivate.delete(`/admin/delete-course/${course.id}`).then((response) => {
+      console.log(response);
+      navigate(-1);
+    });
+  };
+
   return (
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} transparent />
@@ -359,7 +366,7 @@ function EditCourse({ loading, setLoading }) {
                     </MDBox>
                     {edit && (
                       <MDBox mt={1} mb={1} textAlign="center">
-                        <MDButton variant="contained" color="error">
+                        <MDButton variant="contained" color="error" onClick={() => deleteCourse()}>
                           Delete
                         </MDButton>
                       </MDBox>

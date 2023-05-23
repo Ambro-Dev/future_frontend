@@ -7,13 +7,14 @@ import { useState, useEffect, useContext } from "react";
 import ErrorContext from "context/ErrorProvider";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
+import MDTypography from "./MDTypography";
 
 function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { auth, persist } = useAuth();
 
-  const { setError } = useContext(ErrorContext);
+  const { showErrorNotification } = useContext(ErrorContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -22,21 +23,22 @@ function PersistLogin() {
       try {
         await refresh();
       } catch (err) {
-        console.error(err);
-        setError(err);
+        if (err.response.status === 406) showErrorNotification("You have been logged out");
+        else showErrorNotification(err.message);
       } finally {
         isMounted && setIsLoading(false);
       }
     };
 
-    // persist added here AFTER tutorial video
     // Avoids unwanted call to verifyRefreshToken
     !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
 
     return () => (isMounted = false);
   }, []);
 
-  return <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>;
+  return (
+    <>{!persist ? <Outlet /> : isLoading ? <MDTypography>Loading...</MDTypography> : <Outlet />}</>
+  );
 }
 
 export default PersistLogin;

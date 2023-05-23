@@ -56,6 +56,7 @@ import AdminUsers from "layouts/pages/pricing-page/Users";
 import ImportUsers from "layouts/pages/pricing-page/ImportUsers";
 import EditCourse from "layouts/pages/pricing-page/Courses/components/EditCourse";
 import EditUser from "layouts/pages/pricing-page/Users/components/EditUser";
+import { ErrorProvider } from "context/ErrorProvider";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -212,6 +213,71 @@ export default function App() {
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+        <ErrorProvider>
+          <CssBaseline />
+          {layout === "dashboard" && (
+            <>
+              <Sidenav
+                color={sidenavColor}
+                brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+                brandName="Distance Learning"
+                routes={routes}
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+              />
+              <Configurator />
+              {configsButton}
+            </>
+          )}
+          {layout === "vr" && <Configurator />}
+          <Routes>
+            <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route element={<PersistLogin />}>
+              {getRoutes(routes)}
+              <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+                <Route path="/admin" element={<PricingPage />} key="admin-page" />
+                <Route
+                  path="/admin/users/import"
+                  element={<ImportUsers />}
+                  key="admin-users-import"
+                />
+                <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
+                <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
+                <Route
+                  path="/admin/courses/edit-course"
+                  element={<EditCourse />}
+                  key="admin-edit-course"
+                />
+                <Route path="/admin/users/edit-user" element={<EditUser />} key="admin-edit-user" />
+              </Route>
+              <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+                <Route
+                  path="/ecommerce/products/edit-product"
+                  element={<EditProduct />}
+                  key="edit-product"
+                />
+                <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
+              </Route>
+              <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
+                <Route path="*" element={<Navigate to="/profile-overview" />} />
+                <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
+                <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
+                <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
+                <Route
+                  path="/ecommerce/products/new-product"
+                  element={<NewProduct />}
+                  key="new-product"
+                />
+              </Route>
+            </Route>
+          </Routes>
+        </ErrorProvider>
+      </ThemeProvider>
+    </CacheProvider>
+  ) : (
+    <ThemeProvider theme={darkMode ? themeDark : theme}>
+      <ErrorProvider>
         <CssBaseline />
         {layout === "dashboard" && (
           <>
@@ -270,64 +336,7 @@ export default function App() {
             </Route>
           </Route>
         </Routes>
-      </ThemeProvider>
-    </CacheProvider>
-  ) : (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
-      <CssBaseline />
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Distance Learning"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-          />
-          <Configurator />
-          {configsButton}
-        </>
-      )}
-      {layout === "vr" && <Configurator />}
-      <Routes>
-        <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route element={<PersistLogin />}>
-          {getRoutes(routes)}
-          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-            <Route path="/admin" element={<PricingPage />} key="admin-page" />
-            <Route path="/admin/users/import" element={<ImportUsers />} key="admin-users-import" />
-            <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
-            <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
-            <Route
-              path="/admin/courses/edit-course"
-              element={<EditCourse />}
-              key="admin-edit-course"
-            />
-            <Route path="/admin/users/edit-user" element={<EditUser />} key="admin-edit-user" />
-          </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
-            <Route
-              path="/ecommerce/products/edit-product"
-              element={<EditProduct />}
-              key="edit-product"
-            />
-            <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
-          </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
-            <Route path="*" element={<Navigate to="/profile-overview" />} />
-            <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
-            <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
-            <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
-            <Route
-              path="/ecommerce/products/new-product"
-              element={<NewProduct />}
-              key="new-product"
-            />
-          </Route>
-        </Route>
-      </Routes>
+      </ErrorProvider>
     </ThemeProvider>
   );
 }
