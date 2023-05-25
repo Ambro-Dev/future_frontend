@@ -21,12 +21,16 @@ import MDButton from "components/MDButton";
 import { useEffect, useRef, useState } from "react";
 import MDSnackbar from "components/MDSnackbar";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { Autocomplete, Checkbox, Grid, TextField } from "@mui/material";
+import { Autocomplete, Checkbox, CircularProgress, Divider, Grid, TextField } from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
 import { useLocation, useNavigate } from "react-router-dom";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ClearIcon from "@mui/icons-material/Clear";
+import AddIcon from "@mui/icons-material/Add";
 
 function EditCourse({ loading, setLoading }) {
   const [manage, setManage] = useState(false);
@@ -45,6 +49,9 @@ function EditCourse({ loading, setLoading }) {
   const [teachersList, setTeachersList] = useState([]);
   const [members, setMembers] = useState([]);
   const [changed, setChanged] = useState(false);
+  const [allStudents, setAllStudents] = useState([]);
+  const [addMembers, setAddMembers] = useState(false);
+  const [membersToAdd, setMembersToAdd] = useState([]);
 
   const [successSB, setSuccessSB] = useState(false);
   const errRef = useRef();
@@ -76,6 +83,17 @@ function EditCourse({ loading, setLoading }) {
         .then((response) => {
           const newRows = response.data.map((row) => ({ ...row, isSelected: false }));
           setMembers(newRows);
+          axiosPrivate
+            .get("admin/students")
+            .then((res) => {
+              const getStudents = res.data.filter(
+                (student) => !newRows.some((member) => member._id === student._id)
+              );
+              setAllStudents(getStudents);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         })
         .catch((error) => {
           console.error(error);
@@ -115,7 +133,6 @@ function EditCourse({ loading, setLoading }) {
     e.preventDefault();
     try {
       const newCourse = { name, description, teacherId: teacher };
-      console.log(newCourse);
       const response = await axiosPrivate.post(
         process.env.REACT_APP_CREATE_COURSE_URL,
         JSON.stringify(newCourse),
@@ -186,6 +203,13 @@ function EditCourse({ loading, setLoading }) {
         return row;
       });
       setMembers(newRows);
+    }
+  };
+
+  const addUserToMembers = (user) => {
+    if (!membersToAdd.includes(user)) setMembersToAdd([...membersToAdd, user]);
+    else {
+      setMembersToAdd(membersToAdd.filter((member) => member !== user));
     }
   };
 
@@ -374,55 +398,246 @@ function EditCourse({ loading, setLoading }) {
                   </Grid>
                 </Grid>
                 <MDBox mt={5}>
-                  <MDButton
-                    color={manage ? "warning" : "success"}
-                    onClick={() => setManage(!manage)}
-                  >
-                    {manage ? "Cancel" : "Manage members"}
-                  </MDButton>
+                  <MDBox>
+                    <MDButton
+                      sx={{ margin: 1 }}
+                      color={manage ? "warning" : "success"}
+                      onClick={() => {
+                        setManage(!manage);
+                        setAddMembers(false);
+                      }}
+                    >
+                      {manage ? "Cancel" : "Manage members"}
+                    </MDButton>
+                  </MDBox>
+                  <Divider />
 
                   {manage ? (
-                    <>
-                      <MDButton
-                        sx={{ marginLeft: 3 }}
-                        color="error"
-                        disabled={!selectedRowIds.length}
-                        onClick={() => handleRemoveMembers()}
-                      >
-                        Remove selected members
-                      </MDButton>
-                      <DataTable
-                        table={{
-                          columns: [
-                            {
-                              Header: (
+                    <MDBox mt={2}>
+                      <MDBox display="flex">
+                        {!addMembers && (
+                          <MDButton
+                            color="error"
+                            disabled={!selectedRowIds.length}
+                            sx={{ margin: 1 }}
+                            onClick={() => handleRemoveMembers()}
+                          >
+                            Remove selected members
+                          </MDButton>
+                        )}
+                        <MDButton
+                          color="info"
+                          sx={{ margin: 1 }}
+                          onClick={() => setAddMembers(!addMembers)}
+                        >
+                          {!addMembers ? "Add members" : "Go back"}
+                        </MDButton>
+                        {addMembers && (
+                          <MDButton
+                            color="info"
+                            sx={{ margin: 1 }}
+                            onClick={() => setAddMembers(!addMembers)}
+                            endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
+                          >
+                            <MDTypography
+                              variant="button"
+                              sx={{ color: "#FFFFFF" }}
+                              fontWeight="medium"
+                            >
+                              Import members (CSV)
+                            </MDTypography>
+                          </MDButton>
+                        )}
+                      </MDBox>
+
+                      {!addMembers ? (
+                        <DataTable
+                          table={{
+                            columns: [
+                              {
+                                Header: (
+                                  <MDBox>
+                                    <Checkbox onChange={(e) => handleSelectAll(e.target.checked)} />
+                                    Select All
+                                  </MDBox>
+                                ),
+                                accessor: "checkbox",
+                                Cell: ({ row }) => (
+                                  <Checkbox
+                                    checked={row.original.isSelected}
+                                    onChange={(e) => {
+                                      handleRowSelect(row.original._id, e.target.checked);
+                                    }}
+                                  />
+                                ),
+                                isCheckbox: true,
+                                width: 10,
+                              },
+                              { Header: "name", accessor: "name" },
+                              { Header: "surname", accessor: "surname" },
+                              { Header: "studentNumber", accessor: "studentNumber" },
+                            ],
+                            rows: members,
+                          }}
+                          entriesPerPage={false}
+                          canSearch
+                        />
+                      ) : (
+                        <Grid container spacing={1}>
+                          <Grid item lg={8} xs={12}>
+                            <MDBox
+                              variant="gradient"
+                              bgColor="secondary"
+                              borderRadius="lg"
+                              coloredShadow="success"
+                              mt={-3}
+                              p={1}
+                              mb={1}
+                              my={3}
+                              textAlign="center"
+                            >
+                              <MDTypography variant="h6" fontWeight="medium" color="white">
+                                AVAILABLE STUDENTS
+                              </MDTypography>
+                            </MDBox>
+                            {allStudents ? (
+                              <DataTable
+                                table={{
+                                  columns: [
+                                    { Header: "name", accessor: "name" },
+                                    { Header: "surname", accessor: "surname" },
+                                    { Header: "studentNumber", accessor: "studentNumber" },
+                                    {
+                                      Header: "action",
+                                      accessor: "action",
+                                      width: "15%",
+                                      Cell: ({ row }) => (
+                                        <MDButton
+                                          onClick={() => addUserToMembers(row.original)}
+                                          disabled={
+                                            membersToAdd.includes(row.original) ||
+                                            members.some((member) => allStudents.includes(member))
+                                          }
+                                          endIcon={
+                                            <ArrowForwardIcon sx={{ height: 20, width: 20 }} />
+                                          }
+                                          color="success"
+                                        >
+                                          <MDTypography
+                                            variant="button"
+                                            sx={{ color: "#FFFFFF" }}
+                                            fontWeight="medium"
+                                          >
+                                            Add
+                                          </MDTypography>
+                                        </MDButton>
+                                      ),
+                                    },
+                                  ],
+                                  rows: allStudents,
+                                }}
+                                entriesPerPage={false}
+                                canSearch
+                              />
+                            ) : (
+                              <MDBox
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  textAlign: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <CircularProgress />
+                              </MDBox>
+                            )}
+                          </Grid>
+                          <Grid item lg={4} xs={12}>
+                            <MDBox
+                              variant="gradient"
+                              bgColor="secondary"
+                              borderRadius="lg"
+                              coloredShadow="success"
+                              mt={-3}
+                              p={1}
+                              mb={1}
+                              my={3}
+                              textAlign="center"
+                            >
+                              <MDTypography variant="h6" fontWeight="medium" color="white">
+                                SELECTED
+                              </MDTypography>
+                            </MDBox>
+                            <MDBox>
+                              <MDBox display="flex" justifyContent="space-between" m={2}>
+                                <MDButton
+                                  onClick={() => setMembersToAdd([])}
+                                  startIcon={<ClearIcon sx={{ height: 20, width: 20 }} />}
+                                  color="error"
+                                  disabled={membersToAdd.length === 0}
+                                >
+                                  <MDTypography
+                                    variant="button"
+                                    sx={{ color: "#FFFFFF" }}
+                                    fontWeight="medium"
+                                  >
+                                    Remove All
+                                  </MDTypography>
+                                </MDButton>
                                 <MDBox>
-                                  <Checkbox onChange={(e) => handleSelectAll(e.target.checked)} />
-                                  Select All
+                                  <MDTypography variant="button" fontWeight="medium">
+                                    Selected: {membersToAdd.length}
+                                  </MDTypography>
                                 </MDBox>
-                              ),
-                              accessor: "checkbox",
-                              Cell: ({ row }) => (
-                                <Checkbox
-                                  checked={row.original.isSelected}
-                                  onChange={(e) => {
-                                    handleRowSelect(row.original._id, e.target.checked);
-                                  }}
-                                />
-                              ),
-                              isCheckbox: true,
-                              width: 10,
-                            },
-                            { Header: "name", accessor: "name" },
-                            { Header: "surname", accessor: "surname" },
-                            { Header: "studentNumber", accessor: "studentNumber" },
-                          ],
-                          rows: members,
-                        }}
-                        entriesPerPage={false}
-                        canSearch
-                      />
-                    </>
+                              </MDBox>
+
+                              <DataTable
+                                table={{
+                                  columns: [
+                                    {
+                                      Header: "action",
+                                      accessor: "action",
+                                      width: "15%",
+                                      Cell: ({ row }) => (
+                                        <MDButton
+                                          onClick={() => addUserToMembers(row.original)}
+                                          startIcon={
+                                            <ArrowBackIcon sx={{ height: 20, width: 20 }} />
+                                          }
+                                          color="error"
+                                          variant="outlined"
+                                        >
+                                          <MDTypography
+                                            variant="button"
+                                            sx={{ color: "#f65f53" }}
+                                            fontWeight="medium"
+                                          >
+                                            Remove
+                                          </MDTypography>
+                                        </MDButton>
+                                      ),
+                                    },
+                                    { Header: "name", accessor: "name" },
+                                    { Header: "surname", accessor: "surname" },
+                                    { Header: "studentNumber", accessor: "studentNumber" },
+                                  ],
+                                  rows: membersToAdd,
+                                }}
+                                entriesPerPage={false}
+                              />
+                              <MDButton
+                                onClick={() => setMembersToAdd([])}
+                                color="success"
+                                disabled={membersToAdd.length === 0}
+                                fullWidth
+                              >
+                                Add selected
+                              </MDButton>
+                            </MDBox>
+                          </Grid>
+                        </Grid>
+                      )}
+                    </MDBox>
                   ) : (
                     <DataTable
                       table={{
