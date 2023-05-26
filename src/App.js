@@ -57,6 +57,7 @@ import ImportUsers from "layouts/pages/pricing-page/ImportUsers";
 import EditCourse from "layouts/pages/pricing-page/Courses/components/EditCourse";
 import EditUser from "layouts/pages/pricing-page/Users/components/EditUser";
 import { ErrorProvider } from "context/ErrorProvider";
+import ImportPage from "layouts/pages/pricing-page/ImportPage";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -237,6 +238,7 @@ export default function App() {
               {getRoutes(routes)}
               <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                 <Route path="/admin" element={<PricingPage />} key="admin-page" />
+                <Route path="/admin/import-page" element={<ImportPage />} key="import-page" />
                 <Route
                   path="/admin/users/import"
                   element={<ImportUsers />}
@@ -301,6 +303,7 @@ export default function App() {
             {getRoutes(routes)}
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
               <Route path="/admin" element={<PricingPage />} key="admin-page" />
+              <Route path="/admin/import-members" element={<ImportPage />} key="import-members" />
               <Route
                 path="/admin/users/import"
                 element={<ImportUsers />}

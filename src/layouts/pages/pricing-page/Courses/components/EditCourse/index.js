@@ -220,6 +220,16 @@ function EditCourse({ loading, setLoading }) {
     });
   };
 
+  const openImport = () => {
+    const courseInfo = {
+      id: course.id,
+      description,
+      name,
+    };
+
+    navigate("/admin/import-members", { state: courseInfo });
+  };
+
   return (
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} transparent />
@@ -436,7 +446,7 @@ function EditCourse({ loading, setLoading }) {
                           <MDButton
                             color="info"
                             sx={{ margin: 1 }}
-                            onClick={() => setAddMembers(!addMembers)}
+                            onClick={() => openImport()}
                             endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
                           >
                             <MDTypography
