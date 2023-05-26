@@ -350,6 +350,7 @@ function EditUser() {
                       <ChangePassword
                         setChngPassword={setChngPassword}
                         chngPassword={chngPassword}
+                        userId={user.id}
                       />
                     </Grid>
                   )}

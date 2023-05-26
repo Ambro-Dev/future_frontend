@@ -16,18 +16,19 @@ import MDButton from "components/MDButton";
 import { useEffect, useRef, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "api/axios";
 import MDSnackbar from "components/MDSnackbar";
 import { IconButton } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&*]).{8,24}$/;
 
-function ChangePassword({ setChngPassword, chngPassword }) {
+function ChangePassword({ setChngPassword, chngPassword, userId }) {
   const [successSB, setSuccessSB] = useState(false);
   const errRef = useRef();
+  const axiosPrivate = useAxiosPrivate();
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
@@ -77,29 +78,22 @@ function ChangePassword({ setChngPassword, chngPassword }) {
       return;
     }
     try {
-      const newUser = { password: pwd };
+      const newUser = { id: userId, newPassword: pwd };
       console.log(newUser);
-      const response = await axios.post(
-        process.env.REACT_APP_REGISTER_URL,
-        JSON.stringify(newUser),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+      const response = await axiosPrivate.post(
+        process.env.REACT_APP_ADMIN_CHANGE_PASSWORD,
+        newUser
       );
       // TODO: remove console.logs before deployment
-      console.log(JSON.stringify(response?.data));
+      console.log(response);
       // console.log(JSON.stringify(response))
       // clear state and controlled inputs
       setPwd("");
       openSuccessSB();
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
-        setErrMsg("Emailname Taken");
-      } else {
-        setErrMsg("Registration Failed");
+      if (err?.response) {
+        console.log(err.response);
+        setErrMsg(err.response?.data.message);
       }
       errRef.current.focus();
     }

@@ -1,10 +1,11 @@
 // Distance Learning React examples
-import { Card } from "@mui/material";
+import { Card, Grid } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+import DataTable from "examples/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { DropzoneDialog } from "mui-file-dropzone";
 import pageRoutes from "page.routes";
@@ -14,6 +15,9 @@ import { useLocation } from "react-router-dom";
 function ImportPage() {
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
+
+  const [errors, setErrors] = useState([]);
+  const [results, setResults] = useState([]);
 
   const location = useLocation();
   const courseInfo = location.state;
@@ -47,6 +51,8 @@ function ImportPage() {
       })
       .then((response) => {
         console.log(response.data);
+        setResults(response.data.results);
+        setErrors(response.data.errors);
         alert("Courses imported successfully");
       })
       .catch((error) => {
@@ -90,7 +96,7 @@ function ImportPage() {
               sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
               onClick={handleDownloadSchema}
             >
-              Import CSV schema
+              Download CSV schema
             </MDButton>
             <MDButton onClick={handleOpen}>Upload CSV file</MDButton>
             <DropzoneDialog
@@ -102,6 +108,63 @@ function ImportPage() {
               onClose={handleClose}
             />
           </MDBox>
+          {(results.length > 0 || errors.length > 0) && (
+            <MDBox m={1}>
+              <Grid container spacing={1}>
+                <Grid item lg={6} sx={12}>
+                  <MDBox
+                    variant="gradient"
+                    bgColor="success"
+                    borderRadius="lg"
+                    coloredShadow="success"
+                    mt={-3}
+                    p={1}
+                    mb={1}
+                    my={3}
+                    textAlign="center"
+                  >
+                    <MDTypography variant="h6" fontWeight="medium" color="white">
+                      Imported
+                    </MDTypography>
+                  </MDBox>
+                  <DataTable
+                    table={{
+                      columns: [{ Header: "studentNumber", accessor: "studentNumber" }],
+                      rows: results,
+                    }}
+                    entriesPerPage={false}
+                  />
+                </Grid>
+                <Grid item lg={6} sx={12}>
+                  <MDBox
+                    variant="gradient"
+                    bgColor="error"
+                    borderRadius="lg"
+                    coloredShadow="success"
+                    mt={-3}
+                    p={1}
+                    mb={1}
+                    my={3}
+                    textAlign="center"
+                  >
+                    <MDTypography variant="h6" fontWeight="medium" color="white">
+                      Errors
+                    </MDTypography>
+                  </MDBox>
+                  <DataTable
+                    table={{
+                      columns: [
+                        { Header: "line", accessor: "line" },
+                        { Header: "error", accessor: "error" },
+                      ],
+                      rows: errors,
+                    }}
+                    entriesPerPage={false}
+                  />
+                </Grid>
+              </Grid>
+            </MDBox>
+          )}
         </Card>
       </MDBox>
     </PageLayout>
