@@ -233,8 +233,80 @@ export default function App() {
           {layout === "vr" && <Configurator />}
           <Routes>
             <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
-            <Route path="/unauthorized" element={<Unauthorized />} />
             <Route element={<PersistLogin />}>
+              <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+                <Route path="/unauthorized" element={<Unauthorized />} />
+                {getRoutes(routes)}
+                <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+                  <Route path="/admin" element={<PricingPage />} key="admin-page" />
+                  <Route path="/admin/import-page" element={<ImportPage />} key="import-page" />
+                  <Route
+                    path="/admin/users/import"
+                    element={<ImportUsers />}
+                    key="admin-users-import"
+                  />
+                  <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
+                  <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
+                  <Route
+                    path="/admin/courses/edit-course"
+                    element={<EditCourse />}
+                    key="admin-edit-course"
+                  />
+                  <Route
+                    path="/admin/users/edit-user"
+                    element={<EditUser />}
+                    key="admin-edit-user"
+                  />
+                </Route>
+                <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+                  <Route
+                    path="/ecommerce/products/edit-product"
+                    element={<EditProduct />}
+                    key="edit-product"
+                  />
+                  <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
+                </Route>
+                <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
+                  <Route path="*" element={<Navigate to="/profile-overview" />} />
+                  <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
+                  <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
+                  <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
+                  <Route
+                    path="/ecommerce/products/new-product"
+                    element={<NewProduct />}
+                    key="new-product"
+                  />
+                </Route>
+              </Route>
+            </Route>
+          </Routes>
+        </ErrorProvider>
+      </ThemeProvider>
+    </CacheProvider>
+  ) : (
+    <ThemeProvider theme={darkMode ? themeDark : theme}>
+      <ErrorProvider>
+        <CssBaseline />
+        {layout === "dashboard" && (
+          <>
+            <Sidenav
+              color={sidenavColor}
+              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+              brandName="Distance Learning"
+              routes={routes}
+              onMouseEnter={handleOnMouseEnter}
+              onMouseLeave={handleOnMouseLeave}
+            />
+            <Configurator />
+            {configsButton}
+          </>
+        )}
+        {layout === "vr" && <Configurator />}
+        <Routes>
+          <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/unauthorized" element={<Unauthorized />} />
               {getRoutes(routes)}
               <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                 <Route path="/admin" element={<PricingPage />} key="admin-page" />
@@ -272,70 +344,6 @@ export default function App() {
                   key="new-product"
                 />
               </Route>
-            </Route>
-          </Routes>
-        </ErrorProvider>
-      </ThemeProvider>
-    </CacheProvider>
-  ) : (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
-      <ErrorProvider>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Distance Learning"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
-        <Routes>
-          <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
-          <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route element={<PersistLogin />}>
-            {getRoutes(routes)}
-            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-              <Route path="/admin" element={<PricingPage />} key="admin-page" />
-              <Route path="/admin/import-members" element={<ImportPage />} key="import-members" />
-              <Route
-                path="/admin/users/import"
-                element={<ImportUsers />}
-                key="admin-users-import"
-              />
-              <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
-              <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
-              <Route
-                path="/admin/courses/edit-course"
-                element={<EditCourse />}
-                key="admin-edit-course"
-              />
-              <Route path="/admin/users/edit-user" element={<EditUser />} key="admin-edit-user" />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
-              <Route
-                path="/ecommerce/products/edit-product"
-                element={<EditProduct />}
-                key="edit-product"
-              />
-              <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
-              <Route path="*" element={<Navigate to="/profile-overview" />} />
-              <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
-              <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
-              <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
-              <Route
-                path="/ecommerce/products/new-product"
-                element={<NewProduct />}
-                key="new-product"
-              />
             </Route>
           </Route>
         </Routes>

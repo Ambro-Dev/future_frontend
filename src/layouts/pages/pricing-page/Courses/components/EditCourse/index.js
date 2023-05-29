@@ -18,10 +18,10 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import MDSnackbar from "components/MDSnackbar";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { Autocomplete, Checkbox, CircularProgress, Divider, Grid, TextField } from "@mui/material";
+import { Autocomplete, CircularProgress, Divider, Grid, TextField } from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
 import { useLocation, useNavigate } from "react-router-dom";
 import PageLayout from "examples/LayoutContainers/PageLayout";
@@ -31,6 +31,9 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ClearIcon from "@mui/icons-material/Clear";
 import AddIcon from "@mui/icons-material/Add";
+import ErrorContext from "context/ErrorProvider";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 function EditCourse({ loading, setLoading }) {
   const [manage, setManage] = useState(false);
@@ -53,6 +56,10 @@ function EditCourse({ loading, setLoading }) {
   const [addMembers, setAddMembers] = useState(false);
   const [membersToAdd, setMembersToAdd] = useState([]);
 
+  const [reload, setReload] = useState(false);
+
+  const { showErrorNotification, showInfoNotification } = useContext(ErrorContext);
+
   const [successSB, setSuccessSB] = useState(false);
   const errRef = useRef();
 
@@ -62,7 +69,6 @@ function EditCourse({ loading, setLoading }) {
   const closeSuccessSB = () => setSuccessSB(false);
 
   useEffect(() => {
-    console.log(course);
     if (course) {
       setName(course.name);
       setNewName(course.name);
@@ -108,7 +114,7 @@ function EditCourse({ loading, setLoading }) {
           console.error(error);
         });
     }
-  }, [loading]);
+  }, [reload]);
 
   useEffect(() => {
     const hasChanges = newDescription !== description || newName !== name || newTeacher !== teacher;
@@ -160,11 +166,9 @@ function EditCourse({ loading, setLoading }) {
     }
   };
 
-  const handleSelectAll = (selected) => {
-    const newRows = members.map((row) => ({ ...row, isSelected: selected }));
-    setMembers(newRows);
-    if (selected) {
-      setSelectedRowIds(newRows.map((row) => row._id));
+  const handleSelectAll = () => {
+    if (selectedRowIds.length < members.length) {
+      setSelectedRowIds(members.map((row) => row._id));
     } else {
       setSelectedRowIds([]);
     }
@@ -174,35 +178,19 @@ function EditCourse({ loading, setLoading }) {
     axiosPrivate
       .post(`/admin/${course.id}/members`, { memberIds: selectedRowIds })
       .then((response) => {
-        console.log(response);
+        if (response.status === 200) showInfoNotification(response.data.message);
+        else showErrorNotification(response.data.message);
+        setReload(!reload);
       });
   };
 
-  const handleRowSelect = (rowId, isSelected) => {
-    if (isSelected) {
+  const handleRowSelect = (rowId) => {
+    if (!selectedRowIds.includes(rowId)) {
       // add row ID to selectedRowIds if it's not already in the array
-      if (!selectedRowIds.includes(rowId)) {
-        setSelectedRowIds([...selectedRowIds, rowId]);
-      }
-      // set isSelected property of selected row to true
-      const newRows = members.map((row) => {
-        if (row._id === rowId) {
-          return { ...row, isSelected: true };
-        }
-        return row;
-      });
-      setMembers(newRows);
+      setSelectedRowIds([...selectedRowIds, rowId]);
     } else {
       // remove row ID from selectedRowIds if it's in the array
       setSelectedRowIds(selectedRowIds.filter((id) => id !== rowId));
-      // set isSelected property of deselected row to false
-      const newRows = members.map((row) => {
-        if (row._id === rowId) {
-          return { ...row, isSelected: false };
-        }
-        return row;
-      });
-      setMembers(newRows);
     }
   };
 
@@ -228,6 +216,18 @@ function EditCourse({ loading, setLoading }) {
     };
 
     navigate("/admin/import-members", { state: courseInfo });
+  };
+
+  const handleAddMembers = async () => {
+    const newMembers = membersToAdd.map((row) => row._id);
+    await axiosPrivate
+      .put(`admin/${course.id}/members`, { memberIds: newMembers })
+      .then((response) => {
+        if (response.status === 500) showErrorNotification(response.data.message);
+        else showInfoNotification(response.data.message);
+      });
+    setMembersToAdd([]);
+    setReload(!reload);
   };
 
   return (
@@ -467,18 +467,38 @@ function EditCourse({ loading, setLoading }) {
                               {
                                 Header: (
                                   <MDBox>
-                                    <Checkbox onChange={(e) => handleSelectAll(e.target.checked)} />
-                                    Select All
+                                    <MDButton
+                                      onClick={() => handleSelectAll()}
+                                      startIcon={
+                                        selectedRowIds.length === members.length ? (
+                                          <CheckBoxIcon sx={{ height: 25, width: 25 }} />
+                                        ) : (
+                                          <CheckBoxOutlineBlankIcon
+                                            sx={{ height: 25, width: 25 }}
+                                          />
+                                        )
+                                      }
+                                    >
+                                      <MDTypography variant="button" fontWeight="medium">
+                                        Select All
+                                      </MDTypography>
+                                    </MDButton>
                                   </MDBox>
                                 ),
                                 accessor: "checkbox",
                                 Cell: ({ row }) => (
-                                  <Checkbox
-                                    checked={row.original.isSelected}
-                                    onChange={(e) => {
-                                      handleRowSelect(row.original._id, e.target.checked);
+                                  <MDButton
+                                    onClick={() => {
+                                      handleRowSelect(row.original._id);
                                     }}
-                                  />
+                                    iconOnly
+                                  >
+                                    {selectedRowIds.includes(row.original._id) ? (
+                                      <CheckBoxIcon sx={{ height: 20, width: 20 }} />
+                                    ) : (
+                                      <CheckBoxOutlineBlankIcon sx={{ height: 20, width: 20 }} />
+                                    )}
+                                  </MDButton>
                                 ),
                                 isCheckbox: true,
                                 width: 10,
@@ -636,7 +656,7 @@ function EditCourse({ loading, setLoading }) {
                                 entriesPerPage={false}
                               />
                               <MDButton
-                                onClick={() => setMembersToAdd([])}
+                                onClick={() => handleAddMembers()}
                                 color="success"
                                 disabled={membersToAdd.length === 0}
                                 fullWidth
