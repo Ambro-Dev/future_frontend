@@ -18,7 +18,7 @@ ReactDOM.render(
           <I18nextProvider i18n={i18n}>
             <MaterialUIControllerProvider>
               <Routes>
-                <Route path="/*" element={<App />} />
+                <Route path="/*" element={<App />} key="app" />
               </Routes>
             </MaterialUIControllerProvider>
           </I18nextProvider>

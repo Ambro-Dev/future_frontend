@@ -18,14 +18,17 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { Checkbox, Divider, Grid } from "@mui/material";
+import { Chip, Dialog, DialogActions, Divider, Grid, Stack } from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
 import { useLocation, useNavigate } from "react-router-dom";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import ErrorContext from "context/ErrorProvider";
 import ChangePassword from "./ChangePasword";
 
 function EditUser() {
@@ -46,9 +49,25 @@ function EditUser() {
   const [allCourses, setAllCourses] = useState([]);
   const [addCourse, setAddCourse] = useState(false);
   const [chngPassword, setChngPassword] = useState(false);
+  const [reload, setReload] = useState(false);
+
+  const { showErrorNotification, showInfoNotification } = useContext(ErrorContext);
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
-    console.log(user);
+    if (selectedUserRowIds.length === 0) setOpen(false);
+  }, [selectedUserRowIds]);
+
+  useEffect(() => {
     if (user) {
       axiosPrivate
         .get(`users/${user.id}`)
@@ -66,7 +85,12 @@ function EditUser() {
       axiosPrivate
         .get(`admin/${user.id}/courses`)
         .then((response) => {
-          const newRows = response.data.map((row) => ({ ...row, isSelected: false }));
+          const newRows = response.data.map((row) => ({
+            id: row._id,
+            name: row.name,
+            members: row.members,
+            teacherId: row.teacherId,
+          }));
           setAllCourses(newRows);
         })
         .catch((error) => {
@@ -77,9 +101,13 @@ function EditUser() {
         axiosPrivate
           .get(`users/teacher/${user.id}/courses`)
           .then((response) => {
-            const newRows = response.data.map((row) => ({ ...row, isSelected: false }));
+            const newRows = response.data.map((row) => ({
+              id: row._id,
+              name: row.name,
+              members: row.members,
+              teacherId: row.teacherId,
+            }));
             setCourses(newRows);
-            console.log(response.data);
           })
           .catch((error) => {
             console.error(error);
@@ -88,73 +116,71 @@ function EditUser() {
         axiosPrivate
           .get(`users/${user.id}/courses`)
           .then((response) => {
-            const newRows = response.data.map((row) => ({ ...row, isSelected: false }));
+            const newRows = response.data.map((row) => ({
+              id: row._id,
+              name: row.name,
+              members: row.members,
+              teacherId: row.teacherId,
+            }));
             setCourses(newRows);
-            console.log(response.data);
           })
           .catch((error) => {
             console.error(error);
           });
       }
     }
-  }, []);
+  }, [reload]);
 
-  const handleUserRowSelect = (rowId, isSelected, e) => {
-    e.preventDefault();
-    if (isSelected) {
+  const handleUserRowSelect = (rowId) => {
+    if (!selectedUserRowIds.includes(rowId)) {
       // add row ID to selectedRowIds if it's not already in the array
-      if (!selectedUserRowIds.includes(rowId)) {
-        setSelectedUserRowIds([...selectedUserRowIds, rowId]);
-      }
-      // set isSelected property of selected row to true
-      const newRows = courses.map((row) => {
-        if (row._id === rowId) {
-          return { ...row, isSelected: true };
-        }
-        return row;
-      });
-      setCourses(newRows);
+      setSelectedUserRowIds([...selectedUserRowIds, rowId]);
     } else {
       // remove row ID from selectedRowIds if it's in the array
       setSelectedUserRowIds(selectedUserRowIds.filter((id) => id !== rowId));
-      // set isSelected property of deselected row to false
-      const newRows = courses.map((row) => {
-        if (row._id === rowId) {
-          return { ...row, isSelected: false };
-        }
-        return row;
-      });
-      setCourses(newRows);
     }
   };
 
-  const handleCoursesRowSelect = (rowId, isSelected, e) => {
-    e.preventDefault();
-    if (isSelected) {
+  const handleCoursesRowSelect = (rowId) => {
+    if (!selectedCoursesRowIds.includes(rowId)) {
       // add row ID to selectedRowIds if it's not already in the array
-      if (!selectedCoursesRowIds.includes(rowId)) {
-        setSelectedCoursesRowIds([...selectedCoursesRowIds, rowId]);
-      }
-      // set isSelected property of selected row to true
-      const newRows = allCourses.map((row) => {
-        if (row._id === rowId) {
-          return { ...row, isSelected: true };
-        }
-        return row;
-      });
-      setAllCourses(newRows);
+      setSelectedCoursesRowIds([...selectedCoursesRowIds, rowId]);
     } else {
       // remove row ID from selectedRowIds if it's in the array
       setSelectedCoursesRowIds(selectedCoursesRowIds.filter((id) => id !== rowId));
-      // set isSelected property of deselected row to false
-      const newRows = allCourses.map((row) => {
-        if (row._id === rowId) {
-          return { ...row, isSelected: false };
-        }
-        return row;
-      });
-      setAllCourses(newRows);
     }
+  };
+
+  const handleDelete = (course) => {
+    setSelectedUserRowIds(selectedUserRowIds.filter((id) => id !== course));
+  };
+
+  const handleChipDelete = (course) => {
+    setSelectedCoursesRowIds(selectedCoursesRowIds.filter((id) => id !== course));
+  };
+
+  const handleRemoveFromCourses = async () => {
+    const rowsToRemove = selectedUserRowIds.map((row) => row.id);
+    await axiosPrivate
+      .put(`/admin/${user.id}/remove-courses`, { courses: rowsToRemove })
+      .then((response) => {
+        if (response.status === 500) showErrorNotification(response.data.message);
+        else showInfoNotification(response.data.message);
+      });
+    setSelectedUserRowIds([]);
+    setReload(!reload);
+  };
+
+  const handleAddToCourses = async () => {
+    const rowsToAdd = selectedCoursesRowIds.map((row) => row.id);
+    await axiosPrivate
+      .put(`/admin/${user.id}/add-courses`, { courses: rowsToAdd })
+      .then((response) => {
+        if (response.status === 500) showErrorNotification(response.data.message);
+        else showInfoNotification(response.data.message);
+      });
+    setSelectedCoursesRowIds([]);
+    setReload(!reload);
   };
 
   return (
@@ -424,8 +450,9 @@ function EditUser() {
                         <MDButton
                           color={manage ? "warning" : "success"}
                           onClick={() => {
-                            setManage(!manage);
+                            if (!addCourse) setManage(!manage);
                             setChngPassword(false);
+                            setAddCourse(false);
                           }}
                           sx={{ margin: 1 }}
                           variant="outlined"
@@ -433,27 +460,105 @@ function EditUser() {
                           {manage ? "Cancel" : "Manage courses"}
                         </MDButton>
                         {manage && (
-                          <>
+                          <MDBox>
                             {!addCourse && (
                               <MDButton
                                 sx={{ margin: 1 }}
                                 color="error"
                                 disabled={!selectedUserRowIds.length}
-                                onClick={() => console.log(selectedUserRowIds, courses)}
+                                onClick={() => handleClickOpen()}
                               >
                                 Remove selected courses
                               </MDButton>
                             )}
 
+                            <Dialog open={open} onClose={handleClose}>
+                              <MDBox key="dialog-card" sx={{ padding: 3 }}>
+                                <MDBox
+                                  variant="gradient"
+                                  bgColor="info"
+                                  borderRadius="lg"
+                                  coloredShadow="info"
+                                  mt={-3}
+                                  p={1}
+                                  my={-1}
+                                  textAlign="center"
+                                  key="title"
+                                >
+                                  <MDTypography
+                                    key="title-text"
+                                    variant="h4"
+                                    fontWeight="medium"
+                                    color="white"
+                                  >
+                                    Confirm operation
+                                  </MDTypography>
+                                </MDBox>
+                                <MDBox key="title-description" m={2}>
+                                  <MDTypography key="title-description-text" variant="button">
+                                    Remove user from courses:
+                                  </MDTypography>
+                                </MDBox>
+                                <MDBox key="content">
+                                  <Stack direction="column" spacing={1} key="dialog-stack">
+                                    {selectedUserRowIds.flatMap((course, index) => (
+                                      <Chip
+                                        key={`${course._id}-${index}`}
+                                        label={course.name}
+                                        variant="outlined"
+                                        onDelete={() => handleDelete(course)}
+                                      />
+                                    ))}
+                                  </Stack>
+                                </MDBox>
+
+                                <DialogActions>
+                                  <MDButton
+                                    onClick={handleClose}
+                                    variant="outlined"
+                                    color="warning"
+                                  >
+                                    Cancel
+                                  </MDButton>
+                                  <MDButton
+                                    variant="outlined"
+                                    color="success"
+                                    onClick={handleRemoveFromCourses}
+                                    autoFocus
+                                  >
+                                    Accept
+                                  </MDButton>
+                                </DialogActions>
+                              </MDBox>
+                            </Dialog>
+
                             <MDButton
                               color="info"
-                              onClick={() => setAddCourse(true)}
+                              onClick={() => {
+                                if (selectedCoursesRowIds.length > 0) handleAddToCourses();
+                                else setAddCourse(true);
+                              }}
                               sx={{ margin: 1 }}
                             >
-                              Add user to courses
+                              {addCourse ? "Add user to selected courses" : "Add user to courses"}
                             </MDButton>
-                          </>
+                          </MDBox>
                         )}
+                      </MDBox>
+                      <Divider />
+                      <MDBox sx={{ display: "flex", flexWrap: "wrap" }}>
+                        {addCourse &&
+                          selectedCoursesRowIds.length > 0 &&
+                          selectedCoursesRowIds.flatMap((course, index) => (
+                            <Chip
+                              key={`${course.id}-${index}`}
+                              label={course.name}
+                              variant="outlined"
+                              color="info"
+                              onDelete={() => handleChipDelete(course)}
+                              sx={{ marginBottom: 1, marginRight: 1 }}
+                            />
+                          ))}
                       </MDBox>
                     </MDBox>
                   )}
@@ -468,12 +573,18 @@ function EditUser() {
                                 Header: "",
                                 accessor: "checkbox",
                                 Cell: ({ row }) => (
-                                  <Checkbox
-                                    checked={row.original.isSelected}
-                                    onChange={(e) =>
-                                      handleUserRowSelect(row.original._id, e.target.checked, e)
-                                    }
-                                  />
+                                  <MDButton
+                                    onClick={() => {
+                                      handleUserRowSelect(row.original);
+                                    }}
+                                    iconOnly
+                                  >
+                                    {selectedUserRowIds.includes(row.original) ? (
+                                      <CheckBoxIcon sx={{ height: 20, width: 20 }} />
+                                    ) : (
+                                      <CheckBoxOutlineBlankIcon sx={{ height: 20, width: 20 }} />
+                                    )}
+                                  </MDButton>
                                 ),
                                 isCheckbox: true,
                                 width: 10,
@@ -504,12 +615,18 @@ function EditUser() {
                                 Header: "",
                                 accessor: "checkbox",
                                 Cell: ({ row }) => (
-                                  <Checkbox
-                                    checked={row.original.isSelected}
-                                    onChange={(e) =>
-                                      handleCoursesRowSelect(row.original._id, e.target.checked, e)
-                                    }
-                                  />
+                                  <MDButton
+                                    onClick={() => {
+                                      handleCoursesRowSelect(row.original);
+                                    }}
+                                    iconOnly
+                                  >
+                                    {selectedCoursesRowIds.includes(row.original) ? (
+                                      <CheckBoxIcon sx={{ height: 20, width: 20 }} />
+                                    ) : (
+                                      <CheckBoxOutlineBlankIcon sx={{ height: 20, width: 20 }} />
+                                    )}
+                                  </MDButton>
                                 ),
                                 isCheckbox: true,
                                 width: 10,

@@ -164,24 +164,23 @@ export default function App() {
   }, [pathname]);
 
   const getRoutes = (allRoutes) =>
-    allRoutes.map((route) => {
+    allRoutes.flatMap((route, index) => {
       if (route.collapse) {
         return getRoutes(route.collapse);
       }
 
       if (route.route) {
         if (route.key === "logout") {
-          return (
-            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-              <Route exact path={route.route} element={route.component} key={route.key} />
-            </Route>
-          );
+          return <Route exact path={route.route} element={route.component} key={route.key} />;
         }
-        return (
-          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
+        return [
+          <Route
+            element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}
+            key={`dynamic-route-${index}`}
+          >
             <Route exact path={route.route} element={route.component} key={route.key} />
-          </Route>
-        );
+          </Route>,
+        ];
       }
 
       return null;
@@ -235,7 +234,7 @@ export default function App() {
             <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
             <Route element={<PersistLogin />}>
               <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-                <Route path="/unauthorized" element={<Unauthorized />} />
+                <Route path="/unauthorized" element={<Unauthorized />} key="unauthorized" />
                 {getRoutes(routes)}
                 <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                   <Route path="/admin" element={<PricingPage />} key="admin-page" />
@@ -306,7 +305,7 @@ export default function App() {
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-              <Route path="/unauthorized" element={<Unauthorized />} />
+              <Route path="/unauthorized" element={<Unauthorized />} key="unauthorized" />
               {getRoutes(routes)}
               <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                 <Route path="/admin" element={<PricingPage />} key="admin-page" />
