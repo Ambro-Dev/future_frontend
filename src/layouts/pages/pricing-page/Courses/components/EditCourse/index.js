@@ -18,8 +18,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
-import { useContext, useEffect, useRef, useState } from "react";
-import MDSnackbar from "components/MDSnackbar";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { Autocomplete, CircularProgress, Divider, Grid, TextField } from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
@@ -35,7 +34,7 @@ import ErrorContext from "context/ErrorProvider";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
-function EditCourse({ loading, setLoading }) {
+function EditCourse() {
   const [manage, setManage] = useState(false);
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const axiosPrivate = useAxiosPrivate();
@@ -58,15 +57,8 @@ function EditCourse({ loading, setLoading }) {
 
   const [reload, setReload] = useState(false);
 
-  const { showErrorNotification, showInfoNotification } = useContext(ErrorContext);
-
-  const [successSB, setSuccessSB] = useState(false);
-  const errRef = useRef();
-
-  const [errMsg, setErrMsg] = useState("");
-
-  const openSuccessSB = () => setSuccessSB(true);
-  const closeSuccessSB = () => setSuccessSB(false);
+  const { showErrorNotification, showInfoNotification, showSuccessNotification } =
+    useContext(ErrorContext);
 
   useEffect(() => {
     if (course) {
@@ -121,49 +113,32 @@ function EditCourse({ loading, setLoading }) {
     setChanged(hasChanges);
   }, [newDescription, newName, newTeacher]);
 
-  const renderSuccessSB = (
-    <MDSnackbar
-      color="success"
-      icon="check"
-      title="Course Created"
-      content="Course created successfully"
-      dateTime="now"
-      open={successSB}
-      onClose={closeSuccessSB}
-      close={closeSuccessSB}
-      bgWhite
-    />
-  );
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
-      const newCourse = { name, description, teacherId: teacher };
-      const response = await axiosPrivate.post(
-        process.env.REACT_APP_CREATE_COURSE_URL,
-        JSON.stringify(newCourse),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      // TODO: remove console.logs before deployment
-      console.log(JSON.stringify(response?.data));
-      // console.log(JSON.stringify(response))
+      const newCourse = {
+        id: course.id,
+        name: newName !== name ? newName : undefined,
+        description: newDescription !== description ? newDescription : undefined,
+        teacherId: newTeacher !== teacher ? newTeacher : undefined,
+      };
+      await axiosPrivate
+        .put(process.env.REACT_APP_CHANGE_COURSE_URL, newCourse)
+        .then((response) => {
+          if (response.status === 200) {
+            showSuccessNotification(response.data.message);
+            setEdit(!edit);
+          } else showErrorNotification(response.data.message);
+        });
       // clear state and controlled inputs
       setChanged(false);
-      setLoading(!loading);
-      openSuccessSB();
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
-        setErrMsg("Emailname Taken");
+        showErrorNotification("Changing failed, server error");
       } else {
-        setErrMsg("Registration Failed");
+        showInfoNotification(err.response.data.message);
       }
-      errRef.current.focus();
     }
+    setReload(!reload);
   };
 
   const handleSelectAll = () => {
@@ -235,9 +210,6 @@ function EditCourse({ loading, setLoading }) {
       <DefaultNavbar routes={pageRoutes} transparent />
       <MDBox my={3} mt={12} ml={1} mr={1}>
         <Card sx={{ marginTop: 3 }}>
-          <MDBox ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-            {errMsg}
-          </MDBox>
           <MDBox
             variant="gradient"
             bgColor="secondary"
@@ -377,7 +349,7 @@ function EditCourse({ loading, setLoading }) {
                           variant="contained"
                           color="success"
                           disabled={!changed || !newName || !newDescription || !newTeacher}
-                          onClick={() => handleSubmit()}
+                          onClick={handleSubmit}
                         >
                           Save changes
                         </MDButton>
@@ -688,7 +660,6 @@ function EditCourse({ loading, setLoading }) {
               <MDBox>No course selected</MDBox>
             )}
           </MDBox>
-          {renderSuccessSB}
         </Card>
       </MDBox>
     </PageLayout>

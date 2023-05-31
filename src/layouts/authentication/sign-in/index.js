@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import useAuth from "hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -22,6 +22,7 @@ import axios from "api/axios";
 
 import appIcon from "assets/images/logo/logo-mans.png";
 import { useTranslation } from "react-i18next";
+import ErrorContext from "context/ErrorProvider";
 
 function Login() {
   const { t } = useTranslation("translation", { keyPrefix: "login" });
@@ -39,6 +40,8 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+
+  const { showErrorNotification } = useContext(ErrorContext);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -75,22 +78,27 @@ function Login() {
       const surname = response?.data?.surname;
       const picture = response?.data?.picture;
       const studentNumber = response?.data?.studentNumber;
-      setAuth({
-        userId,
-        name,
-        email,
-        surname,
-        roles,
-        studentNumber,
-        accessToken,
-        picture,
-      });
-      setEmail("");
-      setPassword("");
-      if (roles.includes(1001)) {
-        navigate("/admin", { replace: true });
+
+      if (roles.includes(4004)) {
+        showErrorNotification("Your account have been blocked");
       } else {
-        navigate(from, { replace: true });
+        setAuth({
+          userId,
+          name,
+          email,
+          surname,
+          roles,
+          studentNumber,
+          accessToken,
+          picture,
+        });
+        setEmail("");
+        setPassword("");
+        if (roles.includes(1001)) {
+          navigate("/admin", { replace: true });
+        } else {
+          navigate(from, { replace: true });
+        }
       }
     } catch (err) {
       if (!err?.response) {

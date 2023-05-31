@@ -29,6 +29,7 @@ import pageRoutes from "page.routes";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import ErrorContext from "context/ErrorProvider";
+import BlockIcon from "@mui/icons-material/Block";
 import ChangePassword from "./ChangePasword";
 
 function EditUser() {
@@ -44,14 +45,20 @@ function EditUser() {
   const [surname, setSurname] = useState("");
   const [studentNumber, setStudentNumber] = useState("");
   const [email, setEmail] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newSurname, setNewSurname] = useState("");
+  const [newStudentNumber, setNewStudentNumber] = useState("");
+  const [newEmail, setNewEmail] = useState("");
   const [roles, setRoles] = useState({});
   const [courses, setCourses] = useState([]);
   const [allCourses, setAllCourses] = useState([]);
   const [addCourse, setAddCourse] = useState(false);
   const [chngPassword, setChngPassword] = useState(false);
   const [reload, setReload] = useState(false);
+  const [changed, setChanged] = useState(false);
 
-  const { showErrorNotification, showInfoNotification } = useContext(ErrorContext);
+  const { showErrorNotification, showInfoNotification, showSuccessNotification } =
+    useContext(ErrorContext);
 
   const [open, setOpen] = useState(false);
 
@@ -183,6 +190,60 @@ function EditUser() {
     setReload(!reload);
   };
 
+  useEffect(() => {
+    const hasChanges =
+      newSurname !== surname ||
+      newName !== name ||
+      newStudentNumber !== studentNumber ||
+      newEmail !== email;
+    setChanged(hasChanges);
+  }, [newSurname, newName, newStudentNumber, newEmail]);
+
+  const handleSubmitChanges = async () => {
+    try {
+      const newUser = {
+        id: user.id,
+        name: newName !== name ? newName : undefined,
+        surname: newSurname !== surname ? newSurname : undefined,
+        studentNumber: newStudentNumber !== studentNumber ? newStudentNumber : undefined,
+        email: newEmail !== email ? newEmail : undefined,
+      };
+      await axiosPrivate.put(process.env.REACT_APP_CHANGE_USER_URL, newUser).then((response) => {
+        if (response.status === 200) {
+          showSuccessNotification(response.data.message);
+          setEdit(!edit);
+        } else showErrorNotification(response.data.message);
+      });
+      // clear state and controlled inputs
+      setChanged(false);
+      setReload(!reload);
+    } catch (err) {
+      if (!err?.response) {
+        showErrorNotification("Changing failed, server error");
+      } else {
+        showInfoNotification(err.response.data.message);
+      }
+    }
+  };
+
+  const handleBlockUser = async () => {
+    await axiosPrivate.put(`/admin/${user.id}/block-user`).then((response) => {
+      if (response.status === 400) showErrorNotification(response.data.message);
+      else if (response.status === 204) showErrorNotification(response.data.message);
+      else showSuccessNotification(response.data.message);
+    });
+    setReload(!reload);
+  };
+
+  const handleUnblockUser = async () => {
+    await axiosPrivate.put(`/admin/${user.id}/unblock-user`).then((response) => {
+      if (response.status === 400) showErrorNotification(response.data.message);
+      else if (response.status === 204) showErrorNotification(response.data.message);
+      else showSuccessNotification(response.data.message);
+    });
+    setReload(!reload);
+  };
+
   return (
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} transparent />
@@ -218,8 +279,8 @@ function EditUser() {
                             label="Name"
                             variant="standard"
                             required
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={newName}
+                            onChange={(e) => setNewName(e.target.value)}
                             fullWidth
                           />
                         </MDBox>
@@ -229,9 +290,9 @@ function EditUser() {
                             label="Surname"
                             multiline
                             variant="standard"
-                            value={surname}
+                            value={newSurname}
                             required
-                            onChange={(e) => setSurname(e.target.value)}
+                            onChange={(e) => setNewSurname(e.target.value)}
                             fullWidth
                           />
                         </MDBox>
@@ -241,8 +302,8 @@ function EditUser() {
                             label="Email"
                             variant="standard"
                             required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={newEmail}
+                            onChange={(e) => setNewEmail(e.target.value)}
                             fullWidth
                           />
                         </MDBox>
@@ -253,8 +314,8 @@ function EditUser() {
                               label="Student Number"
                               variant="standard"
                               required
-                              value={studentNumber}
-                              onChange={(e) => setStudentNumber(e.target.value)}
+                              value={newStudentNumber}
+                              onChange={(e) => setNewStudentNumber(e.target.value)}
                               fullWidth
                             />
                           </MDBox>
@@ -388,6 +449,21 @@ function EditUser() {
                     display="flex"
                     flexDirection="column"
                   >
+                    {Object.values(roles).includes(4004) && (
+                      <MDBox
+                        display="flex"
+                        justifyContent="center"
+                        textAlign="center"
+                        alignItems="center"
+                      >
+                        <MDTypography fontWeight="medium" mr={1}>
+                          User blocked
+                        </MDTypography>
+
+                        <BlockIcon color="error" sx={{ height: 40, width: 40 }} />
+                      </MDBox>
+                    )}
+
                     <MDBox mt={4} mb={1} textAlign="center">
                       {!edit && (
                         <MDButton
@@ -403,19 +479,49 @@ function EditUser() {
                     </MDBox>
                     <MDButton
                       sx={{ margin: 2 }}
-                      variant="contained"
                       color="warning"
                       onClick={() => {
                         setEdit(!edit);
                         setChngPassword(false);
+                        if (!edit) {
+                          setNewEmail(email);
+                          setNewName(name);
+                          setNewStudentNumber(studentNumber);
+                          setNewSurname(surname);
+                        }
                       }}
                     >
                       {!edit ? "Edit" : "Cancel"}
                     </MDButton>
                     {edit && (
-                      <MDButton sx={{ margin: 2 }} variant="contained" color="error">
-                        Delete
-                      </MDButton>
+                      <>
+                        <MDBox>
+                          <MDButton
+                            sx={{ margin: 2 }}
+                            variant="contained"
+                            color={Object.values(roles).includes(4004) ? "info" : "error"}
+                            onClick={
+                              Object.values(roles).includes(4004)
+                                ? handleUnblockUser
+                                : handleBlockUser
+                            }
+                          >
+                            {Object.values(roles).includes(4004) ? "Unblock user" : "Block user"}
+                          </MDButton>
+                        </MDBox>
+                        <MDBox m={2} textAlign="center">
+                          <MDButton
+                            variant="contained"
+                            color="success"
+                            disabled={
+                              !changed || !newName || !newSurname || !newStudentNumber || !newEmail
+                            }
+                            onClick={() => handleSubmitChanges()}
+                          >
+                            Save changes
+                          </MDButton>
+                        </MDBox>
+                      </>
                     )}
                   </Grid>
                 </Grid>

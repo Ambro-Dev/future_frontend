@@ -83,7 +83,7 @@ function Users({ setVisible, visible, loading }) {
           <Divider />
           {!dataLoading ? (
             <MDBox>
-              {users.length > 0 && (
+              {users?.length > 0 && (
                 <MDBox>
                   <DataTable
                     table={{

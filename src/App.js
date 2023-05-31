@@ -58,6 +58,7 @@ import EditCourse from "layouts/pages/pricing-page/Courses/components/EditCourse
 import EditUser from "layouts/pages/pricing-page/Users/components/EditUser";
 import { ErrorProvider } from "context/ErrorProvider";
 import ImportPage from "layouts/pages/pricing-page/ImportPage";
+import useAuth from "hooks/useAuth";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -65,6 +66,8 @@ import routesua from "./routesua";
 
 export default function App() {
   const { i18n } = useTranslation();
+
+  const { auth } = useAuth();
   const [routes, setRoutes] = useState(routespl);
   const [controller, dispatch] = useMaterialUIController();
   const { setSocket } = useContext(SocketContext);
@@ -234,11 +237,25 @@ export default function App() {
             <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
             <Route element={<PersistLogin />}>
               <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+                <Route
+                  path="*"
+                  element={
+                    auth.roles.includes(1001) ? (
+                      <Navigate to="/admin" />
+                    ) : (
+                      <Navigate to="/profile-overview" />
+                    )
+                  }
+                />
                 <Route path="/unauthorized" element={<Unauthorized />} key="unauthorized" />
                 {getRoutes(routes)}
                 <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                   <Route path="/admin" element={<PricingPage />} key="admin-page" />
-                  <Route path="/admin/import-page" element={<ImportPage />} key="import-page" />
+                  <Route
+                    path="/admin/import-members"
+                    element={<ImportPage />}
+                    key="import-members"
+                  />
                   <Route
                     path="/admin/users/import"
                     element={<ImportUsers />}
@@ -266,7 +283,6 @@ export default function App() {
                   <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
                 </Route>
                 <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
-                  <Route path="*" element={<Navigate to="/profile-overview" />} />
                   <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
                   <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
                   <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
@@ -306,10 +322,20 @@ export default function App() {
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/unauthorized" element={<Unauthorized />} key="unauthorized" />
+              <Route
+                path="*"
+                element={
+                  auth.roles?.includes(1001) ? (
+                    <Navigate to="/admin" />
+                  ) : (
+                    <Navigate to="/profile-overview" />
+                  )
+                }
+              />
               {getRoutes(routes)}
               <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                 <Route path="/admin" element={<PricingPage />} key="admin-page" />
-                <Route path="/admin/import-page" element={<ImportPage />} key="import-page" />
+                <Route path="/admin/import-members" element={<ImportPage />} key="import-members" />
                 <Route
                   path="/admin/users/import"
                   element={<ImportUsers />}
@@ -333,7 +359,6 @@ export default function App() {
                 <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
               </Route>
               <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
-                <Route path="*" element={<Navigate to="/profile-overview" />} />
                 <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
                 <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
                 <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
