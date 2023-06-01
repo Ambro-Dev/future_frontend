@@ -53,12 +53,14 @@ import io from "socket.io-client";
 import Unauthorized from "components/Unauthorized";
 import AdminCourses from "layouts/pages/pricing-page/Courses";
 import AdminUsers from "layouts/pages/pricing-page/Users";
-import ImportUsers from "layouts/pages/pricing-page/ImportUsers";
 import EditCourse from "layouts/pages/pricing-page/Courses/components/EditCourse";
 import EditUser from "layouts/pages/pricing-page/Users/components/EditUser";
 import { ErrorProvider } from "context/ErrorProvider";
-import ImportPage from "layouts/pages/pricing-page/ImportPage";
+import ImportMembers from "layouts/pages/pricing-page/ImportMembers";
 import useAuth from "hooks/useAuth";
+import ImportStudents from "layouts/pages/pricing-page/ImportStudents";
+import ImportTeachers from "layouts/pages/pricing-page/ImportTeachers";
+import ImportCourses from "layouts/pages/pricing-page/ImportCourses";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -253,13 +255,8 @@ export default function App() {
                   <Route path="/admin" element={<PricingPage />} key="admin-page" />
                   <Route
                     path="/admin/import-members"
-                    element={<ImportPage />}
+                    element={<ImportMembers />}
                     key="import-members"
-                  />
-                  <Route
-                    path="/admin/users/import"
-                    element={<ImportUsers />}
-                    key="admin-users-import"
                   />
                   <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
                   <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
@@ -335,11 +332,25 @@ export default function App() {
               {getRoutes(routes)}
               <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                 <Route path="/admin" element={<PricingPage />} key="admin-page" />
-                <Route path="/admin/import-members" element={<ImportPage />} key="import-members" />
                 <Route
-                  path="/admin/users/import"
-                  element={<ImportUsers />}
-                  key="admin-users-import"
+                  path="/admin/import-members"
+                  element={<ImportMembers />}
+                  key="import-members"
+                />
+                <Route
+                  path="/admin/import-students"
+                  element={<ImportStudents />}
+                  key="import-students"
+                />
+                <Route
+                  path="/admin/import-courses"
+                  element={<ImportCourses />}
+                  key="import-courses"
+                />
+                <Route
+                  path="/admin/import-teachers"
+                  element={<ImportTeachers />}
+                  key="import-teachers"
                 />
                 <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
                 <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />

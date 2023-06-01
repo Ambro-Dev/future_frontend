@@ -10,28 +10,24 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { DropzoneDialog } from "mui-file-dropzone";
 import pageRoutes from "page.routes";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 
-function ImportPage() {
+function ImportStudents() {
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
 
   const [errors, setErrors] = useState([]);
   const [results, setResults] = useState([]);
 
-  const location = useLocation();
-  const courseInfo = location.state;
-
   const handleDownloadSchema = async (event) => {
     event.preventDefault();
     try {
-      const response = await axiosPrivate.get("/admin/import-members/schema", {
+      const response = await axiosPrivate.get("/admin/student-schema", {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "import-members.csv");
+      link.setAttribute("download", "student-schema.csv");
       document.body.appendChild(link);
       link.click();
     } catch (error) {
@@ -44,7 +40,7 @@ function ImportPage() {
     const formData = new FormData();
     formData.append("file", files[0]);
     await axiosPrivate
-      .post(`/admin/import-members/${courseInfo.id}`, formData, {
+      .post("/admin/import-students", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -53,7 +49,7 @@ function ImportPage() {
         console.log(response.data);
         setResults(response.data.results);
         setErrors(response.data.errors);
-        alert("Courses imported successfully");
+        alert("Students imported successfully");
       })
       .catch((error) => {
         alert(error.response.data);
@@ -86,7 +82,7 @@ function ImportPage() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Import
+              Import students
             </MDTypography>
           </MDBox>
           <MDBox pl={2}>
@@ -171,4 +167,4 @@ function ImportPage() {
   );
 }
 
-export default ImportPage;
+export default ImportStudents;

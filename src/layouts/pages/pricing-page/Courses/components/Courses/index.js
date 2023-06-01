@@ -13,13 +13,12 @@ import MDTypography from "components/MDTypography";
 // Distance Learning React examples
 import DataTable from "examples/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { DropzoneDialog } from "mui-file-dropzone";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
 
 function Courses({ setVisible, visible, loading }) {
   const axiosPrivate = useAxiosPrivate();
-  const [open, setOpen] = useState(false);
   const [courses, setCourses] = useState();
   const navigate = useNavigate();
   const [dataLoading, setDataLoading] = useState(true);
@@ -35,48 +34,6 @@ function Courses({ setVisible, visible, loading }) {
         setDataLoading(false);
       });
   }, [loading]);
-
-  const handleDownloadSchema = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axiosPrivate.get("/admin/courses-schema", { responseType: "blob" });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "courses-schema.csv");
-      document.body.appendChild(link);
-      link.click();
-    } catch (error) {
-      alert(error.response.data);
-    }
-  };
-
-  const handleSave = async (files) => {
-    setOpen(false);
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    await axiosPrivate
-      .post("/admin/import-courses", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        alert("Courses imported successfully");
-      })
-      .catch((error) => {
-        alert(error.response.data);
-      });
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const openEdit = (row) => {
     const course = {
@@ -107,22 +64,15 @@ function Courses({ setVisible, visible, loading }) {
             Add Course
           </MDButton>
           <MDButton
-            color="primary"
-            variant="outlined"
-            sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
-            onClick={handleDownloadSchema}
+            color="info"
+            sx={{ margin: 1 }}
+            onClick={() => navigate("/admin/import-courses")}
+            endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
           >
-            Import courses (CSV)
+            <MDTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
+              Import courses (CSV)
+            </MDTypography>
           </MDButton>
-          <MDButton onClick={handleOpen}>import Courses</MDButton>
-          <DropzoneDialog
-            open={open}
-            onSave={handleSave}
-            acceptedFiles={["text/csv"]}
-            showPreviews
-            maxFileSize={10000000}
-            onClose={handleClose}
-          />
         </MDBox>
         <Divider />
         {!dataLoading ? (

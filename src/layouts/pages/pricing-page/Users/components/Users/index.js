@@ -15,6 +15,7 @@ import DataTable from "examples/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
 
 function Users({ setVisible, visible, loading }) {
   const navigate = useNavigate();
@@ -52,8 +53,8 @@ function Users({ setVisible, visible, loading }) {
     };
 
     navigate("/admin/users/edit-user", { state: user });
-    console.log(row.original);
   };
+
   return (
     <Card style={{ marginTop: 25 }}>
       <MDBox>
@@ -72,12 +73,24 @@ function Users({ setVisible, visible, loading }) {
               Add User
             </MDButton>
             <MDButton
-              color="primary"
-              variant="outlined"
-              onClick={() => navigate("/admin/users/import")}
-              sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
+              color="info"
+              sx={{ margin: 1 }}
+              onClick={() => navigate("/admin/import-students")}
+              endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
             >
-              Import Users
+              <MDTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
+                Import students (CSV)
+              </MDTypography>
+            </MDButton>
+            <MDButton
+              color="info"
+              sx={{ margin: 1 }}
+              onClick={() => navigate("/admin/import-teachers")}
+              endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
+            >
+              <MDTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
+                Import teachers (CSV)
+              </MDTypography>
             </MDButton>
           </MDBox>
           <Divider />
