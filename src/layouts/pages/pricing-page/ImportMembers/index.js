@@ -50,7 +50,6 @@ function ImportMembers() {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setResults(response.data.results);
         setErrors(response.data.errors);
         alert("Members imported successfully");

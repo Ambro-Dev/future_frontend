@@ -46,7 +46,6 @@ function ImportCourses() {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setResults(response.data.results);
         setErrors(response.data.errors);
         alert("Courses imported successfully");

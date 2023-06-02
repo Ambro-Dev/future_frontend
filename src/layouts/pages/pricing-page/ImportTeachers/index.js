@@ -46,7 +46,6 @@ function ImportTeachers() {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setResults(response.data.results);
         setErrors(response.data.errors);
         alert("Teachers imported successfully");

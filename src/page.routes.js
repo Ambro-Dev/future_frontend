@@ -28,17 +28,12 @@ Coded by Ambro-Dev
 
 const pageRoutes = [
   {
-    name: "Manage",
+    name: "Courses",
     collapse: [
       {
         name: "Manage Courses",
         route: "/admin/courses",
         icon: "widgets",
-      },
-      {
-        name: "Manage Users",
-        route: "/admin/users",
-        icon: "import_contacts",
       },
     ],
   },
@@ -48,7 +43,7 @@ const pageRoutes = [
       {
         name: "Manage Users",
         route: "/admin/users",
-        icon: "widgets",
+        icon: "import_contacts",
       },
     ],
   },
@@ -61,7 +56,7 @@ const pageRoutes = [
         icon: "widgets",
       },
       {
-        name: "MUsers Raports",
+        name: "Users Raports",
         route: "/applications/wizard",
         icon: "import_contacts",
       },

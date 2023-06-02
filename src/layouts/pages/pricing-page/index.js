@@ -8,6 +8,8 @@ import pageRoutes from "page.routes";
 import PeopleIcon from "@mui/icons-material/People";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
 
 function PricingPage() {
   const navigate = useNavigate();
@@ -26,6 +28,16 @@ function PricingPage() {
       borderColor: "info",
     },
   });
+
+  const [allFiles, setAllFiles] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
+
+  useEffect(() => {
+    axiosPrivate.get("files").then((response) => {
+      setAllFiles(response.data);
+    });
+  }, []);
+
   return (
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} />
@@ -51,6 +63,11 @@ function PricingPage() {
                   </MDButton>
                 </Grid>
               </Grid>
+            </Card>
+            <Card sx={{ padding: 3, marginTop: 2 }}>
+              <MDBox>
+                <MDButton onClick={() => console.log(allFiles)}>Log</MDButton>
+              </MDBox>
             </Card>
           </Grid>
         </Grid>

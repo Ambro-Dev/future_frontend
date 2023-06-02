@@ -46,7 +46,6 @@ function ImportStudents() {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setResults(response.data.results);
         setErrors(response.data.errors);
         alert("Students imported successfully");
