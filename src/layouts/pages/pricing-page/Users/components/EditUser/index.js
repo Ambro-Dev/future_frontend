@@ -548,7 +548,7 @@ function EditUser() {
                         my={3}
                         textAlign="center"
                       >
-                        <MDTypography variant="h5" fontWeight="medium" color="white" mt={1}>
+                        <MDTypography variant="h5" fontWeight="medium" color="white">
                           User courses
                         </MDTypography>
                       </MDBox>

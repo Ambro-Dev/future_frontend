@@ -65,11 +65,7 @@ function Users({ setVisible, visible, loading }) {
             </MDTypography>
           </MDBox>
           <MDBox pl={2}>
-            <MDButton
-              color="primary"
-              onClick={() => setVisible(!visible)}
-              sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
-            >
+            <MDButton color="primary" sx={{ margin: 1 }} onClick={() => setVisible(!visible)}>
               Add User
             </MDButton>
             <MDButton
