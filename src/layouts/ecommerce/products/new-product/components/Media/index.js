@@ -10,28 +10,28 @@ Coded by Ambro-Dev
 import { useMemo } from "react";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDDropzone from "components/MDDropzone";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLDropzone from "components/DLDropzone";
 
 function Media() {
   return (
-    <MDBox>
-      <MDTypography variant="h5">Media</MDTypography>
-      <MDBox mt={3}>
-        <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-          <MDTypography component="label" variant="button" fontWeight="regular" color="text">
+    <DLBox>
+      <DLTypography variant="h5">Media</DLTypography>
+      <DLBox mt={3}>
+        <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+          <DLTypography component="label" variant="button" fontWeight="regular" color="text">
             Product Image
-          </MDTypography>
-        </MDBox>
+          </DLTypography>
+        </DLBox>
         {useMemo(
           () => (
-            <MDDropzone options={{ addRemoveLinks: true }} />
+            <DLDropzone options={{ addRemoveLinks: true }} />
           ),
           []
         )}
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

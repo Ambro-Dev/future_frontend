@@ -14,8 +14,8 @@ import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // NewUser page components
 import FormField from "layouts/pages/users/new-user/components/FormField";
@@ -26,11 +26,11 @@ function Socials({ formData }) {
   const { twitter: twitterV, facebook: facebookV, instagram: instagramV } = values;
 
   return (
-    <MDBox>
-      <MDTypography variant="h5" fontWeight="bold">
+    <DLBox>
+      <DLTypography variant="h5" fontWeight="bold">
         Socials
-      </MDTypography>
-      <MDBox mt={1.625}>
+      </DLTypography>
+      <DLBox mt={1.625}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <FormField
@@ -62,8 +62,8 @@ function Socials({ formData }) {
             />
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

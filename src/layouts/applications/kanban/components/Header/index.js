@@ -12,10 +12,10 @@ import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLAvatar from "components/DLAvatar";
+import DLButton from "components/DLButton";
 
 // Image
 import team1 from "assets/images/team-1.jpg";
@@ -38,30 +38,30 @@ function Header() {
   };
 
   return (
-    <MDBox display="flex" alignItems="center">
-      <MDBox mt={0.5} pr={1}>
-        <MDBox mb={1} ml={-1.25} lineHeight={0}>
-          <MDTypography variant="caption" color="secondary">
+    <DLBox display="flex" alignItems="center">
+      <DLBox mt={0.5} pr={1}>
+        <DLBox mb={1} ml={-1.25} lineHeight={0}>
+          <DLTypography variant="caption" color="secondary">
             Team members:
-          </MDTypography>
-        </MDBox>
-        <MDBox display="flex">
-          <MDAvatar src={team1} alt="team-1" size="sm" sx={avatarStyles} />
-          <MDAvatar src={team2} alt="team-1" size="sm" sx={avatarStyles} />
-          <MDAvatar src={team3} alt="team-1" size="sm" sx={avatarStyles} />
-          <MDAvatar src={team4} alt="team-1" size="sm" sx={avatarStyles} />
-          <MDAvatar src={team5} alt="team-1" size="sm" sx={avatarStyles} />
-        </MDBox>
-      </MDBox>
-      <MDBox height="75%" alignSelf="flex-end">
+          </DLTypography>
+        </DLBox>
+        <DLBox display="flex">
+          <DLAvatar src={team1} alt="team-1" size="sm" sx={avatarStyles} />
+          <DLAvatar src={team2} alt="team-1" size="sm" sx={avatarStyles} />
+          <DLAvatar src={team3} alt="team-1" size="sm" sx={avatarStyles} />
+          <DLAvatar src={team4} alt="team-1" size="sm" sx={avatarStyles} />
+          <DLAvatar src={team5} alt="team-1" size="sm" sx={avatarStyles} />
+        </DLBox>
+      </DLBox>
+      <DLBox height="75%" alignSelf="flex-end">
         <Divider orientation="vertical" />
-      </MDBox>
-      <MDBox pl={1}>
-        <MDButton variant="gradient" color="info" iconOnly>
+      </DLBox>
+      <DLBox pl={1}>
+        <DLButton variant="gradient" color="info" iconOnly>
           <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-        </MDButton>
-      </MDBox>
-    </MDBox>
+        </DLButton>
+      </DLBox>
+    </DLBox>
   );
 }
 

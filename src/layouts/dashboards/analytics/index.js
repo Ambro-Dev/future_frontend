@@ -13,17 +13,17 @@ import Tooltip from "@mui/material/Tooltip";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import BookingCard from "examples/Cards/BookingCard";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import ReportsBarChart from "utils/Charts/BarCharts/ReportsBarChart";
+import ReportsLineChart from "utils/Charts/LineCharts/ReportsLineChart";
+import ComplexStatisticsCard from "utils/Cards/StatisticsCards/ComplexStatisticsCard";
+import BookingCard from "utils/Cards/BookingCard";
 
 // Anaytics dashboard components
 import SalesByCountry from "layouts/dashboards/analytics/components/SalesByCountry";
@@ -44,19 +44,19 @@ function Analytics() {
   const actionButtons = (
     <>
       <Tooltip title="Refresh" placement="bottom">
-        <MDTypography
+        <DLTypography
           variant="body1"
           color="primary"
           lineHeight={1}
           sx={{ cursor: "pointer", mx: 3 }}
         >
           <Icon color="inherit">refresh</Icon>
-        </MDTypography>
+        </DLTypography>
       </Tooltip>
       <Tooltip title="Edit" placement="bottom">
-        <MDTypography variant="body1" color="info" lineHeight={1} sx={{ cursor: "pointer", mx: 3 }}>
+        <DLTypography variant="body1" color="info" lineHeight={1} sx={{ cursor: "pointer", mx: 3 }}>
           <Icon color="inherit">edit</Icon>
-        </MDTypography>
+        </DLTypography>
       </Tooltip>
     </>
   );
@@ -64,14 +64,14 @@ function Analytics() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
+      <DLBox py={3}>
         <Grid container>
           <SalesByCountry />
         </Grid>
-        <MDBox mt={6}>
+        <DLBox mt={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
+              <DLBox mb={3}>
                 <ReportsBarChart
                   color="info"
                   title="website views"
@@ -79,10 +79,10 @@ function Analytics() {
                   date="campaign sent 2 days ago"
                   chart={reportsBarChartData}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
+              <DLBox mb={3}>
                 <ReportsLineChart
                   color="success"
                   title="daily sales"
@@ -94,10 +94,10 @@ function Analytics() {
                   date="updated 4 min ago"
                   chart={sales}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
+              <DLBox mb={3}>
                 <ReportsLineChart
                   color="dark"
                   title="completed tasks"
@@ -105,14 +105,14 @@ function Analytics() {
                   date="just updated"
                   chart={tasks}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mt={1.5}>
+        </DLBox>
+        <DLBox mt={1.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
+              <DLBox mb={1.5}>
                 <ComplexStatisticsCard
                   color="dark"
                   icon="weekend"
@@ -124,10 +124,10 @@ function Analytics() {
                     label: "than lask week",
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
+              <DLBox mb={1.5}>
                 <ComplexStatisticsCard
                   icon="leaderboard"
                   title="Today's Users"
@@ -138,10 +138,10 @@ function Analytics() {
                     label: "than last month",
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
+              <DLBox mb={1.5}>
                 <ComplexStatisticsCard
                   color="success"
                   icon="store"
@@ -153,10 +153,10 @@ function Analytics() {
                     label: "than yesterday",
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
+              <DLBox mb={1.5}>
                 <ComplexStatisticsCard
                   color="primary"
                   icon="person_add"
@@ -168,14 +168,14 @@ function Analytics() {
                     label: "Just updated",
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mt={2}>
+        </DLBox>
+        <DLBox mt={2}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
+              <DLBox mt={3}>
                 <BookingCard
                   image={booking1}
                   title="Cozy 5 Stars Apartment"
@@ -184,10 +184,10 @@ function Analytics() {
                   location="Barcelona, Spain"
                   action={actionButtons}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
+              <DLBox mt={3}>
                 <BookingCard
                   image={booking2}
                   title="Office Studio"
@@ -196,10 +196,10 @@ function Analytics() {
                   location="London, UK"
                   action={actionButtons}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
+              <DLBox mt={3}>
                 <BookingCard
                   image={booking3}
                   title="Beautiful Castle"
@@ -208,11 +208,11 @@ function Analytics() {
                   location="Milan, Italy"
                   action={actionButtons}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
           </Grid>
-        </MDBox>
-      </MDBox>
+        </DLBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

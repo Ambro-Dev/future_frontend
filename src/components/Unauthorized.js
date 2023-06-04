@@ -1,9 +1,9 @@
 /* eslint-disable react/button-has-type */
-import PageLayout from "examples/LayoutContainers/PageLayout";
+import PageLayout from "utils/LayoutContainers/PageLayout";
 import { useNavigate } from "react-router-dom";
-import MDTypography from "./MDTypography";
-import MDBox from "./MDBox";
-import MDButton from "./MDButton";
+import DLTypography from "./DLTypography";
+import DLBox from "./DLBox";
+import DLButton from "./DLButton";
 
 function Unauthorized() {
   const navigate = useNavigate();
@@ -12,11 +12,11 @@ function Unauthorized() {
 
   return (
     <PageLayout>
-      <MDTypography variant="h1">Unauthorized</MDTypography>
-      <MDTypography variant="text">You do not have access to the requested page.</MDTypography>
-      <MDBox>
-        <MDButton onClick={goBack}>Go Back</MDButton>
-      </MDBox>
+      <DLTypography variant="h1">Unauthorized</DLTypography>
+      <DLTypography variant="text">You do not have access to the requested page.</DLTypography>
+      <DLBox>
+        <DLButton onClick={goBack}>Go Back</DLButton>
+      </DLBox>
     </PageLayout>
   );
 }

@@ -8,10 +8,10 @@ import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
+import DLButton from "components/DLButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
@@ -125,7 +125,7 @@ function Login() {
   return (
     <BasicLayout image={bgImage}>
       <Card>
-        <MDBox
+        <DLBox
           variant="gradient"
           bgColor="white"
           borderRadius="lg"
@@ -138,16 +138,16 @@ function Login() {
         >
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={6}>
-              <MDBox component="img" src={appIcon} sx={{ height: 152, width: 152 }} />
+              <DLBox component="img" src={appIcon} sx={{ height: 152, width: 152 }} />
             </Grid>
             <Grid item xs={6}>
-              <MDTypography variant="h4" fontWeight="medium" color="dark" mt={7}>
+              <DLTypography variant="h4" fontWeight="medium" color="dark" mt={7}>
                 {t("signin")}
-              </MDTypography>
+              </DLTypography>
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox
+        </DLBox>
+        <DLBox
           pt={4}
           pb={3}
           px={3}
@@ -155,9 +155,9 @@ function Login() {
           className={errMsg ? "errmsg" : "offscreen"}
           aria-live="assertive"
         >
-          <MDBox component="form" role="form" onSubmit={handleSubmit}>
-            <MDBox mb={2}>
-              <MDInput
+          <DLBox component="form" role="form" onSubmit={handleSubmit}>
+            <DLBox mb={2}>
+              <DLInput
                 type="email"
                 id="email"
                 ref={emailRef}
@@ -167,10 +167,10 @@ function Login() {
                 fullWidth
                 required
               />
-            </MDBox>
+            </DLBox>
             {errMsg}
-            <MDBox mb={2}>
-              <MDInput
+            <DLBox mb={2}>
+              <DLInput
                 type="password"
                 label={t("password")}
                 id="password"
@@ -179,10 +179,10 @@ function Login() {
                 fullWidth
                 required
               />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
+            </DLBox>
+            <DLBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={persist} onChange={togglePersist} />
-              <MDTypography
+              <DLTypography
                 variant="button"
                 fontWeight="regular"
                 color="text"
@@ -190,10 +190,10 @@ function Login() {
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
                 &nbsp;&nbsp;{t("remember")}
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
+              </DLTypography>
+            </DLBox>
+            <DLBox mt={4} mb={1}>
+              <DLButton
                 variant="gradient"
                 type="submit"
                 color="info"
@@ -201,10 +201,10 @@ function Login() {
                 fullWidth
               >
                 {t("signin")}
-              </MDButton>
-            </MDBox>
-          </MDBox>
-        </MDBox>
+              </DLButton>
+            </DLBox>
+          </DLBox>
+        </DLBox>
       </Card>
     </BasicLayout>
   );

@@ -14,21 +14,21 @@ import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 function RefundsCell({ value, icon }) {
   return (
-    <MDBox display="flex" justifyContent="center" alignItems="center" px={2}>
-      <MDTypography variant="button" fontWeight="regular" color="text">
+    <DLBox display="flex" justifyContent="center" alignItems="center" px={2}>
+      <DLTypography variant="button" fontWeight="regular" color="text">
         {value}
-      </MDTypography>
-      <MDBox color={icon.color} lineHeight={0}>
+      </DLTypography>
+      <DLBox color={icon.color} lineHeight={0}>
         <Icon sx={{ fontWeight: "bold" }} fontSize="small">
           {icon.name}
         </Icon>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

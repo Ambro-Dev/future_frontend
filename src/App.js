@@ -9,11 +9,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
-// Distance Learning React examples
-import Sidenav from "examples/Sidenav";
-import Configurator from "examples/Configurator";
+// Distance Learning React utils
+import Sidenav from "utils/Sidenav";
+import Configurator from "utils/Configurator";
 
 // Distance Learning React themes
 import theme from "assets/theme";
@@ -192,7 +192,7 @@ export default function App() {
     });
 
   const configsButton = (
-    <MDBox
+    <DLBox
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -212,7 +212,7 @@ export default function App() {
       <Icon fontSize="small" color="inherit">
         settings
       </Icon>
-    </MDBox>
+    </DLBox>
   );
 
   return direction === "rtl" ? (

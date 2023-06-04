@@ -11,7 +11,7 @@ Coded by Ambro-Dev
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
 // Settings page components
 import BaseLayout from "layouts/pages/account/components/BaseLayout";
@@ -22,13 +22,13 @@ import ChangePassword from "layouts/pages/account/settings/components/ChangePass
 function Settings() {
   return (
     <BaseLayout>
-      <MDBox mt={4}>
+      <DLBox mt={4}>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={3}>
             <Sidenav />
           </Grid>
           <Grid item xs={12} lg={9}>
-            <MDBox mb={3}>
+            <DLBox mb={3}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Header />
@@ -37,10 +37,10 @@ function Settings() {
                   <ChangePassword />
                 </Grid>
               </Grid>
-            </MDBox>
+            </DLBox>
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
     </BaseLayout>
   );
 }

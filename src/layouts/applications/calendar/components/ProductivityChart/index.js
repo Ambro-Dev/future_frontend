@@ -19,8 +19,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // Chart configurations
 import configs from "layouts/applications/calendar/components/ProductivityChart/configs";
@@ -58,42 +58,42 @@ function ProductivityChart() {
 
   return (
     <Card sx={{ overflow: "hidden" }}>
-      <MDBox bgColor="dark" variant="gradient">
-        <MDBox p={2}>
-          <MDBox display="flex" justifyContent="space-between">
-            <MDBox>
-              <MDTypography variant="h6" fontWeight="medium" color="white">
+      <DLBox bgColor="dark" variant="gradient">
+        <DLBox p={2}>
+          <DLBox display="flex" justifyContent="space-between">
+            <DLBox>
+              <DLTypography variant="h6" fontWeight="medium" color="white">
                 Productivity
-              </MDTypography>
-              <MDBox display="flex" alignItems="center">
-                <MDBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
+              </DLTypography>
+              <DLBox display="flex" alignItems="center">
+                <DLBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
                   <Icon sx={{ fontWeight: "bold" }}>arrow_upward</Icon>
-                </MDBox>
-                <MDTypography variant="button" color="white" fontWeight="medium">
+                </DLBox>
+                <DLTypography variant="button" color="white" fontWeight="medium">
                   4% more{" "}
-                  <MDTypography variant="button" color="white">
+                  <DLTypography variant="button" color="white">
                     in 2021
-                  </MDTypography>
-                </MDTypography>
-              </MDBox>
-            </MDBox>
-            <MDTypography color="white" onClick={handleOpenMenu}>
+                  </DLTypography>
+                </DLTypography>
+              </DLBox>
+            </DLBox>
+            <DLTypography color="white" onClick={handleOpenMenu}>
               <Icon fontSize="default" sx={{ cursor: "pointer" }}>
                 more_horiz
               </Icon>
-            </MDTypography>
+            </DLTypography>
             {renderMenu()}
-          </MDBox>
-        </MDBox>
+          </DLBox>
+        </DLBox>
         {useMemo(
           () => (
-            <MDBox ref={chartRef} sx={{ height: "6.25rem" }}>
+            <DLBox ref={chartRef} sx={{ height: "6.25rem" }}>
               <Line data={data} options={options} />
-            </MDBox>
+            </DLBox>
           ),
           [chart]
         )}
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

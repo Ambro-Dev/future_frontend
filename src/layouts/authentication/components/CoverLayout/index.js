@@ -14,12 +14,12 @@ import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-// import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+// import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import PageLayout from "examples/LayoutContainers/PageLayout";
+// Distance Learning React utils
+import DefaultNavbar from "utils/Navbars/DefaultNavbar";
+import PageLayout from "utils/LayoutContainers/PageLayout";
 
 // Authentication layout components
 import Footer from "layouts/authentication/components/Footer";
@@ -40,7 +40,7 @@ function CoverLayout({ coverHeight, image, children }) {
         transparent
         light
       />
-      <MDBox
+      <DLBox
         width="calc(100% - 2rem)"
         minHeight={coverHeight}
         borderRadius="xl"
@@ -60,13 +60,13 @@ function CoverLayout({ coverHeight, image, children }) {
           backgroundRepeat: "no-repeat",
         }}
       />
-      <MDBox mt={{ xs: -20, lg: -18 }} px={1} width="calc(100% - 2rem)" mx="auto">
+      <DLBox mt={{ xs: -20, lg: -18 }} px={1} width="calc(100% - 2rem)" mx="auto">
         <Grid container spacing={1} justifyContent="center">
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             {children}
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
       <Footer />
     </PageLayout>
   );

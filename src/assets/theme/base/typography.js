@@ -31,7 +31,7 @@ const baseProperties = {
   fontSizeXXS: pxToRem(10.4),
   fontSizeXS: pxToRem(12),
   fontSizeSM: pxToRem(14),
-  fontSizeMD: pxToRem(16),
+  fontSizeDL: pxToRem(16),
   fontSizeLG: pxToRem(18),
   fontSizeXL: pxToRem(20),
   fontSize2XL: pxToRem(24),
@@ -104,7 +104,7 @@ const typography = {
 
   subtitle2: {
     fontFamily: baseProperties.fontFamily,
-    fontSize: baseProperties.fontSizeMD,
+    fontSize: baseProperties.fontSizeDL,
     fontWeight: baseProperties.fontWeightLight,
     lineHeight: 1.6,
   },
@@ -118,7 +118,7 @@ const typography = {
 
   body2: {
     fontFamily: baseProperties.fontFamily,
-    fontSize: baseProperties.fontSizeMD,
+    fontSize: baseProperties.fontSizeDL,
     fontWeight: baseProperties.fontWeightLight,
     lineHeight: 1.6,
   },
@@ -176,7 +176,7 @@ const typography = {
     xxs: baseProperties.fontSizeXXS,
     xs: baseProperties.fontSizeXS,
     sm: baseProperties.fontSizeSM,
-    md: baseProperties.fontSizeMD,
+    md: baseProperties.fontSizeDL,
     lg: baseProperties.fontSizeLG,
     xl: baseProperties.fontSizeXL,
     "2xl": baseProperties.fontSize2XL,

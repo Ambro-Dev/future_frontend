@@ -11,28 +11,28 @@ Coded by Ambro-Dev
 import PropTypes from "prop-types";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLAvatar from "components/DLAvatar";
 
 function ProductCell({ image, name, orders }) {
   return (
-    <MDBox display="flex" alignItems="center" pr={2}>
-      <MDBox mr={2}>
-        <MDAvatar src={image} alt={name} />
-      </MDBox>
-      <MDBox display="flex" flexDirection="column">
-        <MDTypography variant="button" fontWeight="medium">
+    <DLBox display="flex" alignItems="center" pr={2}>
+      <DLBox mr={2}>
+        <DLAvatar src={image} alt={name} />
+      </DLBox>
+      <DLBox display="flex" flexDirection="column">
+        <DLTypography variant="button" fontWeight="medium">
           {name}
-        </MDTypography>
-        <MDTypography variant="button" fontWeight="regular" color="secondary">
-          <MDTypography component="span" variant="button" fontWeight="regular" color="success">
+        </DLTypography>
+        <DLTypography variant="button" fontWeight="regular" color="secondary">
+          <DLTypography component="span" variant="button" fontWeight="regular" color="success">
             {orders}
-          </MDTypography>{" "}
+          </DLTypography>{" "}
           orders
-        </MDTypography>
-      </MDBox>
-    </MDBox>
+        </DLTypography>
+      </DLBox>
+    </DLBox>
   );
 }
 

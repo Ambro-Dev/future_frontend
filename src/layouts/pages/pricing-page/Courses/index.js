@@ -1,7 +1,7 @@
-// Distance Learning React examples
-import MDBox from "components/MDBox";
-import PageLayout from "examples/LayoutContainers/PageLayout";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+// Distance Learning React utils
+import DLBox from "components/DLBox";
+import PageLayout from "utils/LayoutContainers/PageLayout";
+import DefaultNavbar from "utils/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
 
 // Pricing page components
@@ -16,7 +16,7 @@ function AdminCourses() {
   return (
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} transparent />
-      <MDBox my={3} mt={10} ml={1} mr={1}>
+      <DLBox my={3} mt={10} ml={1} mr={1}>
         <Grid container spacing={1}>
           <Grid item xs={12} lg={!visibleAddCourse ? 12 : 7}>
             <Courses
@@ -34,7 +34,7 @@ function AdminCourses() {
             />
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
     </PageLayout>
   );
 }

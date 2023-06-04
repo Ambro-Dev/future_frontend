@@ -18,14 +18,14 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
 
 // Wizard page components
 import About from "layouts/applications/wizard/components/About";
@@ -34,7 +34,7 @@ import Address from "layouts/applications/wizard/components/Address";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { SocketContext } from "context/socket";
-import MDSnackbar from "components/MDSnackbar";
+import DLSnackbar from "components/DLSnackbar";
 import useAuth from "hooks/useAuth";
 import { useTranslation } from "react-i18next";
 
@@ -84,7 +84,7 @@ function Wizard() {
   const timeNow = new Date().toLocaleTimeString();
 
   const renderSuccessSB = (
-    <MDSnackbar
+    <DLSnackbar
       color="success"
       icon="check"
       title="Event"
@@ -98,7 +98,7 @@ function Wizard() {
   );
 
   const renderErrorSB = (
-    <MDSnackbar
+    <DLSnackbar
       color="error"
       icon="warning"
       title="Event"
@@ -199,21 +199,21 @@ function Wizard() {
     <DashboardLayout>
       <DashboardNavbar />
       {auth.roles.includes(5150) ? (
-        <MDBox pt={3} pb={8}>
+        <DLBox pt={3} pb={8}>
           <Grid container justifyContent="center" sx={{ my: 4 }}>
             <Grid item xs={12} lg={8}>
-              <MDBox mt={6} mb={8} textAlign="center">
-                <MDBox mb={1}>
-                  <MDTypography variant="h3" fontWeight="bold">
+              <DLBox mt={6} mb={8} textAlign="center">
+                <DLBox mb={1}>
+                  <DLTypography variant="h3" fontWeight="bold">
                     {t("build")}
-                  </MDTypography>
-                </MDBox>
-                <MDTypography variant="h5" fontWeight="regular" color="secondary">
+                  </DLTypography>
+                </DLBox>
+                <DLTypography variant="h5" fontWeight="regular" color="secondary">
                   {t("info")}
-                </MDTypography>
-              </MDBox>
+                </DLTypography>
+              </DLBox>
               <Card>
-                <MDBox mt={-3} mx={2}>
+                <DLBox mt={-3} mx={2}>
                   <Stepper activeStep={activeStep} alternativeLabel>
                     {steps.map((label) => (
                       <Step key={label}>
@@ -221,46 +221,46 @@ function Wizard() {
                       </Step>
                     ))}
                   </Stepper>
-                </MDBox>
-                <MDBox p={2}>
-                  <MDBox>
+                </DLBox>
+                <DLBox p={2}>
+                  <DLBox>
                     {getStepContent(activeStep)}
-                    <MDBox mt={3} width="100%" display="flex" justifyContent="space-between">
+                    <DLBox mt={3} width="100%" display="flex" justifyContent="space-between">
                       {activeStep === 0 ? (
-                        <MDBox />
+                        <DLBox />
                       ) : (
-                        <MDButton variant="outlined" color="dark" onClick={handleBack}>
+                        <DLButton variant="outlined" color="dark" onClick={handleBack}>
                           {t("back")}
-                        </MDButton>
+                        </DLButton>
                       )}
                       {activeStep === 1 && (name === "" || description === "") ? (
-                        <MDButton
+                        <DLButton
                           variant="gradient"
                           color="dark"
                           onClick={!isLastStep ? handleNext : createEvent}
                           disabled
                         >
                           {isLastStep ? [t("send")] : [t("next")]}
-                        </MDButton>
+                        </DLButton>
                       ) : (
-                        <MDButton
+                        <DLButton
                           variant="gradient"
                           color="dark"
                           onClick={!isLastStep ? handleNext : createEvent}
                         >
                           {isLastStep ? [t("send")] : [t("next")]}
-                        </MDButton>
+                        </DLButton>
                       )}
-                    </MDBox>
-                  </MDBox>
-                </MDBox>
+                    </DLBox>
+                  </DLBox>
+                </DLBox>
               </Card>
               {renderErrorSB} {renderSuccessSB}
             </Grid>
           </Grid>
-        </MDBox>
+        </DLBox>
       ) : (
-        <MDBox>{t("noaccess")}</MDBox>
+        <DLBox>{t("noaccess")}</DLBox>
       )}
 
       <Footer />

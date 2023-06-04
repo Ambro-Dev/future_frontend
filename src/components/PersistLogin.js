@@ -7,7 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import ErrorContext from "context/ErrorProvider";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
-import MDTypography from "./MDTypography";
+import DLTypography from "./DLTypography";
 
 function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +37,7 @@ function PersistLogin() {
   }, []);
 
   return (
-    <>{!persist ? <Outlet /> : isLoading ? <MDTypography>Loading...</MDTypography> : <Outlet />}</>
+    <>{!persist ? <Outlet /> : isLoading ? <DLTypography>Loading...</DLTypography> : <Outlet />}</>
   );
 }
 

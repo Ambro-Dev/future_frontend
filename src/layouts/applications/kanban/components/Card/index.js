@@ -14,11 +14,11 @@ import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDBadge from "components/MDBadge";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import MDProgress from "components/MDProgress";
+import DLBox from "components/DLBox";
+import DLBadge from "components/DLBadge";
+import DLTypography from "components/DLTypography";
+import DLAvatar from "components/DLAvatar";
+import DLProgress from "components/DLProgress";
 
 // Custom styles for the Card
 
@@ -27,7 +27,7 @@ function Card({ image, badge, content, progress, attachedFiles, members }) {
     const imageAlt = `image-${key}`;
 
     return (
-      <MDAvatar
+      <DLAvatar
         key={imageAlt}
         src={member}
         alt={imageAlt}
@@ -50,33 +50,33 @@ function Card({ image, badge, content, progress, attachedFiles, members }) {
 
   return (
     <>
-      {image && <MDBox component="img" src={image} width="100%" borderRadius="lg" mb={1} />}
-      <MDBadge size="xs" color={badge.color} badgeContent={badge.label} container />
-      <MDBox mt={1} mb={2}>
-        <MDTypography variant="body2" color="text">
+      {image && <DLBox component="img" src={image} width="100%" borderRadius="lg" mb={1} />}
+      <DLBadge size="xs" color={badge.color} badgeContent={badge.label} container />
+      <DLBox mt={1} mb={2}>
+        <DLTypography variant="body2" color="text">
           {content}
-        </MDTypography>
+        </DLTypography>
         {progress > 0 && (
-          <MDBox mt={0.25}>
-            <MDProgress variant="gradient" value={progress} color={badge.color} />
-          </MDBox>
+          <DLBox mt={0.25}>
+            <DLProgress variant="gradient" value={progress} color={badge.color} />
+          </DLBox>
         )}
-      </MDBox>
-      <MDBox display="flex" justifyContent="space-between" alignItems="center">
-        <MDBox display="flex" alignItems="center" color="text">
+      </DLBox>
+      <DLBox display="flex" justifyContent="space-between" alignItems="center">
+        <DLBox display="flex" alignItems="center" color="text">
           {attachedFiles && (
             <>
-              <MDTypography variant="body2" color="text" sx={{ lineHeight: 0 }}>
+              <DLTypography variant="body2" color="text" sx={{ lineHeight: 0 }}>
                 <Icon sx={{ fontWeight: "bold" }}>attach_file</Icon>
-              </MDTypography>
-              <MDTypography variant="button" fontWeight="regular" color="text">
+              </DLTypography>
+              <DLTypography variant="button" fontWeight="regular" color="text">
                 &nbsp;{attachedFiles}
-              </MDTypography>
+              </DLTypography>
             </>
           )}
-        </MDBox>
-        <MDBox display="flex">{renderMembers}</MDBox>
-      </MDBox>
+        </DLBox>
+        <DLBox display="flex">{renderMembers}</DLBox>
+      </DLBox>
     </>
   );
 }

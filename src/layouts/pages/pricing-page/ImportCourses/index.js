@@ -1,11 +1,11 @@
-// Distance Learning React examples
+// Distance Learning React utils
 import { Card, Grid } from "@mui/material";
-import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
-import MDTypography from "components/MDTypography";
-import PageLayout from "examples/LayoutContainers/PageLayout";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import DataTable from "examples/Tables/DataTable";
+import DLBox from "components/DLBox";
+import DLButton from "components/DLButton";
+import DLTypography from "components/DLTypography";
+import PageLayout from "utils/LayoutContainers/PageLayout";
+import DefaultNavbar from "utils/Navbars/DefaultNavbar";
+import DataTable from "utils/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { DropzoneDialog } from "mui-file-dropzone";
 import pageRoutes from "page.routes";
@@ -66,9 +66,9 @@ function ImportCourses() {
   return (
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} transparent />
-      <MDBox my={3} mt={12} ml={1} mr={1}>
+      <DLBox my={3} mt={12} ml={1} mr={1}>
         <Card sx={{ marginTop: 3 }}>
-          <MDBox
+          <DLBox
             variant="gradient"
             bgColor="secondary"
             borderRadius="lg"
@@ -80,20 +80,20 @@ function ImportCourses() {
             my={3}
             textAlign="center"
           >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Import courses
-            </MDTypography>
-          </MDBox>
-          <MDBox pl={2}>
-            <MDButton
+            </DLTypography>
+          </DLBox>
+          <DLBox pl={2}>
+            <DLButton
               color="primary"
               variant="outlined"
               sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
               onClick={handleDownloadSchema}
             >
               Download CSV schema
-            </MDButton>
-            <MDButton onClick={handleOpen}>Upload CSV file</MDButton>
+            </DLButton>
+            <DLButton onClick={handleOpen}>Upload CSV file</DLButton>
             <DropzoneDialog
               open={open}
               onSave={handleSave}
@@ -102,12 +102,12 @@ function ImportCourses() {
               maxFileSize={10000000}
               onClose={handleClose}
             />
-          </MDBox>
+          </DLBox>
           {(results.length > 0 || errors.length > 0) && (
-            <MDBox m={1}>
+            <DLBox m={1}>
               <Grid container spacing={1}>
                 <Grid item lg={6} sx={12}>
-                  <MDBox
+                  <DLBox
                     variant="gradient"
                     bgColor="success"
                     borderRadius="lg"
@@ -118,10 +118,10 @@ function ImportCourses() {
                     my={3}
                     textAlign="center"
                   >
-                    <MDTypography variant="h6" fontWeight="medium" color="white">
+                    <DLTypography variant="h6" fontWeight="medium" color="white">
                       Imported
-                    </MDTypography>
-                  </MDBox>
+                    </DLTypography>
+                  </DLBox>
                   <DataTable
                     table={{
                       columns: [{ Header: "studentNumber", accessor: "studentNumber" }],
@@ -131,7 +131,7 @@ function ImportCourses() {
                   />
                 </Grid>
                 <Grid item lg={6} sx={12}>
-                  <MDBox
+                  <DLBox
                     variant="gradient"
                     bgColor="error"
                     borderRadius="lg"
@@ -142,10 +142,10 @@ function ImportCourses() {
                     my={3}
                     textAlign="center"
                   >
-                    <MDTypography variant="h6" fontWeight="medium" color="white">
+                    <DLTypography variant="h6" fontWeight="medium" color="white">
                       Errors
-                    </MDTypography>
-                  </MDBox>
+                    </DLTypography>
+                  </DLBox>
                   <DataTable
                     table={{
                       columns: [
@@ -158,10 +158,10 @@ function ImportCourses() {
                   />
                 </Grid>
               </Grid>
-            </MDBox>
+            </DLBox>
           )}
         </Card>
-      </MDBox>
+      </DLBox>
     </PageLayout>
   );
 }

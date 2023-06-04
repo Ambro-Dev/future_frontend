@@ -12,18 +12,18 @@ import Grid from "@mui/material/Grid";
 import Autocomplete from "@mui/material/Autocomplete";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
 
 // NewProduct page components
 import FormField from "layouts/ecommerce/products/new-product/components/FormField";
 
 function Pricing() {
   return (
-    <MDBox>
-      <MDTypography variant="h5">Pricing</MDTypography>
-      <MDBox mt={3}>
+    <DLBox>
+      <DLTypography variant="h5">Pricing</DLTypography>
+      <DLBox mt={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={3}>
             <FormField type="text" label="Price" placeholder="99.00" />
@@ -32,32 +32,32 @@ function Pricing() {
             <Autocomplete
               defaultValue="USD"
               options={["BTC", "CNY", "EUR", "GBP", "INR", "USD"]}
-              renderInput={(params) => <MDInput {...params} variant="standard" />}
+              renderInput={(params) => <DLInput {...params} variant="standard" />}
             />
           </Grid>
           <Grid item xs={12} sm={5}>
             <FormField type="text" label="SKU" placeholder="71283476591" />
           </Grid>
         </Grid>
-      </MDBox>
-      <MDBox mt={1}>
+      </DLBox>
+      <DLBox mt={1}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <MDBox my={2} display="inline-block">
-              <MDTypography component="label" variant="button" fontWeight="regular" color="text">
+            <DLBox my={2} display="inline-block">
+              <DLTypography component="label" variant="button" fontWeight="regular" color="text">
                 Tags
-              </MDTypography>
-            </MDBox>
+              </DLTypography>
+            </DLBox>
             <Autocomplete
               multiple
               defaultValue={["In Stock", "Out of Stock"]}
               options={["Black Friday", "Expired", "Out of Stock", "In Stock", "Sale"]}
-              renderInput={(params) => <MDInput {...params} variant="standard" />}
+              renderInput={(params) => <DLInput {...params} variant="standard" />}
             />
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

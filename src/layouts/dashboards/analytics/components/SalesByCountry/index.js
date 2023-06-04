@@ -17,11 +17,11 @@ import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import SalesTable from "examples/Tables/SalesTable";
+// Distance Learning React utils
+import SalesTable from "utils/Tables/SalesTable";
 
 // Data
 import salesTableData from "layouts/dashboards/analytics/components/SalesByCountry/data/salesTableData";
@@ -29,8 +29,8 @@ import salesTableData from "layouts/dashboards/analytics/components/SalesByCount
 function SalesByCountry() {
   return (
     <Card sx={{ width: "100%" }}>
-      <MDBox display="flex">
-        <MDBox
+      <DLBox display="flex">
+        <DLBox
           display="flex"
           justifyContent="center"
           alignItems="center"
@@ -47,12 +47,12 @@ function SalesByCountry() {
           <Icon fontSize="medium" color="inherit">
             language
           </Icon>
-        </MDBox>
-        <MDTypography variant="h6" sx={{ mt: 2, mb: 1, ml: 2 }}>
+        </DLBox>
+        <DLTypography variant="h6" sx={{ mt: 2, mb: 1, ml: 2 }}>
           Sales by Country
-        </MDTypography>
-      </MDBox>
-      <MDBox p={2}>
+        </DLTypography>
+      </DLBox>
+      <DLBox p={2}>
         <Grid container>
           <Grid item xs={12} md={7} lg={6}>
             <SalesTable rows={salesTableData} shadow={false} />
@@ -125,7 +125,7 @@ function SalesByCountry() {
             />
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

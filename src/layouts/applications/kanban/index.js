@@ -10,18 +10,18 @@ Coded by Ambro-Dev
 */
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
 import { useEffect, useState } from "react";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import MDTypography from "components/MDTypography";
-import CategoriesList from "examples/Lists/CategoriesList";
-import MDButton from "components/MDButton";
+import DLTypography from "components/DLTypography";
+import CategoriesList from "utils/Lists/CategoriesList";
+import DLButton from "components/DLButton";
 import { useTranslation } from "react-i18next";
 import About from "./components/About";
 
@@ -103,26 +103,26 @@ function Kanban() {
       <DashboardLayout>
         <DashboardNavbar />
         {auth.roles.includes(5150) && (
-          <MDBox>
+          <DLBox>
             {isVisible ? (
-              <MDBox>
+              <DLBox>
                 {name === "" || description === "" ? (
                   <>
-                    <MDButton color="success" circular disabled onClick={handleSave}>
+                    <DLButton color="success" circular disabled onClick={handleSave}>
                       {t("save")}
-                    </MDButton>
-                    <MDButton color="error" circular onClick={handleClose} sx={{ ml: 1 }}>
+                    </DLButton>
+                    <DLButton color="error" circular onClick={handleClose} sx={{ ml: 1 }}>
                       {t("cancel")}
-                    </MDButton>
+                    </DLButton>
                   </>
                 ) : (
                   <>
-                    <MDButton color="success" circular onClick={handleSave}>
+                    <DLButton color="success" circular onClick={handleSave}>
                       {t("save")}
-                    </MDButton>
-                    <MDButton color="error" circular onClick={handleClose} sx={{ ml: 1 }}>
+                    </DLButton>
+                    <DLButton color="error" circular onClick={handleClose} sx={{ ml: 1 }}>
                       {t("cancel")}
-                    </MDButton>
+                    </DLButton>
                   </>
                 )}
                 <About
@@ -133,17 +133,17 @@ function Kanban() {
                   setDescription={setDescription}
                   setPic={setPic}
                 />
-              </MDBox>
+              </DLBox>
             ) : (
-              <MDButton color="success" circular onClick={handleOpen} sx={{ mb: 1 }}>
+              <DLButton color="success" circular onClick={handleOpen} sx={{ mb: 1 }}>
                 {t("add")}
-              </MDButton>
+              </DLButton>
             )}
-          </MDBox>
+          </DLBox>
         )}
 
         {courses.length > 0 ? (
-          <MDBox py={3}>
+          <DLBox py={3}>
             <CategoriesList
               title={t("courses")}
               categories={courses.map((course) => ({
@@ -154,17 +154,17 @@ function Kanban() {
                   <>
                     {course.teacherId.name} {course.teacherId.surname}
                     {"   "}
-                    <MDTypography variant="caption" color="text" fontWeight="medium">
+                    <DLTypography variant="caption" color="text" fontWeight="medium">
                       {course.members.length} {t("members")}
-                    </MDTypography>
+                    </DLTypography>
                   </>
                 ),
                 route: `/courses/course-info/${course._id}`,
               }))}
             />
-          </MDBox>
+          </DLBox>
         ) : (
-          <MDBox py={3}>{t("nocourses")}</MDBox>
+          <DLBox py={3}>{t("nocourses")}</DLBox>
         )}
         <Footer />
       </DashboardLayout>

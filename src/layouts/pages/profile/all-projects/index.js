@@ -16,15 +16,15 @@ import MenuItem from "@mui/material/MenuItem";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import ComplexProjectCard from "examples/Cards/ProjectCards/ComplexProjectCard";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import ComplexProjectCard from "utils/Cards/ProjectCards/ComplexProjectCard";
 
 // Project page components
 import Header from "layouts/pages/profile/components/Header";
@@ -80,33 +80,33 @@ function AllProjects() {
 
   return (
     <DashboardLayout>
-      <MDBox width="calc(100% - 48px)" position="absolute" top="1.75rem">
+      <DLBox width="calc(100% - 48px)" position="absolute" top="1.75rem">
         <DashboardNavbar light absolute />
-      </MDBox>
+      </DLBox>
       <Header />
-      <MDBox pb={3}>
+      <DLBox pb={3}>
         <Grid container alignItems="center">
           <Grid item xs={12} md={7}>
-            <MDBox mb={1}>
-              <MDTypography variant="h5">Some of Our Awesome Projects</MDTypography>
-            </MDBox>
-            <MDBox mb={2}>
-              <MDTypography variant="body2" color="text">
+            <DLBox mb={1}>
+              <DLTypography variant="h5">Some of Our Awesome Projects</DLTypography>
+            </DLBox>
+            <DLBox mb={2}>
+              <DLTypography variant="body2" color="text">
                 This is the paragraph where you can write more details about your projects. Keep you
                 user engaged by providing meaningful information.
-              </MDTypography>
-            </MDBox>
+              </DLTypography>
+            </DLBox>
           </Grid>
           <Grid item xs={12} md={5} sx={{ textAlign: "right" }}>
-            <MDButton variant="gradient" color="info">
+            <DLButton variant="gradient" color="info">
               <Icon>add</Icon>&nbsp; Add New
-            </MDButton>
+            </DLButton>
           </Grid>
         </Grid>
-        <MDBox mt={5}>
+        <DLBox mt={5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
+              <DLBox mb={1.5} mt={1.5}>
                 <ComplexProjectCard
                   image={logoSlack}
                   title="slack bot"
@@ -118,10 +118,10 @@ function AllProjects() {
                     menu: renderMenu(slackBotMenu, closeSlackBotMenu),
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
+              <DLBox mb={1.5} mt={1.5}>
                 <ComplexProjectCard
                   image={logoSpotify}
                   title="premium support"
@@ -133,10 +133,10 @@ function AllProjects() {
                     menu: renderMenu(premiumSupportMenu, closePremiumSupportMenu),
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
+              <DLBox mb={1.5} mt={1.5}>
                 <ComplexProjectCard
                   image={logoXD}
                   title="design tools"
@@ -148,10 +148,10 @@ function AllProjects() {
                     menu: renderMenu(designToolsMenu, closeDesignToolsMenu),
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
+              <DLBox mb={1.5} mt={1.5}>
                 <ComplexProjectCard
                   image={logoAsana}
                   title="looking great"
@@ -163,10 +163,10 @@ function AllProjects() {
                     menu: renderMenu(lookingGreatMenu, closeLookingGreatMenu),
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
+              <DLBox mb={1.5} mt={1.5}>
                 <ComplexProjectCard
                   image={logoInvision}
                   title="developer first"
@@ -178,10 +178,10 @@ function AllProjects() {
                     menu: renderMenu(developerFirstMenu, closeDeveloperFirstMenu),
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
+              <DLBox mb={1.5} mt={1.5}>
                 <ComplexProjectCard
                   image={logoAtlassian}
                   title="Product Development"
@@ -193,11 +193,11 @@ function AllProjects() {
                     menu: renderMenu(developerFirstMenu, closeDeveloperFirstMenu),
                   }}
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
           </Grid>
-        </MDBox>
-      </MDBox>
+        </DLBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

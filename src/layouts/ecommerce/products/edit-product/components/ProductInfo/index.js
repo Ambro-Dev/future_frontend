@@ -15,10 +15,10 @@ import Card from "@mui/material/Card";
 import Autocomplete from "@mui/material/Autocomplete";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDEditor from "components/MDEditor";
-import MDInput from "components/MDInput";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLEditor from "components/DLEditor";
+import DLInput from "components/DLInput";
 
 // NewProduct page components
 import FormField from "layouts/ecommerce/products/edit-product/components/FormField";
@@ -32,9 +32,9 @@ function ProductInfo() {
 
   return (
     <Card>
-      <MDBox p={3}>
-        <MDTypography variant="h5">Product Information</MDTypography>
-        <MDBox mt={1}>
+      <DLBox p={3}>
+        <DLTypography variant="h5">Product Information</DLTypography>
+        <DLBox mt={1}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <FormField type="text" label="Name" defaultValue="Minimal Bar Stool" />
@@ -43,8 +43,8 @@ function ProductInfo() {
               <FormField type="number" label="Weight" defaultValue={2} />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mt={1}>
+        </DLBox>
+        <DLBox mt={1}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={3}>
               <FormField type="text" label="Collection" defaultValue="Summer" />
@@ -56,24 +56,24 @@ function ProductInfo() {
               <FormField type="number" label="Quantity" defaultValue={50} />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mt={1}>
+        </DLBox>
+        <DLBox mt={1}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
-              <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                <MDTypography component="label" variant="button" fontWeight="regular" color="text">
+              <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                <DLTypography component="label" variant="button" fontWeight="regular" color="text">
                   Description&nbsp;&nbsp;
-                  <MDTypography variant="caption" fontWeight="regular" color="text">
+                  <DLTypography variant="caption" fontWeight="regular" color="text">
                     (optional)
-                  </MDTypography>
-                </MDTypography>
-              </MDBox>
-              <MDEditor value={editorValue} onChange={setEditorValue} />
+                  </DLTypography>
+                </DLTypography>
+              </DLBox>
+              <DLEditor value={editorValue} onChange={setEditorValue} />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <MDBox mb={3}>
-                <MDBox mb={1.625} display="inline-block">
-                  <MDTypography
+              <DLBox mb={3}>
+                <DLBox mb={1.625} display="inline-block">
+                  <DLTypography
                     component="label"
                     variant="button"
                     fontWeight="regular"
@@ -81,16 +81,16 @@ function ProductInfo() {
                     textTransform="capitalize"
                   >
                     Category
-                  </MDTypography>
-                </MDBox>
+                  </DLTypography>
+                </DLBox>
                 <Autocomplete
                   defaultValue="Clothing"
                   options={["Clothing", "Electronics", "Furniture", "Others", "Real Estate"]}
-                  renderInput={(params) => <MDInput {...params} variant="standard" />}
+                  renderInput={(params) => <DLInput {...params} variant="standard" />}
                 />
-              </MDBox>
-              <MDBox mb={1.625} display="inline-block">
-                <MDTypography
+              </DLBox>
+              <DLBox mb={1.625} display="inline-block">
+                <DLTypography
                   component="label"
                   variant="button"
                   fontWeight="regular"
@@ -98,17 +98,17 @@ function ProductInfo() {
                   textTransform="capitalize"
                 >
                   Color
-                </MDTypography>
-              </MDBox>
+                </DLTypography>
+              </DLBox>
               <Autocomplete
                 defaultValue="Black"
                 options={["Black", "Blue", "Green", "Orange", "White"]}
-                renderInput={(params) => <MDInput {...params} variant="standard" />}
+                renderInput={(params) => <DLInput {...params} variant="standard" />}
               />
             </Grid>
           </Grid>
-        </MDBox>
-      </MDBox>
+        </DLBox>
+      </DLBox>
     </Card>
   );
 }

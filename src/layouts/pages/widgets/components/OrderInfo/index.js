@@ -11,11 +11,11 @@ Coded by Ambro-Dev
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
-import MDAvatar from "components/MDAvatar";
-import MDBadge from "components/MDBadge";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
+import DLAvatar from "components/DLAvatar";
+import DLBadge from "components/DLBadge";
 import PropTypes from "prop-types";
 
 // Images
@@ -51,33 +51,33 @@ function OrderInfo({ courseId }) {
   return (
     <Grid container spacing={3} alignItems="center">
       <Grid item xs={12} md={6}>
-        <MDBox display="flex" alignItems="center">
-          <MDBox mr={2}>
-            <MDAvatar size="xxl" src={imageIrl} alt="Gold Glasses" />
-          </MDBox>
-          <MDBox lineHeight={1}>
-            <MDTypography variant="h6" fontWeight="medium">
+        <DLBox display="flex" alignItems="center">
+          <DLBox mr={2}>
+            <DLAvatar size="xxl" src={imageIrl} alt="Gold Glasses" />
+          </DLBox>
+          <DLBox lineHeight={1}>
+            <DLTypography variant="h6" fontWeight="medium">
               {teacher?.name} {teacher?.surname}
-            </MDTypography>
-            <MDBadge
+            </DLTypography>
+            <DLBadge
               variant="gradient"
               color="success"
               size="xs"
               badgeContent={t("badge")}
               container
             />
-          </MDBox>
-        </MDBox>
+          </DLBox>
+        </DLBox>
       </Grid>
       <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
-        <MDButton variant="gradient" color="dark" size="small" onClick={() => navigate("/chat")}>
+        <DLButton variant="gradient" color="dark" size="small" onClick={() => navigate("/chat")}>
           {t("sendmessage")}
-        </MDButton>
-        <MDBox mt={0.5}>
-          <MDTypography variant="button" color="text">
+        </DLButton>
+        <DLBox mt={0.5}>
+          <DLTypography variant="button" color="text">
             {t("questions")}
-          </MDTypography>
-        </MDBox>
+          </DLTypography>
+        </DLBox>
       </Grid>
     </Grid>
   );

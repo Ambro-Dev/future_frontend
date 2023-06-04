@@ -14,12 +14,12 @@ import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import PageLayout from "examples/LayoutContainers/PageLayout";
+// Distance Learning React utils
+import DefaultNavbar from "utils/Navbars/DefaultNavbar";
+import PageLayout from "utils/LayoutContainers/PageLayout";
 
 // Distance Learning React page layout routes
 import pageRoutes from "page.routes";
@@ -49,7 +49,7 @@ function IllustrationLayout({ header, title, description, illustration, children
         }}
       >
         <Grid item xs={12} lg={6}>
-          <MDBox
+          <DLBox
             display={{ xs: "none", lg: "flex" }}
             width="calc(100% - 2rem)"
             height="calc(100vh - 2rem)"
@@ -60,25 +60,25 @@ function IllustrationLayout({ header, title, description, illustration, children
           />
         </Grid>
         <Grid item xs={11} sm={8} md={6} lg={4} xl={3} sx={{ mx: "auto" }}>
-          <MDBox display="flex" flexDirection="column" justifyContent="center" height="100vh">
-            <MDBox py={3} px={3} textAlign="center">
+          <DLBox display="flex" flexDirection="column" justifyContent="center" height="100vh">
+            <DLBox py={3} px={3} textAlign="center">
               {!header ? (
                 <>
-                  <MDBox mb={1} textAlign="center">
-                    <MDTypography variant="h4" fontWeight="bold">
+                  <DLBox mb={1} textAlign="center">
+                    <DLTypography variant="h4" fontWeight="bold">
                       {title}
-                    </MDTypography>
-                  </MDBox>
-                  <MDTypography variant="body2" color="text">
+                    </DLTypography>
+                  </DLBox>
+                  <DLTypography variant="body2" color="text">
                     {description}
-                  </MDTypography>
+                  </DLTypography>
                 </>
               ) : (
                 header
               )}
-            </MDBox>
-            <MDBox p={3}>{children}</MDBox>
-          </MDBox>
+            </DLBox>
+            <DLBox p={3}>{children}</DLBox>
+          </DLBox>
         </Grid>
       </Grid>
     </PageLayout>

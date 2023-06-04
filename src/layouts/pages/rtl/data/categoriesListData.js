@@ -8,7 +8,7 @@ Coded by Ambro-Dev
 */
 
 // Distance Learning React components
-import MDTypography from "components/MDTypography";
+import DLTypography from "components/DLTypography";
 
 const categoriesListData = [
   {
@@ -18,9 +18,9 @@ const categoriesListData = [
     description: (
       <>
         250 في المخزن,{" "}
-        <MDTypography variant="caption" color="text" fontWeight="medium">
+        <DLTypography variant="caption" color="text" fontWeight="medium">
           346+ تم البيع
-        </MDTypography>
+        </DLTypography>
       </>
     ),
     route: "/",
@@ -32,9 +32,9 @@ const categoriesListData = [
     description: (
       <>
         123 مغلق,{" "}
-        <MDTypography variant="caption" color="text" fontWeight="medium">
+        <DLTypography variant="caption" color="text" fontWeight="medium">
           15 افتح
-        </MDTypography>
+        </DLTypography>
       </>
     ),
     route: "/",
@@ -46,9 +46,9 @@ const categoriesListData = [
     description: (
       <>
         1 is نشيط,{" "}
-        <MDTypography variant="caption" color="text" fontWeight="medium">
+        <DLTypography variant="caption" color="text" fontWeight="medium">
           40 مغلق
-        </MDTypography>
+        </DLTypography>
       </>
     ),
     route: "/",
@@ -58,9 +58,9 @@ const categoriesListData = [
     icon: "insert_emoticon",
     name: "المستخدمين السعداء",
     description: (
-      <MDTypography variant="caption" color="text" fontWeight="medium">
+      <DLTypography variant="caption" color="text" fontWeight="medium">
         + 430
-      </MDTypography>
+      </DLTypography>
     ),
     route: "/",
   },

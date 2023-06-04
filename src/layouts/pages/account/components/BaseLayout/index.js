@@ -6,15 +6,15 @@ import PropTypes from "prop-types";
 // @mui material components
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
 // Distance Learning React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
 
 function BaseLayout({ stickyNavbar, children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -42,7 +42,7 @@ function BaseLayout({ stickyNavbar, children }) {
   return (
     <DashboardLayout>
       <DashboardNavbar absolute={!stickyNavbar} isMini />
-      <MDBox mt={stickyNavbar ? 3 : 10}>{children}</MDBox>
+      <DLBox mt={stickyNavbar ? 3 : 10}>{children}</DLBox>
       <Footer />
     </DashboardLayout>
   );

@@ -14,20 +14,20 @@ import PropTypes from "prop-types";
 import { ErrorMessage, Field } from "formik";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
 
 function FormField({ label, name, ...rest }) {
   return (
-    <MDBox mb={1.5}>
-      <Field {...rest} name={name} as={MDInput} variant="standard" label={label} fullWidth />
-      <MDBox mt={0.75}>
-        <MDTypography component="div" variant="caption" color="error" fontWeight="regular">
+    <DLBox mb={1.5}>
+      <Field {...rest} name={name} as={DLInput} variant="standard" label={label} fullWidth />
+      <DLBox mt={0.75}>
+        <DLTypography component="div" variant="caption" color="error" fontWeight="regular">
           <ErrorMessage name={name} />
-        </MDTypography>
-      </MDBox>
-    </MDBox>
+        </DLTypography>
+      </DLBox>
+    </DLBox>
   );
 }
 

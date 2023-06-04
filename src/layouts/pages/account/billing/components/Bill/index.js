@@ -14,9 +14,9 @@ import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
 // Distance Learning React context
 import { useMaterialUIController } from "context";
@@ -26,7 +26,7 @@ function Bill({ name, company, email, vat, noGutter }) {
   const { darkMode } = controller;
 
   return (
-    <MDBox
+    <DLBox
       component="li"
       display="flex"
       justifyContent="space-between"
@@ -37,53 +37,53 @@ function Bill({ name, company, email, vat, noGutter }) {
       mb={noGutter ? 0 : 1}
       mt={2}
     >
-      <MDBox width="100%" display="flex" flexDirection="column">
-        <MDBox
+      <DLBox width="100%" display="flex" flexDirection="column">
+        <DLBox
           display="flex"
           justifyContent="space-between"
           alignItems={{ xs: "flex-start", sm: "center" }}
           flexDirection={{ xs: "column", sm: "row" }}
           mb={2}
         >
-          <MDTypography variant="button" fontWeight="medium" textTransform="capitalize">
+          <DLTypography variant="button" fontWeight="medium" textTransform="capitalize">
             {name}
-          </MDTypography>
+          </DLTypography>
 
-          <MDBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
-            <MDBox mr={1}>
-              <MDButton variant="text" color="error">
+          <DLBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
+            <DLBox mr={1}>
+              <DLButton variant="text" color="error">
                 <Icon>delete</Icon>&nbsp;delete
-              </MDButton>
-            </MDBox>
-            <MDButton variant="text" color={darkMode ? "white" : "dark"}>
+              </DLButton>
+            </DLBox>
+            <DLButton variant="text" color={darkMode ? "white" : "dark"}>
               <Icon>edit</Icon>&nbsp;edit
-            </MDButton>
-          </MDBox>
-        </MDBox>
-        <MDBox mb={1} lineHeight={0}>
-          <MDTypography variant="caption" color="text">
+            </DLButton>
+          </DLBox>
+        </DLBox>
+        <DLBox mb={1} lineHeight={0}>
+          <DLTypography variant="caption" color="text">
             Company Name:&nbsp;&nbsp;&nbsp;
-            <MDTypography variant="caption" fontWeight="medium" textTransform="capitalize">
+            <DLTypography variant="caption" fontWeight="medium" textTransform="capitalize">
               {company}
-            </MDTypography>
-          </MDTypography>
-        </MDBox>
-        <MDBox mb={1} lineHeight={0}>
-          <MDTypography variant="caption" color="text">
+            </DLTypography>
+          </DLTypography>
+        </DLBox>
+        <DLBox mb={1} lineHeight={0}>
+          <DLTypography variant="caption" color="text">
             Email Address:&nbsp;&nbsp;&nbsp;
-            <MDTypography variant="caption" fontWeight="medium">
+            <DLTypography variant="caption" fontWeight="medium">
               {email}
-            </MDTypography>
-          </MDTypography>
-        </MDBox>
-        <MDTypography variant="caption" color="text">
+            </DLTypography>
+          </DLTypography>
+        </DLBox>
+        <DLTypography variant="caption" color="text">
           VAT Number:&nbsp;&nbsp;&nbsp;
-          <MDTypography variant="caption" fontWeight="medium">
+          <DLTypography variant="caption" fontWeight="medium">
             {vat}
-          </MDTypography>
-        </MDTypography>
-      </MDBox>
-    </MDBox>
+          </DLTypography>
+        </DLTypography>
+      </DLBox>
+    </DLBox>
   );
 }
 

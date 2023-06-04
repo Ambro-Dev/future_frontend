@@ -14,34 +14,34 @@ import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
 function Transaction({ color, icon, name, description, value }) {
   return (
-    <MDBox key={name} component="li" py={1} pr={2} mb={1}>
-      <MDBox display="flex" justifyContent="space-between" alignItems="center">
-        <MDBox display="flex" alignItems="center">
-          <MDBox mr={2}>
-            <MDButton variant="outlined" color={color} iconOnly circular>
+    <DLBox key={name} component="li" py={1} pr={2} mb={1}>
+      <DLBox display="flex" justifyContent="space-between" alignItems="center">
+        <DLBox display="flex" alignItems="center">
+          <DLBox mr={2}>
+            <DLButton variant="outlined" color={color} iconOnly circular>
               <Icon sx={{ fontWeight: "bold" }}>{icon}</Icon>
-            </MDButton>
-          </MDBox>
-          <MDBox display="flex" flexDirection="column">
-            <MDTypography variant="button" fontWeight="medium" gutterBottom>
+            </DLButton>
+          </DLBox>
+          <DLBox display="flex" flexDirection="column">
+            <DLTypography variant="button" fontWeight="medium" gutterBottom>
               {name}
-            </MDTypography>
-            <MDTypography variant="caption" color="text" fontWeight="regular">
+            </DLTypography>
+            <DLTypography variant="caption" color="text" fontWeight="regular">
               {description}
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDTypography variant="button" color={color} fontWeight="medium" textGradient>
+            </DLTypography>
+          </DLBox>
+        </DLBox>
+        <DLTypography variant="button" color={color} fontWeight="medium" textGradient>
           {value}
-        </MDTypography>
-      </MDBox>
-    </MDBox>
+        </DLTypography>
+      </DLBox>
+    </DLBox>
   );
 }
 

@@ -3,7 +3,7 @@ import { VideoSDKMeeting } from "@videosdk.live/rtc-js-prebuilt";
 import useAuth from "hooks/useAuth";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 import "./styles/index.css";
 
 export default function App() {
@@ -106,5 +106,5 @@ export default function App() {
     meeting.init(config);
   }, []);
 
-  return <MDBox />;
+  return <DLBox />;
 }

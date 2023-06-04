@@ -14,12 +14,12 @@ import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 function Invoice({ date, id, price, noGutter }) {
   return (
-    <MDBox
+    <DLBox
       component="li"
       display="flex"
       justifyContent="space-between"
@@ -28,26 +28,26 @@ function Invoice({ date, id, price, noGutter }) {
       pr={1}
       mb={noGutter ? 0 : 1}
     >
-      <MDBox lineHeight={1.125}>
-        <MDTypography display="block" variant="button" fontWeight="medium">
+      <DLBox lineHeight={1.125}>
+        <DLTypography display="block" variant="button" fontWeight="medium">
           {date}
-        </MDTypography>
-        <MDTypography variant="caption" fontWeight="regular" color="text">
+        </DLTypography>
+        <DLTypography variant="caption" fontWeight="regular" color="text">
           {id}
-        </MDTypography>
-      </MDBox>
-      <MDBox display="flex" alignItems="center">
-        <MDTypography variant="button" fontWeight="regular" color="text">
+        </DLTypography>
+      </DLBox>
+      <DLBox display="flex" alignItems="center">
+        <DLTypography variant="button" fontWeight="regular" color="text">
           {price}
-        </MDTypography>
-        <MDBox display="flex" alignItems="center" lineHeight={1} ml={3} sx={{ cursor: "pointer" }}>
+        </DLTypography>
+        <DLBox display="flex" alignItems="center" lineHeight={1} ml={3} sx={{ cursor: "pointer" }}>
           <Icon fontSize="small">picture_as_pdf</Icon>
-          <MDTypography variant="button" fontWeight="bold">
+          <DLTypography variant="button" fontWeight="bold">
             &nbsp;PDF
-          </MDTypography>
-        </MDBox>
-      </MDBox>
-    </MDBox>
+          </DLTypography>
+        </DLBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

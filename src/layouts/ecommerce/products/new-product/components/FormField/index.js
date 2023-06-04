@@ -11,10 +11,10 @@ Coded by Ambro-Dev
 import PropTypes from "prop-types";
 
 // Distance Learning React components
-import MDInput from "components/MDInput";
+import DLInput from "components/DLInput";
 
 function FormField({ label, ...rest }) {
-  return <MDInput {...rest} label={label} variant="standard" fullWidth />;
+  return <DLInput {...rest} label={label} variant="standard" fullWidth />;
 }
 
 // typechecking props for FormField

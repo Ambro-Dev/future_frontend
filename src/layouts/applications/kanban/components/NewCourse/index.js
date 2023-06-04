@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import Modal from "@mui/material/Modal";
-import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLButton from "components/DLButton";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
@@ -50,17 +50,17 @@ function NewEvent(props) {
       aria-describedby="modal-modal-description"
       onClose={onClose}
     >
-      <MDBox
+      <DLBox
         component="form"
         role="form"
         className="modal-form"
         onSubmit={setSelectedAvatar}
         sx={style}
       >
-        <MDBox id="modal-modal-title">{t("avatar")}</MDBox>
-        <MDBox id="modal-modal-description">
+        <DLBox id="modal-modal-title">{t("avatar")}</DLBox>
+        <DLBox id="modal-modal-description">
           {imageOptions.map((avatar) => (
-            <MDBox
+            <DLBox
               sx={{ height: 150 }}
               component="img"
               key={avatar}
@@ -70,9 +70,9 @@ function NewEvent(props) {
               style={{ border: avatar === selectedAvatar ? "2px solid #333" : "none" }}
             />
           ))}
-        </MDBox>
-        <MDButton onClick={onClose}>{t("close")}</MDButton>
-      </MDBox>
+        </DLBox>
+        <DLButton onClick={onClose}>{t("close")}</DLButton>
+      </DLBox>
     </Modal>
   );
 }

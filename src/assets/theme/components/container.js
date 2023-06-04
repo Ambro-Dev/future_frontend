@@ -18,7 +18,7 @@ const {
 } = breakpoints;
 
 const SM = `@media (min-width: ${sm}px)`;
-const MD = `@media (min-width: ${md}px)`;
+const DL = `@media (min-width: ${md}px)`;
 const LG = `@media (min-width: ${lg}px)`;
 const XL = `@media (min-width: ${xl}px)`;
 const XXL = `@media (min-width: ${xxl}px)`;
@@ -39,7 +39,7 @@ const container = {
       maxWidth: "540px !important",
     },
   },
-  [MD]: {
+  [DL]: {
     ".MuiContainer-root": {
       ...sharedClasses,
       maxWidth: "720px !important",

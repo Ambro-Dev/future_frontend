@@ -11,8 +11,8 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // Billing page components
 import Bill from "layouts/pages/account/billing/components/Bill";
@@ -20,13 +20,13 @@ import Bill from "layouts/pages/account/billing/components/Bill";
 function BillingInformation() {
   return (
     <Card id="delete-account">
-      <MDBox pt={3} px={2}>
-        <MDTypography variant="h6" fontWeight="medium">
+      <DLBox pt={3} px={2}>
+        <DLTypography variant="h6" fontWeight="medium">
           Billing Information
-        </MDTypography>
-      </MDBox>
-      <MDBox pt={1} pb={2} px={2}>
-        <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+        </DLTypography>
+      </DLBox>
+      <DLBox pt={1} pb={2} px={2}>
+        <DLBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
           <Bill
             name="oliver liam"
             company="viking burrito"
@@ -46,8 +46,8 @@ function BillingInformation() {
             vat="FRB1235476"
             noGutter
           />
-        </MDBox>
-      </MDBox>
+        </DLBox>
+      </DLBox>
     </Card>
   );
 }

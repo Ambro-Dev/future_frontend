@@ -14,9 +14,9 @@ import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -66,49 +66,49 @@ function Account({ setClassName }) {
   });
 
   return (
-    <MDBox>
-      <MDBox width="80%" textAlign="center" mx="auto" my={4}>
-        <MDBox mb={1}>
-          <MDTypography variant="h5" fontWeight="regular">
+    <DLBox>
+      <DLBox width="80%" textAlign="center" mx="auto" my={4}>
+        <DLBox mb={1}>
+          <DLTypography variant="h5" fontWeight="regular">
             {t("typeofevent")}
-          </MDTypography>
-        </MDBox>
-      </MDBox>
-      <MDBox mt={2}>
+          </DLTypography>
+        </DLBox>
+      </DLBox>
+      <DLBox mt={2}>
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} sm={3}>
-            <MDBox textAlign="center">
-              <MDButton
+            <DLBox textAlign="center">
+              <DLButton
                 color="info"
                 variant={design ? "contained" : "outlined"}
                 onClick={handleSetDesign}
                 sx={customButtonStyles}
               >
                 <Icon sx={{ color: design ? "white" : "inherit" }}>video_call</Icon>
-              </MDButton>
-              <MDTypography variant="h6" sx={{ mt: 1 }}>
+              </DLButton>
+              <DLTypography variant="h6" sx={{ mt: 1 }}>
                 {t("videolesson")}
-              </MDTypography>
-            </MDBox>
+              </DLTypography>
+            </DLBox>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <MDBox textAlign="center">
-              <MDButton
+            <DLBox textAlign="center">
+              <DLButton
                 color="info"
                 variant={code ? "contained" : "outlined"}
                 onClick={handleSetCode}
                 sx={customButtonStyles}
               >
                 <Icon sx={{ color: code ? "white" : "inherit" }}>grading</Icon>
-              </MDButton>
-              <MDTypography variant="h6" sx={{ mt: 1 }}>
+              </DLButton>
+              <DLTypography variant="h6" sx={{ mt: 1 }}>
                 {t("exam")}
-              </MDTypography>
-            </MDBox>
+              </DLTypography>
+            </DLBox>
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

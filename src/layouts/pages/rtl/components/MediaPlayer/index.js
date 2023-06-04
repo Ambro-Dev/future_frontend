@@ -12,9 +12,9 @@ import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
 // Images
 import bgImage from "assets/images/bg-player.jpeg";
@@ -39,16 +39,16 @@ function MediaPlayer() {
         backgroundPosition: "center",
       })}
     >
-      <MDBox p={3} position="relative" lineHeight={0}>
-        <MDTypography variant="h5" color="white" fontWeight="medium">
+      <DLBox p={3} position="relative" lineHeight={0}>
+        <DLTypography variant="h5" color="white" fontWeight="medium">
           نوع من البلوز
-        </MDTypography>
-        <MDTypography variant="button" color="white">
+        </DLTypography>
+        <DLTypography variant="button" color="white">
           ديفتونز
-        </MDTypography>
-        <MDBox display="flex" mt={3} pt={1}>
-          <MDBox display="flex" alignItems="center" justifyContent="center">
-            <MDButton
+        </DLTypography>
+        <DLBox display="flex" mt={3} pt={1}>
+          <DLBox display="flex" alignItems="center" justifyContent="center">
+            <DLButton
               variant="outlined"
               size="large"
               circular
@@ -56,8 +56,8 @@ function MediaPlayer() {
               sx={mediaPlayerButtonStyles}
             >
               <Icon>skip_previous</Icon>
-            </MDButton>
-            <MDButton
+            </DLButton>
+            <DLButton
               variant="outlined"
               size="large"
               circular
@@ -65,8 +65,8 @@ function MediaPlayer() {
               sx={mediaPlayerButtonStyles}
             >
               <Icon>play_arrow</Icon>
-            </MDButton>
-            <MDButton
+            </DLButton>
+            <DLButton
               variant="outlined"
               size="large"
               circular
@@ -74,10 +74,10 @@ function MediaPlayer() {
               sx={mediaPlayerButtonStyles}
             >
               <Icon>skip_next</Icon>
-            </MDButton>
-          </MDBox>
-        </MDBox>
-      </MDBox>
+            </DLButton>
+          </DLBox>
+        </DLBox>
+      </DLBox>
     </Card>
   );
 }

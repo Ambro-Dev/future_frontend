@@ -15,10 +15,10 @@ import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
+import DLButton from "components/DLButton";
 
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
@@ -30,7 +30,7 @@ function Cover() {
   return (
     <CoverLayout image={bgImage}>
       <Card>
-        <MDBox
+        <DLBox
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
@@ -41,35 +41,35 @@ function Cover() {
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+          <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Join us today
-          </MDTypography>
-          <MDTypography display="block" variant="button" color="white" my={1}>
+          </DLTypography>
+          <DLTypography display="block" variant="button" color="white" my={1}>
             Enter your email and password to register
-          </MDTypography>
-        </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
+          </DLTypography>
+        </DLBox>
+        <DLBox pt={4} pb={3} px={3}>
+          <DLBox component="form" role="form">
+            <DLBox mb={2}>
+              <DLInput type="text" label="Name" variant="standard" fullWidth />
+            </DLBox>
+            <DLBox mb={2}>
+              <DLInput type="email" label="Email" variant="standard" fullWidth />
+            </DLBox>
+            <DLBox mb={2}>
+              <DLInput type="password" label="Password" variant="standard" fullWidth />
+            </DLBox>
+            <DLBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
-              <MDTypography
+              <DLTypography
                 variant="button"
                 fontWeight="regular"
                 color="text"
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
                 &nbsp;&nbsp;I agree the&nbsp;
-              </MDTypography>
-              <MDTypography
+              </DLTypography>
+              <DLTypography
                 component="a"
                 href="#"
                 variant="button"
@@ -78,17 +78,17 @@ function Cover() {
                 textGradient
               >
                 Terms and Conditions
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              </DLTypography>
+            </DLBox>
+            <DLBox mt={4} mb={1}>
+              <DLButton variant="gradient" color="info" fullWidth>
                 sign in
-              </MDButton>
-            </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
+              </DLButton>
+            </DLBox>
+            <DLBox mt={3} mb={1} textAlign="center">
+              <DLTypography variant="button" color="text">
                 Already have an account?{" "}
-                <MDTypography
+                <DLTypography
                   component={Link}
                   to="/authentication/sign-in/cover"
                   variant="button"
@@ -97,11 +97,11 @@ function Cover() {
                   textGradient
                 >
                   Sign In
-                </MDTypography>
-              </MDTypography>
-            </MDBox>
-          </MDBox>
-        </MDBox>
+                </DLTypography>
+              </DLTypography>
+            </DLBox>
+          </DLBox>
+        </DLBox>
       </Card>
     </CoverLayout>
   );

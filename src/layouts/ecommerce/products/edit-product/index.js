@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import PageLayout from "examples/LayoutContainers/PageLayout";
+import PageLayout from "utils/LayoutContainers/PageLayout";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import React, { useEffect, useState } from "react";

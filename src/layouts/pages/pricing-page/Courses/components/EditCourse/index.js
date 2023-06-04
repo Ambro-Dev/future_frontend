@@ -14,17 +14,17 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
+import DLButton from "components/DLButton";
 import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { Autocomplete, CircularProgress, Divider, Grid, TextField } from "@mui/material";
-import DataTable from "examples/Tables/DataTable";
+import DataTable from "utils/Tables/DataTable";
 import { useLocation, useNavigate } from "react-router-dom";
-import PageLayout from "examples/LayoutContainers/PageLayout";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+import PageLayout from "utils/LayoutContainers/PageLayout";
+import DefaultNavbar from "utils/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -208,9 +208,9 @@ function EditCourse() {
   return (
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} transparent />
-      <MDBox my={3} mt={12} ml={1} mr={1}>
+      <DLBox my={3} mt={12} ml={1} mr={1}>
         <Card sx={{ marginTop: 3 }}>
-          <MDBox
+          <DLBox
             variant="gradient"
             bgColor="secondary"
             borderRadius="lg"
@@ -222,20 +222,20 @@ function EditCourse() {
             my={3}
             textAlign="center"
           >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Edit Course
-            </MDTypography>
-          </MDBox>
+            </DLTypography>
+          </DLBox>
 
-          <MDBox pt={4} pb={3} px={3}>
+          <DLBox pt={4} pb={3} px={3}>
             {course ? (
-              <MDBox component="form" role="form">
+              <DLBox component="form" role="form">
                 <Grid container spacing={1}>
                   <Grid item xs={8} lg={10}>
                     {edit ? (
-                      <MDBox display="flex" flexDirection="column">
-                        <MDBox mb={2}>
-                          <MDInput
+                      <DLBox display="flex" flexDirection="column">
+                        <DLBox mb={2}>
+                          <DLInput
                             type="text"
                             label="Name"
                             variant="standard"
@@ -244,9 +244,9 @@ function EditCourse() {
                             onChange={(e) => setNewName(e.target.value)}
                             fullWidth
                           />
-                        </MDBox>
-                        <MDBox mb={2}>
-                          <MDInput
+                        </DLBox>
+                        <DLBox mb={2}>
+                          <DLInput
                             type="text"
                             label="Description"
                             multiline
@@ -256,8 +256,8 @@ function EditCourse() {
                             onChange={(e) => setNewDescription(e.target.value)}
                             fullWidth
                           />
-                        </MDBox>
-                        <MDBox pr={1}>
+                        </DLBox>
+                        <DLBox pr={1}>
                           <Autocomplete
                             disablePortal
                             options={teachersList}
@@ -270,70 +270,70 @@ function EditCourse() {
                               />
                             )}
                           />
-                        </MDBox>
-                      </MDBox>
+                        </DLBox>
+                      </DLBox>
                     ) : (
-                      <MDBox display="flex" flexDirection="column">
-                        <MDBox p={2}>
-                          <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                            <MDTypography
+                      <DLBox display="flex" flexDirection="column">
+                        <DLBox p={2}>
+                          <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                            <DLTypography
                               component="label"
                               variant="h6"
                               fontWeight="medium"
                               color="text"
                             >
                               Name
-                            </MDTypography>
-                          </MDBox>
-                          <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                            <MDTypography color="text" variant="body2">
+                            </DLTypography>
+                          </DLBox>
+                          <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                            <DLTypography color="text" variant="body2">
                               {name}
-                            </MDTypography>
-                          </MDBox>
-                        </MDBox>
+                            </DLTypography>
+                          </DLBox>
+                        </DLBox>
                         {description && (
-                          <MDBox p={2}>
-                            <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                              <MDTypography
+                          <DLBox p={2}>
+                            <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                              <DLTypography
                                 component="label"
                                 variant="h6"
                                 fontWeight="medium"
                                 color="text"
                               >
                                 Description
-                              </MDTypography>
-                            </MDBox>
-                            <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                              <MDTypography color="text" variant="body2">
+                              </DLTypography>
+                            </DLBox>
+                            <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                              <DLTypography color="text" variant="body2">
                                 {description}
-                              </MDTypography>
-                            </MDBox>
-                          </MDBox>
+                              </DLTypography>
+                            </DLBox>
+                          </DLBox>
                         )}
-                        <MDBox p={2}>
-                          <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                            <MDTypography
+                        <DLBox p={2}>
+                          <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                            <DLTypography
                               component="label"
                               variant="h6"
                               fontWeight="medium"
                               color="text"
                             >
                               Teacher
-                            </MDTypography>
-                          </MDBox>
-                          <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                            <MDTypography color="text" variant="body2">
+                            </DLTypography>
+                          </DLBox>
+                          <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                            <DLTypography color="text" variant="body2">
                               {teacher.name} {teacher.surname}
-                            </MDTypography>
-                          </MDBox>
-                        </MDBox>
-                      </MDBox>
+                            </DLTypography>
+                          </DLBox>
+                        </DLBox>
+                      </DLBox>
                     )}
                   </Grid>
                   <Grid item xs={4} lg={2} textAlign="center" display="flex" flexDirection="column">
                     {!edit ? (
-                      <MDBox mt={4} mb={1} textAlign="center">
-                        <MDButton
+                      <DLBox mt={4} mb={1} textAlign="center">
+                        <DLButton
                           variant="gradient"
                           color="error"
                           onClick={() => {
@@ -341,23 +341,23 @@ function EditCourse() {
                           }}
                         >
                           Go back
-                        </MDButton>
-                      </MDBox>
+                        </DLButton>
+                      </DLBox>
                     ) : (
-                      <MDBox mt={4} mb={1} textAlign="center">
-                        <MDButton
+                      <DLBox mt={4} mb={1} textAlign="center">
+                        <DLButton
                           variant="contained"
                           color="success"
                           disabled={!changed || !newName || !newDescription || !newTeacher}
                           onClick={handleSubmit}
                         >
                           Save changes
-                        </MDButton>
-                      </MDBox>
+                        </DLButton>
+                      </DLBox>
                     )}
 
-                    <MDBox mt={1} mb={1} textAlign="center">
-                      <MDButton
+                    <DLBox mt={1} mb={1} textAlign="center">
+                      <DLButton
                         variant="contained"
                         color="warning"
                         onClick={() => {
@@ -368,20 +368,20 @@ function EditCourse() {
                         }}
                       >
                         {!edit ? "Edit" : "Cancel"}
-                      </MDButton>
-                    </MDBox>
+                      </DLButton>
+                    </DLBox>
                     {edit && (
-                      <MDBox mt={1} mb={1} textAlign="center">
-                        <MDButton variant="contained" color="error" onClick={() => deleteCourse()}>
+                      <DLBox mt={1} mb={1} textAlign="center">
+                        <DLButton variant="contained" color="error" onClick={() => deleteCourse()}>
                           Delete
-                        </MDButton>
-                      </MDBox>
+                        </DLButton>
+                      </DLBox>
                     )}
                   </Grid>
                 </Grid>
-                <MDBox mt={5}>
-                  <MDBox>
-                    <MDButton
+                <DLBox mt={5}>
+                  <DLBox>
+                    <DLButton
                       sx={{ margin: 1 }}
                       color={manage ? "warning" : "success"}
                       onClick={() => {
@@ -390,47 +390,47 @@ function EditCourse() {
                       }}
                     >
                       {manage ? "Cancel" : "Manage members"}
-                    </MDButton>
-                  </MDBox>
+                    </DLButton>
+                  </DLBox>
                   <Divider />
 
                   {manage ? (
-                    <MDBox mt={2}>
-                      <MDBox display="flex">
+                    <DLBox mt={2}>
+                      <DLBox display="flex">
                         {!addMembers && (
-                          <MDButton
+                          <DLButton
                             color="error"
                             disabled={!selectedRowIds.length}
                             sx={{ margin: 1 }}
                             onClick={() => handleRemoveMembers()}
                           >
                             Remove selected members
-                          </MDButton>
+                          </DLButton>
                         )}
-                        <MDButton
+                        <DLButton
                           color="info"
                           sx={{ margin: 1 }}
                           onClick={() => setAddMembers(!addMembers)}
                         >
                           {!addMembers ? "Add members" : "Go back"}
-                        </MDButton>
+                        </DLButton>
                         {addMembers && (
-                          <MDButton
+                          <DLButton
                             color="info"
                             sx={{ margin: 1 }}
                             onClick={() => openImport()}
                             endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
                           >
-                            <MDTypography
+                            <DLTypography
                               variant="button"
                               sx={{ color: "#FFFFFF" }}
                               fontWeight="medium"
                             >
                               Import members (CSV)
-                            </MDTypography>
-                          </MDButton>
+                            </DLTypography>
+                          </DLButton>
                         )}
-                      </MDBox>
+                      </DLBox>
 
                       {!addMembers ? (
                         <DataTable
@@ -438,8 +438,8 @@ function EditCourse() {
                             columns: [
                               {
                                 Header: (
-                                  <MDBox>
-                                    <MDButton
+                                  <DLBox>
+                                    <DLButton
                                       onClick={() => handleSelectAll()}
                                       startIcon={
                                         selectedRowIds.length === members.length ? (
@@ -451,15 +451,15 @@ function EditCourse() {
                                         )
                                       }
                                     >
-                                      <MDTypography variant="button" fontWeight="medium">
+                                      <DLTypography variant="button" fontWeight="medium">
                                         Select All
-                                      </MDTypography>
-                                    </MDButton>
-                                  </MDBox>
+                                      </DLTypography>
+                                    </DLButton>
+                                  </DLBox>
                                 ),
                                 accessor: "checkbox",
                                 Cell: ({ row }) => (
-                                  <MDButton
+                                  <DLButton
                                     onClick={() => {
                                       handleRowSelect(row.original._id);
                                     }}
@@ -470,7 +470,7 @@ function EditCourse() {
                                     ) : (
                                       <CheckBoxOutlineBlankIcon sx={{ height: 20, width: 20 }} />
                                     )}
-                                  </MDButton>
+                                  </DLButton>
                                 ),
                                 isCheckbox: true,
                                 width: 10,
@@ -487,7 +487,7 @@ function EditCourse() {
                       ) : (
                         <Grid container spacing={1}>
                           <Grid item lg={8} xs={12}>
-                            <MDBox
+                            <DLBox
                               variant="gradient"
                               bgColor="secondary"
                               borderRadius="lg"
@@ -498,10 +498,10 @@ function EditCourse() {
                               my={3}
                               textAlign="center"
                             >
-                              <MDTypography variant="h6" fontWeight="medium" color="white">
+                              <DLTypography variant="h6" fontWeight="medium" color="white">
                                 AVAILABLE STUDENTS
-                              </MDTypography>
-                            </MDBox>
+                              </DLTypography>
+                            </DLBox>
                             {allStudents ? (
                               <DataTable
                                 table={{
@@ -514,7 +514,7 @@ function EditCourse() {
                                       accessor: "action",
                                       width: "15%",
                                       Cell: ({ row }) => (
-                                        <MDButton
+                                        <DLButton
                                           onClick={() => addUserToMembers(row.original)}
                                           disabled={
                                             membersToAdd.includes(row.original) ||
@@ -525,14 +525,14 @@ function EditCourse() {
                                           }
                                           color="success"
                                         >
-                                          <MDTypography
+                                          <DLTypography
                                             variant="button"
                                             sx={{ color: "#FFFFFF" }}
                                             fontWeight="medium"
                                           >
                                             Add
-                                          </MDTypography>
-                                        </MDButton>
+                                          </DLTypography>
+                                        </DLButton>
                                       ),
                                     },
                                   ],
@@ -542,7 +542,7 @@ function EditCourse() {
                                 canSearch
                               />
                             ) : (
-                              <MDBox
+                              <DLBox
                                 sx={{
                                   display: "flex",
                                   justifyContent: "center",
@@ -551,11 +551,11 @@ function EditCourse() {
                                 }}
                               >
                                 <CircularProgress />
-                              </MDBox>
+                              </DLBox>
                             )}
                           </Grid>
                           <Grid item lg={4} xs={12}>
-                            <MDBox
+                            <DLBox
                               variant="gradient"
                               bgColor="secondary"
                               borderRadius="lg"
@@ -566,32 +566,32 @@ function EditCourse() {
                               my={3}
                               textAlign="center"
                             >
-                              <MDTypography variant="h6" fontWeight="medium" color="white">
+                              <DLTypography variant="h6" fontWeight="medium" color="white">
                                 SELECTED
-                              </MDTypography>
-                            </MDBox>
-                            <MDBox>
-                              <MDBox display="flex" justifyContent="space-between" m={2}>
-                                <MDButton
+                              </DLTypography>
+                            </DLBox>
+                            <DLBox>
+                              <DLBox display="flex" justifyContent="space-between" m={2}>
+                                <DLButton
                                   onClick={() => setMembersToAdd([])}
                                   startIcon={<ClearIcon sx={{ height: 20, width: 20 }} />}
                                   color="error"
                                   disabled={membersToAdd.length === 0}
                                 >
-                                  <MDTypography
+                                  <DLTypography
                                     variant="button"
                                     sx={{ color: "#FFFFFF" }}
                                     fontWeight="medium"
                                   >
                                     Remove All
-                                  </MDTypography>
-                                </MDButton>
-                                <MDBox>
-                                  <MDTypography variant="button" fontWeight="medium">
+                                  </DLTypography>
+                                </DLButton>
+                                <DLBox>
+                                  <DLTypography variant="button" fontWeight="medium">
                                     Selected: {membersToAdd.length}
-                                  </MDTypography>
-                                </MDBox>
-                              </MDBox>
+                                  </DLTypography>
+                                </DLBox>
+                              </DLBox>
 
                               <DataTable
                                 table={{
@@ -601,7 +601,7 @@ function EditCourse() {
                                       accessor: "action",
                                       width: "15%",
                                       Cell: ({ row }) => (
-                                        <MDButton
+                                        <DLButton
                                           onClick={() => addUserToMembers(row.original)}
                                           startIcon={
                                             <ArrowBackIcon sx={{ height: 20, width: 20 }} />
@@ -609,14 +609,14 @@ function EditCourse() {
                                           color="error"
                                           variant="outlined"
                                         >
-                                          <MDTypography
+                                          <DLTypography
                                             variant="button"
                                             sx={{ color: "#f65f53" }}
                                             fontWeight="medium"
                                           >
                                             Remove
-                                          </MDTypography>
-                                        </MDButton>
+                                          </DLTypography>
+                                        </DLButton>
                                       ),
                                     },
                                     { Header: "name", accessor: "name" },
@@ -627,19 +627,19 @@ function EditCourse() {
                                 }}
                                 entriesPerPage={false}
                               />
-                              <MDButton
+                              <DLButton
                                 onClick={() => handleAddMembers()}
                                 color="success"
                                 disabled={membersToAdd.length === 0}
                                 fullWidth
                               >
                                 Add selected
-                              </MDButton>
-                            </MDBox>
+                              </DLButton>
+                            </DLBox>
                           </Grid>
                         </Grid>
                       )}
-                    </MDBox>
+                    </DLBox>
                   ) : (
                     <DataTable
                       table={{
@@ -654,14 +654,14 @@ function EditCourse() {
                       canSearch
                     />
                   )}
-                </MDBox>
-              </MDBox>
+                </DLBox>
+              </DLBox>
             ) : (
-              <MDBox>No course selected</MDBox>
+              <DLBox>No course selected</DLBox>
             )}
-          </MDBox>
+          </DLBox>
         </Card>
-      </MDBox>
+      </DLBox>
     </PageLayout>
   );
 }

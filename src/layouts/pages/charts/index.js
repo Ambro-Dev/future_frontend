@@ -11,23 +11,23 @@ Coded by Ambro-Dev
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
-import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
-import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
-import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
-import MixedChart from "examples/Charts/MixedChart";
-import BubbleChart from "examples/Charts/BubbleChart";
-import DefaultDoughnutChart from "examples/Charts/DoughnutCharts/DefaultDoughnutChart";
-import PieChart from "examples/Charts/PieChart";
-import RadarChart from "examples/Charts/RadarChart";
-import PolarChart from "examples/Charts/PolarChart";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import DefaultLineChart from "utils/Charts/LineCharts/DefaultLineChart";
+import GradientLineChart from "utils/Charts/LineCharts/GradientLineChart";
+import VerticalBarChart from "utils/Charts/BarCharts/VerticalBarChart";
+import HorizontalBarChart from "utils/Charts/BarCharts/HorizontalBarChart";
+import MixedChart from "utils/Charts/MixedChart";
+import BubbleChart from "utils/Charts/BubbleChart";
+import DefaultDoughnutChart from "utils/Charts/DoughnutCharts/DefaultDoughnutChart";
+import PieChart from "utils/Charts/PieChart";
+import RadarChart from "utils/Charts/RadarChart";
+import PolarChart from "utils/Charts/PolarChart";
 
 // Data
 import defaultLineChartData from "layouts/pages/charts/data/defaultLineChartData";
@@ -45,19 +45,19 @@ function Charts() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox my={3}>
-        <MDBox mb={3}>
+      <DLBox my={3}>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} sx={{ lineHeight: 0 }}>
-              <MDTypography variant="h5">Charts</MDTypography>
-              <MDTypography variant="button" color="text">
+              <DLTypography variant="h5">Charts</DLTypography>
+              <DLTypography variant="button" color="text">
                 Charts on this page use Chart.js - Simple yet flexible JavaScript charting for
                 designers & developers.
-              </MDTypography>
+              </DLTypography>
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={6}>
+        </DLBox>
+        <DLBox mb={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <DefaultLineChart
@@ -76,8 +76,8 @@ function Charts() {
               />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={6}>
+        </DLBox>
+        <DLBox mb={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <VerticalBarChart
@@ -96,8 +96,8 @@ function Charts() {
               />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={6}>
+        </DLBox>
+        <DLBox mb={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <MixedChart
@@ -117,8 +117,8 @@ function Charts() {
               />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={6}>
+        </DLBox>
+        <DLBox mb={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <DefaultDoughnutChart
@@ -137,8 +137,8 @@ function Charts() {
               />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
+        </DLBox>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <RadarChart
@@ -157,8 +157,8 @@ function Charts() {
               />
             </Grid>
           </Grid>
-        </MDBox>
-      </MDBox>
+        </DLBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

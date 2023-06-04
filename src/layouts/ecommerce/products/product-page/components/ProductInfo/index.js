@@ -13,109 +13,109 @@ import Icon from "@mui/material/Icon";
 import Autocomplete from "@mui/material/Autocomplete";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
-import MDBadge from "components/MDBadge";
-import MDInput from "components/MDInput";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
+import DLBadge from "components/DLBadge";
+import DLInput from "components/DLInput";
 
 function ProductInfo() {
   return (
-    <MDBox>
-      <MDBox mb={1}>
-        <MDTypography variant="h3" fontWeight="bold">
+    <DLBox>
+      <DLBox mb={1}>
+        <DLTypography variant="h3" fontWeight="bold">
           Minimal Bar Stool
-        </MDTypography>
-      </MDBox>
-      <MDTypography variant="h4" color="text">
+        </DLTypography>
+      </DLBox>
+      <DLTypography variant="h4" color="text">
         <Icon>star</Icon>
         <Icon>star</Icon>
         <Icon>star</Icon>
         <Icon>star</Icon>
         <Icon>star_half</Icon>
-      </MDTypography>
-      <MDBox mt={1}>
-        <MDTypography variant="h6" fontWeight="medium">
+      </DLTypography>
+      <DLBox mt={1}>
+        <DLTypography variant="h6" fontWeight="medium">
           Price
-        </MDTypography>
-      </MDBox>
-      <MDBox mb={1}>
-        <MDTypography variant="h5" fontWeight="medium">
+        </DLTypography>
+      </DLBox>
+      <DLBox mb={1}>
+        <DLTypography variant="h5" fontWeight="medium">
           $1,419
-        </MDTypography>
-      </MDBox>
-      <MDBadge variant="contained" color="success" badgeContent="in stock" container />
-      <MDBox mt={3} mb={1} ml={0.5}>
-        <MDTypography variant="button" fontWeight="regular" color="text">
+        </DLTypography>
+      </DLBox>
+      <DLBadge variant="contained" color="success" badgeContent="in stock" container />
+      <DLBox mt={3} mb={1} ml={0.5}>
+        <DLTypography variant="button" fontWeight="regular" color="text">
           Description
-        </MDTypography>
-      </MDBox>
-      <MDBox component="ul" m={0} pl={4} mb={2}>
-        <MDBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
-          <MDTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
+        </DLTypography>
+      </DLBox>
+      <DLBox component="ul" m={0} pl={4} mb={2}>
+        <DLBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
+          <DLTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
             The most beautiful curves of this swivel stool adds an elegant touch to any environment
-          </MDTypography>
-        </MDBox>
-        <MDBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
-          <MDTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
+          </DLTypography>
+        </DLBox>
+        <DLBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
+          <DLTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
             Memory swivel seat returns to original seat position
-          </MDTypography>
-        </MDBox>
-        <MDBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
-          <MDTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
+          </DLTypography>
+        </DLBox>
+        <DLBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
+          <DLTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
             Comfortable integrated layered chair seat cushion design
-          </MDTypography>
-        </MDBox>
-        <MDBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
-          <MDTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
+          </DLTypography>
+        </DLBox>
+        <DLBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
+          <DLTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
             Fully assembled! No assembly required
-          </MDTypography>
-        </MDBox>
-      </MDBox>
-      <MDBox mt={3}>
+          </DLTypography>
+        </DLBox>
+      </DLBox>
+      <DLBox mt={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={5}>
-            <MDBox mb={1.5} lineHeight={0} display="inline-block">
-              <MDTypography component="label" variant="button" color="text" fontWeight="regular">
+            <DLBox mb={1.5} lineHeight={0} display="inline-block">
+              <DLTypography component="label" variant="button" color="text" fontWeight="regular">
                 Frame Material
-              </MDTypography>
-            </MDBox>
+              </DLTypography>
+            </DLBox>
             <Autocomplete
               defaultValue="Steel"
               options={["Aluminium", "Carbon", "Steel", "Wood"]}
-              renderInput={(params) => <MDInput {...params} variant="standard" />}
+              renderInput={(params) => <DLInput {...params} variant="standard" />}
             />
           </Grid>
           <Grid item xs={12} lg={5}>
-            <MDBox mb={1.5} lineHeight={0} display="inline-block">
-              <MDTypography component="label" variant="button" color="text" fontWeight="regular">
+            <DLBox mb={1.5} lineHeight={0} display="inline-block">
+              <DLTypography component="label" variant="button" color="text" fontWeight="regular">
                 Color
-              </MDTypography>
-            </MDBox>
+              </DLTypography>
+            </DLBox>
             <Autocomplete
               defaultValue="White"
               options={["Black", "Blue", "Grey", "Pink", "Red", "White"]}
-              renderInput={(params) => <MDInput {...params} variant="standard" />}
+              renderInput={(params) => <DLInput {...params} variant="standard" />}
             />
           </Grid>
           <Grid item xs={12} lg={2}>
-            <MDBox mb={1.5} lineHeight={0} display="inline-block">
-              <MDTypography component="label" variant="button" color="text" fontWeight="regular">
+            <DLBox mb={1.5} lineHeight={0} display="inline-block">
+              <DLTypography component="label" variant="button" color="text" fontWeight="regular">
                 Quantity
-              </MDTypography>
-            </MDBox>
-            <MDInput inputProps={{ type: "number" }} defaultValue={1} variant="standard" />
+              </DLTypography>
+            </DLBox>
+            <DLInput inputProps={{ type: "number" }} defaultValue={1} variant="standard" />
           </Grid>
         </Grid>
-      </MDBox>
-      <MDBox mt={3}>
+      </DLBox>
+      <DLBox mt={3}>
         <Grid item xs={12} lg={5} container>
-          <MDButton variant="gradient" color="info" fullWidth>
+          <DLButton variant="gradient" color="info" fullWidth>
             add to cart
-          </MDButton>
+          </DLButton>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

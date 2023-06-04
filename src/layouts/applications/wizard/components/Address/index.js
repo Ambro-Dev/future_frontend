@@ -12,8 +12,8 @@ Coded by Ambro-Dev
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 import { useTranslation } from "react-i18next";
 import FormField from "../FormField";
 
@@ -31,18 +31,18 @@ function Address({
 }) {
   const { t } = useTranslation("translation", { keyPrefix: "wizard" });
   return (
-    <MDBox>
-      <MDBox width="80%" textAlign="center" mx="auto" my={4}>
-        <MDBox mb={1}>
-          <MDTypography variant="h5" fontWeight="regular">
+    <DLBox>
+      <DLBox width="80%" textAlign="center" mx="auto" my={4}>
+        <DLBox mb={1}>
+          <DLTypography variant="h5" fontWeight="regular">
             {t("dateifo")}
-          </MDTypography>
-        </MDBox>
-        <MDTypography variant="body2" color="text">
+          </DLTypography>
+        </DLBox>
+        <DLTypography variant="body2" color="text">
           {t("datedesc")}
-        </MDTypography>
-      </MDBox>
-      <MDBox mt={2}>
+        </DLTypography>
+      </DLBox>
+      <DLBox mt={2}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={7}>
             <FormField
@@ -85,8 +85,8 @@ function Address({
             />
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

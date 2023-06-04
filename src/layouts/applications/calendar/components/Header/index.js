@@ -13,10 +13,10 @@ import Icon from "@mui/material/Icon";
 import Tooltip from "@mui/material/Tooltip";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLAvatar from "components/DLAvatar";
+import DLButton from "components/DLButton";
 
 // Image
 import team1 from "assets/images/team-1.jpg";
@@ -39,40 +39,40 @@ function Header() {
   };
 
   return (
-    <MDBox display="flex" alignItems="center">
-      <MDBox mt={0.5} pr={1}>
-        <MDBox mb={1} ml={-1.25} lineHeight={0}>
-          <MDTypography variant="button" color="secondary">
+    <DLBox display="flex" alignItems="center">
+      <DLBox mt={0.5} pr={1}>
+        <DLBox mb={1} ml={-1.25} lineHeight={0}>
+          <DLTypography variant="button" color="secondary">
             Team members:
-          </MDTypography>
-        </MDBox>
-        <MDBox display="flex">
+          </DLTypography>
+        </DLBox>
+        <DLBox display="flex">
           <Tooltip title="Jessica Rowland" placement="top">
-            <MDAvatar src={team1} alt="team-1" size="sm" sx={avatarStyles} />
+            <DLAvatar src={team1} alt="team-1" size="sm" sx={avatarStyles} />
           </Tooltip>
           <Tooltip title="Audrey Love" placement="top">
-            <MDAvatar src={team2} alt="team-1" size="sm" sx={avatarStyles} />
+            <DLAvatar src={team2} alt="team-1" size="sm" sx={avatarStyles} />
           </Tooltip>
           <Tooltip title="Michael Lewis" placement="top">
-            <MDAvatar src={team3} alt="team-1" size="sm" sx={avatarStyles} />
+            <DLAvatar src={team3} alt="team-1" size="sm" sx={avatarStyles} />
           </Tooltip>
           <Tooltip title="Lucia Linda" placement="top">
-            <MDAvatar src={team4} alt="team-1" size="sm" sx={avatarStyles} />
+            <DLAvatar src={team4} alt="team-1" size="sm" sx={avatarStyles} />
           </Tooltip>
           <Tooltip title="Ronald Miller" placement="top">
-            <MDAvatar src={team5} alt="team-1" size="sm" sx={avatarStyles} />
+            <DLAvatar src={team5} alt="team-1" size="sm" sx={avatarStyles} />
           </Tooltip>
-        </MDBox>
-      </MDBox>
-      <MDBox height="75%" alignSelf="flex-end">
+        </DLBox>
+      </DLBox>
+      <DLBox height="75%" alignSelf="flex-end">
         <Divider orientation="vertical" />
-      </MDBox>
-      <MDBox pl={1}>
-        <MDButton variant="outlined" color="dark" iconOnly>
+      </DLBox>
+      <DLBox pl={1}>
+        <DLButton variant="outlined" color="dark" iconOnly>
           <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-        </MDButton>
-      </MDBox>
-    </MDBox>
+        </DLButton>
+      </DLBox>
+    </DLBox>
   );
 }
 

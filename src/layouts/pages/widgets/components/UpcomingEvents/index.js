@@ -13,13 +13,13 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DefaultItem from "examples/Items/DefaultItem";
+// Distance Learning React utils
+import DefaultItem from "utils/Items/DefaultItem";
 import PropTypes from "prop-types";
-import MDButton from "components/MDButton";
+import DLButton from "components/DLButton";
 import { useNavigate } from "react-router-dom";
 import useAuth from "hooks/useAuth";
 import { useTranslation } from "react-i18next";
@@ -55,23 +55,23 @@ function UpcomingEvents({ events, courseId }) {
 
   return (
     <Card sx={{ height: "500px" }}>
-      <MDBox
+      <DLBox
         pt={2}
         px={2}
         pb={1}
         lineHeight={1}
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
-        <MDTypography variant="h6" fontWeight="medium" pt={1}>
+        <DLTypography variant="h6" fontWeight="medium" pt={1}>
           {t("upcevents")}
-        </MDTypography>
+        </DLTypography>
         {auth.roles.includes(5150) && (
-          <MDButton color="success" circular onClick={handleOpen}>
+          <DLButton color="success" circular onClick={handleOpen}>
             {t("addevent")}
-          </MDButton>
+          </DLButton>
         )}
-      </MDBox>
-      <MDBox sx={{ overflow: "auto" }}>
+      </DLBox>
+      <DLBox sx={{ overflow: "auto" }}>
         {events && events.length > 0 ? (
           events.map((event, index) => {
             const formattedStartDate = new Date(event.start).toLocaleDateString(`${t("date")}`, {
@@ -95,7 +95,7 @@ function UpcomingEvents({ events, courseId }) {
               hour12: language === "en",
             });
             return (
-              <MDBox key={event._id}>
+              <DLBox key={event._id}>
                 <DefaultItem
                   color="dark"
                   type={event.className}
@@ -109,13 +109,13 @@ function UpcomingEvents({ events, courseId }) {
                   start={`${formattedStartDate}, ${formattedStartTime}`}
                   end={`${formattedEndDate}, ${formattedEndTime}`}
                 />
-              </MDBox>
+              </DLBox>
             );
           })
         ) : (
-          <MDBox p={2}>{t("noevents")}</MDBox>
+          <DLBox p={2}>{t("noevents")}</DLBox>
         )}
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

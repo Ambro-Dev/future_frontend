@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { ImageList, ImageListItem } from "@mui/material";
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 import React, { useState } from "react";
 import availableImages from "./availableImages";
 
@@ -13,8 +13,8 @@ function CourseImageSelector() {
   };
 
   return (
-    <MDBox>
-      <MDTypography varinat="h2">Select Course Image</MDTypography>
+    <DLBox>
+      <DLTypography varinat="h2">Select Course Image</DLTypography>
       <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
         {availableImages.map((item) => (
           <ImageListItem key={item}>
@@ -29,7 +29,7 @@ function CourseImageSelector() {
         ))}
       </ImageList>
       {selectedImage && <p>You have selected {selectedImage} as the course image.</p>}
-    </MDBox>
+    </DLBox>
   );
 }
 

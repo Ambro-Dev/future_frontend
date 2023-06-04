@@ -11,13 +11,13 @@ Coded by Ambro-Dev
 import PropTypes from "prop-types";
 
 // Distance Learning React components
-import MDTypography from "components/MDTypography";
+import DLTypography from "components/DLTypography";
 
 function DefaultCell({ children }) {
   return (
-    <MDTypography variant="button" color="secondary">
+    <DLTypography variant="button" color="secondary">
       {children}
-    </MDTypography>
+    </DLTypography>
   );
 }
 

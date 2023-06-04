@@ -7,20 +7,20 @@ import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLButton from "components/DLButton";
 
-// Distance Learning React examples
-import DataTable from "examples/Tables/DataTable";
+// Distance Learning React utils
+import DataTable from "utils/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import useAuth from "hooks/useAuth";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import MDAvatar from "components/MDAvatar";
+import DLAvatar from "components/DLAvatar";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import MDTypography from "components/MDTypography";
+import DLTypography from "components/DLTypography";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -146,34 +146,34 @@ function OrderList({ courseId }) {
   }
 
   return (
-    <MDBox>
+    <DLBox>
       {listUsers && listUsers.length > 0 ? (
-        <MDBox my={3}>
-          <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-            <MDBox display="flex">
-              <MDBox ml={1}>
-                <MDButton variant="outlined" color="dark" onClick={() => exportCSV(csvList)}>
+        <DLBox my={3}>
+          <DLBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
+            <DLBox display="flex">
+              <DLBox ml={1}>
+                <DLButton variant="outlined" color="dark" onClick={() => exportCSV(csvList)}>
                   <Icon>description</Icon>
                   &nbsp;{t("exportcsv")}
-                </MDButton>
-              </MDBox>
-              <MDBox ml={1}>
-                <MDButton variant="outlined" color="dark" onClick={handlePdfExport}>
+                </DLButton>
+              </DLBox>
+              <DLBox ml={1}>
+                <DLButton variant="outlined" color="dark" onClick={handlePdfExport}>
                   <Icon>picture_as_pdf</Icon>
                   &nbsp;{t("exportpdf")}
-                </MDButton>
-              </MDBox>
-            </MDBox>
-          </MDBox>
-          <MDBox>
+                </DLButton>
+              </DLBox>
+            </DLBox>
+          </DLBox>
+          <DLBox>
             {users.length > 0 && (
-              <MDBox>
+              <DLBox>
                 <Card>
-                  <MDBox pt={2} px={2} lineHeight={1}>
-                    <MDTypography variant="h6" fontWeight="medium">
+                  <DLBox pt={2} px={2} lineHeight={1}>
+                    <DLTypography variant="h6" fontWeight="medium">
                       {t("members")}
-                    </MDTypography>
-                  </MDBox>
+                    </DLTypography>
+                  </DLBox>
                   <DataTable
                     table={{
                       columns: [
@@ -181,7 +181,7 @@ function OrderList({ courseId }) {
                           Header: [t("picture")],
                           accessor: "picture",
                           width: "10%",
-                          Cell: ({ row }) => <MDAvatar src={row.original.picture} size="sm" />,
+                          Cell: ({ row }) => <DLAvatar src={row.original.picture} size="sm" />,
                         },
                         { Header: [t("name")], accessor: "name" },
                         { Header: [t("surname")], accessor: "surname" },
@@ -190,12 +190,12 @@ function OrderList({ courseId }) {
                           Header: [t("actions")],
                           accessor: "actions",
                           Cell: ({ row }) => (
-                            <MDButton
+                            <DLButton
                               onClick={() => navigate("/chat")}
                               disabled={row.original.studentNumber === auth.studentNumber}
                             >
                               {t("message")}
-                            </MDButton>
+                            </DLButton>
                           ),
                         },
                       ],
@@ -205,14 +205,14 @@ function OrderList({ courseId }) {
                     canSearch
                   />
                 </Card>
-              </MDBox>
+              </DLBox>
             )}
-          </MDBox>
-        </MDBox>
+          </DLBox>
+        </DLBox>
       ) : (
-        <MDBox>{t("stillloading")}</MDBox>
+        <DLBox>{t("stillloading")}</DLBox>
       )}
-    </MDBox>
+    </DLBox>
   );
 }
 

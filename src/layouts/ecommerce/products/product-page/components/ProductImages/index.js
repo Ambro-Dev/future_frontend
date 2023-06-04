@@ -16,7 +16,7 @@ import ImgsViewer from "react-images-viewer";
 import Stack from "@mui/material/Stack";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
 // Images
 import image1 from "assets/images/products/product-details-1.jpg";
@@ -41,7 +41,7 @@ function ProductImages() {
   const imgsViewerPrev = () => setImgsViewerCurrent(imgsViewerCurrent - 1);
 
   return (
-    <MDBox>
+    <DLBox>
       <ImgsViewer
         imgs={[{ src: image1 }, { src: image2 }, { src: image3 }, { src: image4 }, { src: image5 }]}
         isOpen={imgsViewer}
@@ -52,7 +52,7 @@ function ProductImages() {
         backdropCloseable
       />
 
-      <MDBox
+      <DLBox
         component="img"
         src={currentImage}
         alt="Product Image"
@@ -61,9 +61,9 @@ function ProductImages() {
         width="100%"
         onClick={openImgsViewer}
       />
-      <MDBox mt={2} pt={1}>
+      <DLBox mt={2} pt={1}>
         <Stack direction="row" spacing={3}>
-          <MDBox
+          <DLBox
             component="img"
             id={0}
             src={image1}
@@ -76,7 +76,7 @@ function ProductImages() {
             sx={{ cursor: "pointer", objectFit: "cover" }}
             onClick={handleSetCurrentImage}
           />
-          <MDBox
+          <DLBox
             component="img"
             id={1}
             src={image2}
@@ -89,7 +89,7 @@ function ProductImages() {
             sx={{ cursor: "pointer", objectFit: "cover" }}
             onClick={handleSetCurrentImage}
           />
-          <MDBox
+          <DLBox
             component="img"
             id={2}
             src={image3}
@@ -102,7 +102,7 @@ function ProductImages() {
             sx={{ cursor: "pointer", objectFit: "cover" }}
             onClick={handleSetCurrentImage}
           />
-          <MDBox
+          <DLBox
             component="img"
             id={3}
             src={image4}
@@ -115,7 +115,7 @@ function ProductImages() {
             sx={{ cursor: "pointer", objectFit: "cover" }}
             onClick={handleSetCurrentImage}
           />
-          <MDBox
+          <DLBox
             component="img"
             id={4}
             src={image5}
@@ -129,8 +129,8 @@ function ProductImages() {
             onClick={handleSetCurrentImage}
           />
         </Stack>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

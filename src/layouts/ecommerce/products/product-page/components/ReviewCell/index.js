@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDTypography from "components/MDTypography";
+import DLTypography from "components/DLTypography";
 
 function ReviewCell({ rating }) {
   const ratings = {
@@ -91,9 +91,9 @@ function ReviewCell({ rating }) {
   };
 
   return (
-    <MDTypography variant="h4" color="text">
+    <DLTypography variant="h4" color="text">
       {ratings[rating]}
-    </MDTypography>
+    </DLTypography>
   );
 }
 

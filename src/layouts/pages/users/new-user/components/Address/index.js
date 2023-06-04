@@ -15,9 +15,9 @@ import Grid from "@mui/material/Grid";
 import Autocomplete from "@mui/material/Autocomplete";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
 
 // NewUser page components
 import FormField from "layouts/pages/users/new-user/components/FormField";
@@ -28,11 +28,11 @@ function Address({ formData }) {
   const { address1: address1V, address2: address2V, city: cityV, zip: zipV } = values;
 
   return (
-    <MDBox>
-      <MDTypography variant="h5" fontWeight="bold">
+    <DLBox>
+      <DLTypography variant="h5" fontWeight="bold">
         Address
-      </MDTypography>
-      <MDBox mt={1.625}>
+      </DLTypography>
+      <DLBox mt={1.625}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <FormField
@@ -46,7 +46,7 @@ function Address({ formData }) {
             />
           </Grid>
           <Grid item xs={12}>
-            <MDBox mt={-1.625}>
+            <DLBox mt={-1.625}>
               <FormField
                 type={address2.type}
                 label={address2.label}
@@ -54,7 +54,7 @@ function Address({ formData }) {
                 value={address2V}
                 placeholder={address2.placeholder}
               />
-            </MDBox>
+            </DLBox>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
@@ -72,7 +72,7 @@ function Address({ formData }) {
           <Grid item xs={6} sm={3}>
             <Autocomplete
               options={["State 1", "State 2", "State 3"]}
-              renderInput={(params) => <MDInput {...params} variant="standard" label="State" />}
+              renderInput={(params) => <DLInput {...params} variant="standard" label="State" />}
             />
           </Grid>
           <Grid item xs={6} sm={3}>
@@ -87,8 +87,8 @@ function Address({ formData }) {
             />
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

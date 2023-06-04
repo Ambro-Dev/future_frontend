@@ -14,21 +14,21 @@ import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
-import ProgressLineChart from "examples/Charts/LineCharts/ProgressLineChart";
-import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
-import MasterCard from "examples/Cards/MasterCard";
-import MiniInfoCard from "examples/Cards/InfoCards/MiniInfoCard";
-import ControllerCard from "examples/Cards/ControllerCard";
-import Calendar from "examples/Calendar";
-import CategoriesList from "examples/Lists/CategoriesList";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import MiniStatisticsCard from "utils/Cards/StatisticsCards/MiniStatisticsCard";
+import ProgressLineChart from "utils/Charts/LineCharts/ProgressLineChart";
+import DefaultInfoCard from "utils/Cards/InfoCards/DefaultInfoCard";
+import MasterCard from "utils/Cards/MasterCard";
+import MiniInfoCard from "utils/Cards/InfoCards/MiniInfoCard";
+import ControllerCard from "utils/Cards/ControllerCard";
+import Calendar from "utils/Calendar";
+import CategoriesList from "utils/Lists/CategoriesList";
 
 // RTL page components
 import FullBody from "layouts/pages/rtl/components/FullBody";
@@ -60,8 +60,8 @@ function RTL() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox my={3}>
-        <MDBox mb={3}>
+      <DLBox my={3}>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} lg={4}>
               <UpcomingEvents />
@@ -77,18 +77,18 @@ function RTL() {
               />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
+        </DLBox>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={3}>
+              <DLBox mb={3}>
                 <MiniStatisticsCard
                   title={{ text: "صحة البطارية" }}
                   count="99 %"
                   icon={{ color: "info", component: "battery_charging_full" }}
                   direction="left"
                 />
-              </MDBox>
+              </DLBox>
               <MiniStatisticsCard
                 title={{ text: "طبقة صوت الموسيقا" }}
                 count="15/100"
@@ -104,29 +104,29 @@ function RTL() {
               display="flex"
               flexDirection={{ xs: "column", sm: "row" }}
             >
-              <MDBox width="100%" mr={{ xs: 0, sm: 3 }} mb={{ xs: 3, sm: 0 }}>
+              <DLBox width="100%" mr={{ xs: 0, sm: 3 }} mb={{ xs: 3, sm: 0 }}>
                 <DefaultInfoCard
                   icon="account_balance"
                   title="مرتب"
                   description="تنتمي التفاعلية"
                   value="+$2000"
                 />
-              </MDBox>
-              <MDBox width="100%">
+              </DLBox>
+              <DLBox width="100%">
                 <DefaultInfoCard
                   icon="paypal"
                   title="باي بال"
                   description="دفع لحسابهم الخاص"
                   value="$455.00"
                 />
-              </MDBox>
+              </DLBox>
             </Grid>
             <Grid item xs={12} lg={4}>
               <MasterCard number={4562112245947852} holder="جاك بيترسون" expires="11/22" />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
+        </DLBox>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={3}>
               <FullBody />
@@ -149,16 +149,16 @@ function RTL() {
                 title={
                   <>
                     754&nbsp;
-                    <MDTypography variant="button" color="secondary" fontWeight="medium">
+                    <DLTypography variant="button" color="secondary" fontWeight="medium">
                       م
-                    </MDTypography>
+                    </DLTypography>
                   </>
                 }
                 description="مدينة نيويورك"
               />
             </Grid>
           </Grid>
-        </MDBox>
+        </DLBox>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={5}>
             {useMemo(
@@ -177,16 +177,16 @@ function RTL() {
             )}
           </Grid>
           <Grid item xs={12} lg={3}>
-            <MDBox mb={3}>
+            <DLBox mb={3}>
               <CategoriesList title="فئات" categories={categoriesListData} />
-            </MDBox>
+            </DLBox>
             <MediaPlayer />
           </Grid>
           <Grid item xs={12} lg={4}>
             <OrdersOverview />
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

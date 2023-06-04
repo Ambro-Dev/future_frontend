@@ -16,13 +16,13 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import Calendar from "examples/Calendar";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import Calendar from "utils/Calendar";
 
 // Widgets page components
 import UpcomingEvents from "layouts/pages/widgets/components/UpcomingEvents";
@@ -30,8 +30,8 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useNavigate, useParams } from "react-router-dom";
 import { SocketContext } from "context/socket";
 import useAuth from "hooks/useAuth";
-import MDTypography from "components/MDTypography";
-import MDEditor from "components/MDEditor";
+import DLTypography from "components/DLTypography";
+import DLEditor from "components/DLEditor";
 import { Card } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import OrderInfo from "./components/OrderInfo";
@@ -116,8 +116,8 @@ function Widgets() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox my={3}>
-        <MDBox mb={3}>
+      <DLBox my={3}>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             {auth.roles.includes(5150) ? (
               <Grid item xs={12} sm={6} lg={5}>
@@ -137,62 +137,62 @@ function Widgets() {
               <Card mb={2}>
                 {auth.roles.includes(5150) ? (
                   editing ? (
-                    <MDBox p={2}>
-                      <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                        <MDTypography
+                    <DLBox p={2}>
+                      <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                        <DLTypography
                           component="label"
                           variant="h6"
                           fontWeight="medium"
                           color="text"
                         >
                           {t("descinfo")}
-                        </MDTypography>
-                      </MDBox>
-                      <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                        <MDEditor value={description} onChange={setDescription} />
-                      </MDBox>
-                    </MDBox>
+                        </DLTypography>
+                      </DLBox>
+                      <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                        <DLEditor value={description} onChange={setDescription} />
+                      </DLBox>
+                    </DLBox>
                   ) : (
-                    <MDBox p={2}>
-                      <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                        <MDTypography
+                    <DLBox p={2}>
+                      <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                        <DLTypography
                           component="label"
                           variant="h6"
                           fontWeight="medium"
                           color="text"
                         >
                           {t("descinfo")}
-                        </MDTypography>
-                      </MDBox>
-                      <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                        <MDTypography
+                        </DLTypography>
+                      </DLBox>
+                      <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                        <DLTypography
                           color="text"
                           variant="body2"
                           dangerouslySetInnerHTML={{ __html: description }}
                         />
-                      </MDBox>
-                    </MDBox>
+                      </DLBox>
+                    </DLBox>
                   )
                 ) : (
-                  <MDBox p={2}>
-                    <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                      <MDTypography component="label" variant="h6" fontWeight="medium" color="text">
+                  <DLBox p={2}>
+                    <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                      <DLTypography component="label" variant="h6" fontWeight="medium" color="text">
                         {t("descinfo")}
-                      </MDTypography>
-                    </MDBox>
-                    <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                      <MDTypography
+                      </DLTypography>
+                    </DLBox>
+                    <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                      <DLTypography
                         color="text"
                         variant="body2"
                         dangerouslySetInnerHTML={{ __html: description }}
                       />
-                    </MDBox>
-                  </MDBox>
+                    </DLBox>
+                  </DLBox>
                 )}
               </Card>
             </Grid>
           </Grid>
-        </MDBox>
+        </DLBox>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={5}>
             {useMemo(() => (
@@ -212,7 +212,7 @@ function Widgets() {
             <UploadFile courseId={courseId} />
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
       <OrderList courseId={courseId} />
       <Footer />
     </DashboardLayout>

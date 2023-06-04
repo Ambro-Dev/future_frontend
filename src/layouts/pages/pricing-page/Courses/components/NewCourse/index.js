@@ -13,12 +13,12 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
+import DLButton from "components/DLButton";
 import { useEffect, useRef, useState } from "react";
-import MDSnackbar from "components/MDSnackbar";
+import DLSnackbar from "components/DLSnackbar";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { Autocomplete, TextField } from "@mui/material";
 
@@ -49,7 +49,7 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
   }, []);
 
   const renderSuccessSB = (
-    <MDSnackbar
+    <DLSnackbar
       color="success"
       icon="check"
       title="Course Created"
@@ -98,10 +98,10 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
 
   return (
     <Card sx={{ marginTop: 3 }}>
-      <MDBox ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+      <DLBox ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
         {errMsg}
-      </MDBox>
-      <MDBox
+      </DLBox>
+      <DLBox
         variant="gradient"
         bgColor="info"
         borderRadius="lg"
@@ -113,17 +113,17 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
         my={3}
         textAlign="center"
       >
-        <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+        <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
           Create new course
-        </MDTypography>
-        <MDTypography display="block" variant="button" color="white" my={1}>
+        </DLTypography>
+        <DLTypography display="block" variant="button" color="white" my={1}>
           Fill all the fields
-        </MDTypography>
-      </MDBox>
-      <MDBox pt={4} pb={3} px={3}>
-        <MDBox component="form" role="form">
-          <MDBox mb={2} display="flex">
-            <MDInput
+        </DLTypography>
+      </DLBox>
+      <DLBox pt={4} pb={3} px={3}>
+        <DLBox component="form" role="form">
+          <DLBox mb={2} display="flex">
+            <DLInput
               type="text"
               label="Name"
               variant="standard"
@@ -132,9 +132,9 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
               onChange={(e) => setName(e.target.value)}
               fullWidth
             />
-          </MDBox>
-          <MDBox mb={2} display="flex">
-            <MDInput
+          </DLBox>
+          <DLBox mb={2} display="flex">
+            <DLInput
               type="text"
               label="Description"
               variant="standard"
@@ -143,8 +143,8 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
             />
-          </MDBox>
-          <MDBox pr={1}>
+          </DLBox>
+          <DLBox pr={1}>
             <Autocomplete
               disablePortal
               options={teachersList}
@@ -152,9 +152,9 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
               onChange={(event, value) => setTeacher(value ? value._id : "")}
               renderInput={(params) => <TextField {...params} label="Teacher" />}
             />
-          </MDBox>
-          <MDBox mt={4} mb={1}>
-            <MDButton
+          </DLBox>
+          <DLBox mt={4} mb={1}>
+            <DLButton
               variant="gradient"
               color="success"
               disabled={!!(!name || !description || !teacher)}
@@ -162,10 +162,10 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
               fullWidth
             >
               Create
-            </MDButton>
-          </MDBox>
-          <MDBox mt={4} mb={1} textAlign="center">
-            <MDButton
+            </DLButton>
+          </DLBox>
+          <DLBox mt={4} mb={1} textAlign="center">
+            <DLButton
               variant="gradient"
               color="error"
               onClick={() => {
@@ -173,10 +173,10 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
               }}
             >
               Cancel
-            </MDButton>
-          </MDBox>
-        </MDBox>
-      </MDBox>
+            </DLButton>
+          </DLBox>
+        </DLBox>
+      </DLBox>
       {renderSuccessSB}
     </Card>
   );

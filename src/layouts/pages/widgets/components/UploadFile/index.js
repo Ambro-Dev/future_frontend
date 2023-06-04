@@ -13,22 +13,22 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
+// Distance Learning React utils
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import MDButton from "components/MDButton";
+import DLButton from "components/DLButton";
 import { useMaterialUIController } from "context";
 import { DropzoneDialog } from "mui-file-dropzone";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
 import image from "assets/images/icons/flags/EN.png";
-import FileItem from "examples/Items/FileItem";
+import FileItem from "utils/Items/FileItem";
 import useAuth from "hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import MDSnackbar from "components/MDSnackbar";
+import DLSnackbar from "components/DLSnackbar";
 
 function UploadFile({ courseId }) {
   const { t } = useTranslation("translation", { keyPrefix: "courseinfo" });
@@ -45,7 +45,7 @@ function UploadFile({ courseId }) {
   const closeSuccessSB = () => setSuccessSB(false);
 
   const renderSuccessSB = (
-    <MDSnackbar
+    <DLSnackbar
       color="success"
       icon="check"
       title="Upload File"
@@ -105,16 +105,16 @@ function UploadFile({ courseId }) {
 
   return (
     <Card sx={{ height: "500px", overflow: "auto" }}>
-      <MDBox pt={2} px={2} lineHeight={1} sx={{ display: "flex", justifyContent: "space-between" }}>
-        <MDTypography
+      <DLBox pt={2} px={2} lineHeight={1} sx={{ display: "flex", justifyContent: "space-between" }}>
+        <DLTypography
           color={darkMode ? "text" : "secondary"}
           variant="h6"
           fontWeight="medium"
           pt={1}
         >
           {t("files")}
-        </MDTypography>
-        {auth.roles.includes(5150) && <MDButton onClick={handleOpen}>{t("addfile")}</MDButton>}
+        </DLTypography>
+        {auth.roles.includes(5150) && <DLButton onClick={handleOpen}>{t("addfile")}</DLButton>}
         <DropzoneDialog
           open={open}
           onSave={handleSave}
@@ -134,9 +134,9 @@ function UploadFile({ courseId }) {
           maxFileSize={10000000}
           onClose={handleClose}
         />
-      </MDBox>
+      </DLBox>
       {renderSuccessSB}
-      <MDBox p={2} sx={{ overflow: "auto" }}>
+      <DLBox p={2} sx={{ overflow: "auto" }}>
         {courseFiles ? (
           courseFiles.map((file) => {
             const extension = file.filename.split(".").pop();
@@ -154,9 +154,9 @@ function UploadFile({ courseId }) {
             );
           })
         ) : (
-          <MDBox>{t("nofiles")}</MDBox>
+          <DLBox>{t("nofiles")}</DLBox>
         )}
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

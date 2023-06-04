@@ -13,9 +13,9 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
 // Invoice page components
 import BaseLayout from "layouts/pages/account/components/BaseLayout";
@@ -69,15 +69,15 @@ function Invoice() {
 
   return (
     <BaseLayout stickyNavbar>
-      <MDBox mt={{ xs: 4, md: 10 }} mb={{ xs: 4, md: 8 }}>
+      <DLBox mt={{ xs: 4, md: 10 }} mb={{ xs: 4, md: 8 }}>
         <Grid container justifyContent="center">
           <Grid item xs={12} sm={10} md={8}>
             <Card>
               {/* Invoice header */}
-              <MDBox p={3}>
+              <DLBox p={3}>
                 <Grid container justifyContent="space-between">
                   <Grid item xs={12} md={4}>
-                    <MDBox
+                    <DLBox
                       component="img"
                       src={course && `${serverUrl}/${course.pic}`}
                       width="25%"
@@ -91,14 +91,14 @@ function Invoice() {
                       }}
                       onClick={() => navigate(`/courses/course-info/${course?._id}`)}
                     />
-                    <MDTypography variant="h6" fontWeight="medium">
+                    <DLTypography variant="h6" fontWeight="medium">
                       {course && course.name}
-                    </MDTypography>
+                    </DLTypography>
                   </Grid>
                   <Grid item xs={12} md={7} lg={3}>
-                    <MDBox width="100%" textAlign={{ xs: "left", md: "right" }} mt={6}>
-                      <MDBox mt={1}>
-                        <MDTypography
+                    <DLBox width="100%" textAlign={{ xs: "left", md: "right" }} mt={6}>
+                      <DLBox mt={1}>
+                        <DLTypography
                           component="span"
                           variant="h6"
                           fontWeight="regular"
@@ -109,7 +109,7 @@ function Invoice() {
                           {auth.roles.includes(5150) ? (
                             <>
                               {!selectedEvent.url?.includes("video-lesson") ? (
-                                <MDButton
+                                <DLButton
                                   variant="gradient"
                                   color="success"
                                   onClick={() =>
@@ -119,25 +119,25 @@ function Invoice() {
                                   }
                                 >
                                   {t("edit")}
-                                </MDButton>
+                                </DLButton>
                               ) : (
-                                <MDButton
+                                <DLButton
                                   variant="gradient"
                                   color="success"
                                   href={selectedEvent.url}
                                   target="_blank"
                                 >
                                   {t("join")}
-                                </MDButton>
+                                </DLButton>
                               )}
-                              <MDButton variant="gradient" color="error" sx={{ ml: 1 }}>
+                              <DLButton variant="gradient" color="error" sx={{ ml: 1 }}>
                                 {t("delete")}
-                              </MDButton>
+                              </DLButton>
                             </>
                           ) : (
-                            <MDBox>
+                            <DLBox>
                               {selectedEvent.url?.includes("video-lesson") ? (
-                                <MDButton
+                                <DLButton
                                   variant="gradient"
                                   color="success"
                                   href={selectedEvent.url}
@@ -147,9 +147,9 @@ function Invoice() {
                                   {new Date(selectedEvent.start) > new Date()
                                     ? [t("eventnotstarted")]
                                     : [t("join")]}
-                                </MDButton>
+                                </DLButton>
                               ) : (
-                                <MDButton
+                                <DLButton
                                   variant="gradient"
                                   color="success"
                                   onClick={() =>
@@ -162,31 +162,31 @@ function Invoice() {
                                   {new Date(selectedEvent.start) > new Date()
                                     ? [t("examnotavailable")]
                                     : [t("joinexam")]}
-                                </MDButton>
+                                </DLButton>
                               )}
-                            </MDBox>
+                            </DLBox>
                           )}
-                        </MDTypography>
-                      </MDBox>
-                    </MDBox>
+                        </DLTypography>
+                      </DLBox>
+                    </DLBox>
                   </Grid>
                 </Grid>
-                <MDBox mt={{ xs: 5, md: 10 }}>
+                <DLBox mt={{ xs: 5, md: 10 }}>
                   <Grid container justifyContent="space-between">
                     <Grid item xs={12} md={4}>
-                      <MDTypography
+                      <DLTypography
                         variant="h6"
                         color={darkMode ? "text" : "secondary"}
                         fontWeight="regular"
                       >
                         {t("title")}
-                      </MDTypography>
-                      <MDTypography variant="h5" fontWeight="medium">
+                      </DLTypography>
+                      <DLTypography variant="h5" fontWeight="medium">
                         {selectedEvent.title}
-                      </MDTypography>
+                      </DLTypography>
                     </Grid>
                     <Grid item xs={12} md={7} lg={5}>
-                      <MDBox
+                      <DLBox
                         width="100%"
                         display="flex"
                         flexDirection={{ xs: "column", md: "row" }}
@@ -194,79 +194,79 @@ function Invoice() {
                         textAlign={{ xs: "left", md: "right" }}
                         mt={{ xs: 3, md: 0 }}
                       >
-                        <MDBox width="50%">
-                          <MDTypography
+                        <DLBox width="50%">
+                          <DLTypography
                             variant="h6"
                             color={darkMode ? "text" : "secondary"}
                             fontWeight="regular"
                           >
                             {t("start")}
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox width="50%">
-                          <MDTypography variant="h6" fontWeight="medium">
+                          </DLTypography>
+                        </DLBox>
+                        <DLBox width="50%">
+                          <DLTypography variant="h6" fontWeight="medium">
                             {selectedEvent.start.toLocaleString("en-US")}
-                          </MDTypography>
-                        </MDBox>
-                      </MDBox>
-                      <MDBox
+                          </DLTypography>
+                        </DLBox>
+                      </DLBox>
+                      <DLBox
                         width="100%"
                         display="flex"
                         flexDirection={{ xs: "column", md: "row" }}
                         alignItems={{ xs: "flex-start", md: "center" }}
                         textAlign={{ xs: "left", md: "right" }}
                       >
-                        <MDBox width="50%">
-                          <MDTypography
+                        <DLBox width="50%">
+                          <DLTypography
                             variant="h6"
                             color={darkMode ? "text" : "secondary"}
                             fontWeight="regular"
                           >
                             {t("end")}
-                          </MDTypography>
-                        </MDBox>
-                        <MDBox width="50%">
-                          <MDTypography variant="h6" fontWeight="medium">
+                          </DLTypography>
+                        </DLBox>
+                        <DLBox width="50%">
+                          <DLTypography variant="h6" fontWeight="medium">
                             {selectedEvent.end.toLocaleString("en-US")}
-                          </MDTypography>
-                        </MDBox>
-                      </MDBox>
+                          </DLTypography>
+                        </DLBox>
+                      </DLBox>
                     </Grid>
                   </Grid>
-                </MDBox>
-              </MDBox>
+                </DLBox>
+              </DLBox>
 
               {/* Invoice table */}
-              <MDBox p={3}>
-                <MDBox width="100%" overflow="auto">
-                  <MDTypography
+              <DLBox p={3}>
+                <DLBox width="100%" overflow="auto">
+                  <DLTypography
                     variant="h6"
                     color={darkMode ? "text" : "secondary"}
                     fontWeight="regular"
                   >
                     {t("description")}
-                  </MDTypography>
+                  </DLTypography>
                   <Divider variant="middle" />
-                  <MDTypography variant="button" fontWeight="regular">
+                  <DLTypography variant="button" fontWeight="regular">
                     {selectedEvent.description}
-                  </MDTypography>
-                </MDBox>
-              </MDBox>
+                  </DLTypography>
+                </DLBox>
+              </DLBox>
 
               {/* Invoice footer */}
-              <MDBox p={3} mt={7}>
+              <DLBox p={3} mt={7}>
                 <Grid container>
                   <Grid item xs={12} lg={5}>
                     <Divider variant="middle" />
-                    <MDTypography variant="h6" fontWeight="regular">
+                    <DLTypography variant="h6" fontWeight="regular">
                       {t("files")}
-                    </MDTypography>
-                    <MDBox mt={1} mb={2} lineHeight={0}>
+                    </DLTypography>
+                    <DLBox mt={1} mb={2} lineHeight={0}>
                       <AttachFileIcon fontSize="large" />
-                    </MDBox>
+                    </DLBox>
                   </Grid>
                   <Grid item xs={12} lg={7}>
-                    <MDBox
+                    <DLBox
                       width="100%"
                       height={{ xs: "auto", md: "100%" }}
                       display="flex"
@@ -274,17 +274,17 @@ function Invoice() {
                       alignItems="flex-end"
                       mt={{ xs: 2, md: 0 }}
                     >
-                      <MDButton variant="gradient" color="warning" onClick={handleClick}>
+                      <DLButton variant="gradient" color="warning" onClick={handleClick}>
                         {t("close")}
-                      </MDButton>
-                    </MDBox>
+                      </DLButton>
+                    </DLBox>
                   </Grid>
                 </Grid>
-              </MDBox>
+              </DLBox>
             </Card>
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
     </BaseLayout>
   );
 }

@@ -8,15 +8,15 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // Distance Learning React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 import useAuth from "hooks/useAuth";
 
 import backgroundImage from "assets/images/bg-profile.jpeg";
-import MDAvatar from "components/MDAvatar";
+import DLAvatar from "components/DLAvatar";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
 // Images
@@ -56,8 +56,8 @@ function Header({ children }) {
   }, [tabsOrientation]);
 
   return (
-    <MDBox position="relative" mb={5}>
-      <MDBox
+    <DLBox position="relative" mb={5}>
+      <DLBox
         display="flex"
         alignItems="center"
         position="relative"
@@ -85,24 +85,24 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={imageIrl} alt={`${auth.name} ${auth.surname}`} size="xl" shadow="sm" />
+            <DLAvatar src={imageIrl} alt={`${auth.name} ${auth.surname}`} size="xl" shadow="sm" />
           </Grid>
           <Grid item>
-            <MDBox height="100%" mt={0.5} lineHeight={1}>
-              <MDTypography variant="h5" fontWeight="medium">
+            <DLBox height="100%" mt={0.5} lineHeight={1}>
+              <DLTypography variant="h5" fontWeight="medium">
                 {auth.name} {auth.surname}
-              </MDTypography>
+              </DLTypography>
               {auth.studentNumber && (
-                <MDTypography variant="button" color="text" fontWeight="regular">
+                <DLTypography variant="button" color="text" fontWeight="regular">
                   {auth.studentNumber}
-                </MDTypography>
+                </DLTypography>
               )}
-            </MDBox>
+            </DLBox>
           </Grid>
         </Grid>
         {children}
       </Card>
-    </MDBox>
+    </DLBox>
   );
 }
 

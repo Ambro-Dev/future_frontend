@@ -13,12 +13,12 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import TreeView from "@mui/lab/TreeView";
 import TreeItem, { treeItemClasses } from "@mui/lab/TreeItem";
 import { Card } from "@mui/material";
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 import SvgIcon from "@mui/material/SvgIcon";
 import { alpha, styled } from "@mui/material/styles";
 import Collapse from "@mui/material/Collapse";
 import { useSpring, animated } from "@react-spring/web";
-import MDTypography from "components/MDTypography";
+import DLTypography from "components/DLTypography";
 import PropTypes from "prop-types";
 
 function MinusSquare(props) {
@@ -127,11 +127,11 @@ function FileTree() {
 
   return (
     <Card sx={{ height: "100%" }}>
-      <MDBox pt={2} px={2} lineHeight={1}>
-        <MDTypography variant="h6" fontWeight="medium">
+      <DLBox pt={2} px={2} lineHeight={1}>
+        <DLTypography variant="h6" fontWeight="medium">
           Files
-        </MDTypography>
-      </MDBox>
+        </DLTypography>
+      </DLBox>
       {treeData.length > 0 ? (
         <TreeView
           aria-label="customized"
@@ -144,7 +144,7 @@ function FileTree() {
           {treeData.map((item) => renderTreeItem(item))}
         </TreeView>
       ) : (
-        <MDBox>No files yet</MDBox>
+        <DLBox>No files yet</DLBox>
       )}
     </Card>
   );

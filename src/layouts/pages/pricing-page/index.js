@@ -1,18 +1,18 @@
-// Distance Learning React examples
+// Distance Learning React utils
 import { Backdrop, Card, CircularProgress, Grid, Icon, Tooltip } from "@mui/material";
-import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
-import PageLayout from "examples/LayoutContainers/PageLayout";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+import DLBox from "components/DLBox";
+import DLButton from "components/DLButton";
+import PageLayout from "utils/LayoutContainers/PageLayout";
+import DefaultNavbar from "utils/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
 import PeopleIcon from "@mui/icons-material/People";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import MDTypography from "components/MDTypography";
-import MDProgress from "components/MDProgress";
-import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
+import DLTypography from "components/DLTypography";
+import DLProgress from "components/DLProgress";
+import VerticalBarChart from "utils/Charts/BarCharts/VerticalBarChart";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import Fade from "@mui/material/Fade";
 
@@ -166,7 +166,7 @@ function PricingPage() {
         title={`Export ${data}`}
         placement="top"
       >
-        <MDButton
+        <DLButton
           variant="gradient"
           sx={{
             height: "100%",
@@ -179,7 +179,7 @@ function PricingPage() {
           onClick={() => exportCSV(data, dataToExport)}
         >
           <ImportExportIcon sx={{ width: 40, height: 40 }} />
-        </MDButton>
+        </DLButton>
       </Tooltip>
     );
   }
@@ -188,37 +188,37 @@ function PricingPage() {
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} />
       {!loading ? (
-        <MDBox my={3} mt={15} ml="5%" mr="5%">
+        <DLBox my={3} mt={15} ml="5%" mr="5%">
           <Grid container spacing="2%">
             <Grid item xs={12} lg={6}>
               <Card sx={{ padding: 3 }}>
                 <Grid container spacing="3%" sx={{ height: 200 }}>
                   <Grid item xs={6} lg={6}>
-                    <MDButton
+                    <DLButton
                       sx={buttonStyles}
                       color="info"
                       onClick={() => navigate("/admin/users")}
                     >
                       <PeopleIcon sx={{ width: 50, height: 50, marginBottom: 1 }} />
                       Manage Users
-                    </MDButton>
+                    </DLButton>
                   </Grid>
                   <Grid item xs={6} lg={6}>
-                    <MDButton
+                    <DLButton
                       sx={buttonStyles}
                       color="info"
                       onClick={() => navigate("/admin/courses")}
                     >
                       <CastForEducationIcon sx={{ width: 50, height: 50, marginBottom: 1 }} />
                       Manage Courses
-                    </MDButton>
+                    </DLButton>
                   </Grid>
                 </Grid>
               </Card>
               <Card sx={{ marginTop: 2 }}>
                 {allFiles ? (
-                  <MDBox p={3}>
-                    <MDBox
+                  <DLBox p={3}>
+                    <DLBox
                       display="grid"
                       justifyContent="center"
                       alignItems="center"
@@ -231,26 +231,26 @@ function PricingPage() {
                       variant="gradient"
                     >
                       <Icon fontSize="default">description</Icon>
-                    </MDBox>
-                    <MDBox mt={2.625}>
-                      <MDTypography variant="h5" fontWeight="medium" textTransform="capitalize">
+                    </DLBox>
+                    <DLBox mt={2.625}>
+                      <DLTypography variant="h5" fontWeight="medium" textTransform="capitalize">
                         Space taken by course files
-                      </MDTypography>
-                      <MDBox display="flex" justifyContent="space-between">
-                        <MDTypography variant="body2" color="text" fontWeight="regular">
+                      </DLTypography>
+                      <DLBox display="flex" justifyContent="space-between">
+                        <DLTypography variant="body2" color="text" fontWeight="regular">
                           {progress ? `${progress.value} ${progress.metric}` : "0 kB"}
-                        </MDTypography>
-                        <MDTypography variant="body2" color="text" fontWeight="regular">
+                        </DLTypography>
+                        <DLTypography variant="body2" color="text" fontWeight="regular">
                           400 GB
-                        </MDTypography>
-                      </MDBox>
-                    </MDBox>
-                    <MDBox>
-                      <MDProgress value={progress ? progress.amount : 0} variant="contained" />
-                    </MDBox>
-                  </MDBox>
+                        </DLTypography>
+                      </DLBox>
+                    </DLBox>
+                    <DLBox>
+                      <DLProgress value={progress ? progress.amount : 0} variant="contained" />
+                    </DLBox>
+                  </DLBox>
                 ) : (
-                  <MDBox
+                  <DLBox
                     sx={{
                       display: "flex",
                       justifyContent: "center",
@@ -259,7 +259,7 @@ function PricingPage() {
                     }}
                   >
                     <CircularProgress />
-                  </MDBox>
+                  </DLBox>
                 )}
               </Card>
             </Grid>
@@ -285,7 +285,7 @@ function PricingPage() {
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <Card sx={{ height: "50%", overflow: "hidden", marginBottom: 1 }}>
-                    <MDBox
+                    <DLBox
                       p={3}
                       height="100%"
                       bgColor="white"
@@ -294,35 +294,35 @@ function PricingPage() {
                       flexDirection="column"
                       justifyContent="space-between"
                     >
-                      <MDBox
+                      <DLBox
                         display="flex"
                         justifyContent="space-between"
                         alignItems="center"
                         mb={2}
                         lineHeight={1}
                       >
-                        <MDTypography variant="body2" color="text">
+                        <DLTypography variant="body2" color="text">
                           Export (CSV)
-                        </MDTypography>
-                        <MDBox mt={-0.5} mr={-1.5}>
+                        </DLTypography>
+                        <DLBox mt={-0.5} mr={-1.5}>
                           {exportButton("users")}
-                        </MDBox>
-                      </MDBox>
+                        </DLBox>
+                      </DLBox>
                       <Icon fontSize="large" color="white">
                         person
                       </Icon>
-                      <MDBox mt={1} lineHeight={1}>
-                        <MDTypography variant="body2" color="text" textTransform="capitalize">
+                      <DLBox mt={1} lineHeight={1}>
+                        <DLTypography variant="body2" color="text" textTransform="capitalize">
                           Users
-                        </MDTypography>
-                        <MDTypography variant="caption" color="text">
+                        </DLTypography>
+                        <DLTypography variant="caption" color="text">
                           {users && users.length}
-                        </MDTypography>
-                      </MDBox>
-                    </MDBox>
+                        </DLTypography>
+                      </DLBox>
+                    </DLBox>
                   </Card>
                   <Card sx={{ height: "50%", overflow: "hidden", marginTop: 1 }}>
-                    <MDBox
+                    <DLBox
                       p={3}
                       height="100%"
                       bgColor="white"
@@ -331,38 +331,38 @@ function PricingPage() {
                       flexDirection="column"
                       justifyContent="space-between"
                     >
-                      <MDBox
+                      <DLBox
                         display="flex"
                         justifyContent="space-between"
                         alignItems="center"
                         mb={2}
                         lineHeight={1}
                       >
-                        <MDTypography variant="body2" color="text">
+                        <DLTypography variant="body2" color="text">
                           Export (CSV)
-                        </MDTypography>
-                        <MDBox mt={-0.5} mr={-1.5}>
+                        </DLTypography>
+                        <DLBox mt={-0.5} mr={-1.5}>
                           {exportButton("courses")}
-                        </MDBox>
-                      </MDBox>
+                        </DLBox>
+                      </DLBox>
                       <Icon fontSize="large" color="white">
                         class
                       </Icon>
-                      <MDBox mt={1} lineHeight={1}>
-                        <MDTypography variant="body2" color="text" textTransform="capitalize">
+                      <DLBox mt={1} lineHeight={1}>
+                        <DLTypography variant="body2" color="text" textTransform="capitalize">
                           Courses
-                        </MDTypography>
-                        <MDTypography variant="caption" color="text">
+                        </DLTypography>
+                        <DLTypography variant="caption" color="text">
                           {courses && courses.length}
-                        </MDTypography>
-                      </MDBox>
-                    </MDBox>
+                        </DLTypography>
+                      </DLBox>
+                    </DLBox>
                   </Card>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </MDBox>
+        </DLBox>
       ) : (
         <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
           <CircularProgress color="inherit" />

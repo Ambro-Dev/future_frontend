@@ -12,14 +12,14 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import DataTable from "utils/Tables/DataTable";
 
 // ProductPage page components
 import ProductImages from "layouts/ecommerce/products/product-page/components/ProductImages";
@@ -32,14 +32,14 @@ function ProductPage() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
+      <DLBox py={3}>
         <Card sx={{ overflow: "visible" }}>
-          <MDBox p={3}>
-            <MDBox mb={3}>
-              <MDTypography variant="h5" fontWeight="medium">
+          <DLBox p={3}>
+            <DLBox mb={3}>
+              <DLTypography variant="h5" fontWeight="medium">
                 Product Details
-              </MDTypography>
-            </MDBox>
+              </DLTypography>
+            </DLBox>
 
             <Grid container spacing={3}>
               <Grid item xs={12} lg={6} xl={5}>
@@ -50,22 +50,22 @@ function ProductPage() {
               </Grid>
             </Grid>
 
-            <MDBox mt={8} mb={2}>
-              <MDBox mb={1} ml={2}>
-                <MDTypography variant="h5" fontWeight="medium">
+            <DLBox mt={8} mb={2}>
+              <DLBox mb={1} ml={2}>
+                <DLTypography variant="h5" fontWeight="medium">
                   Other Products
-                </MDTypography>
-              </MDBox>
+                </DLTypography>
+              </DLBox>
               <DataTable
                 table={dataTableData}
                 entriesPerPage={false}
                 showTotalEntries={false}
                 isSorted={false}
               />
-            </MDBox>
-          </MDBox>
+            </DLBox>
+          </DLBox>
         </Card>
-      </MDBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

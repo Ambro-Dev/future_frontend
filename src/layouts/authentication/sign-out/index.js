@@ -6,9 +6,9 @@ import AuthContext from "context/AuthProvider";
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
@@ -41,7 +41,7 @@ function Logout() {
   return (
     <BasicLayout image={bgImage}>
       <Card>
-        <MDBox
+        <DLBox
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
@@ -52,24 +52,24 @@ function Logout() {
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+          <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             {t("sure")}
-          </MDTypography>
-        </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" onClick={logout} fullWidth>
+          </DLTypography>
+        </DLBox>
+        <DLBox pt={4} pb={3} px={3}>
+          <DLBox component="form" role="form">
+            <DLBox mt={4} mb={1}>
+              <DLButton variant="gradient" color="info" onClick={logout} fullWidth>
                 {t("logout")}
-              </MDButton>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" onClick={goBack} fullWidth>
+              </DLButton>
+            </DLBox>
+            <DLBox mt={4} mb={1}>
+              <DLButton variant="gradient" color="info" onClick={goBack} fullWidth>
                 {t("cancel")}
-              </MDButton>
-            </MDBox>
-          </MDBox>
-        </MDBox>
+              </DLButton>
+            </DLBox>
+          </DLBox>
+        </DLBox>
       </Card>
     </BasicLayout>
   );

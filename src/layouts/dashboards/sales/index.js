@@ -18,20 +18,20 @@ import Icon from "@mui/material/Icon";
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDBadgeDot from "components/MDBadgeDot";
-import MDButton from "components/MDButton";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLBadgeDot from "components/DLBadgeDot";
+import DLButton from "components/DLButton";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DefaultStatisticsCard from "examples/Cards/StatisticsCards/DefaultStatisticsCard";
-import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
-import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
-import SalesTable from "examples/Tables/SalesTable";
-import DataTable from "examples/Tables/DataTable";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import DefaultStatisticsCard from "utils/Cards/StatisticsCards/DefaultStatisticsCard";
+import DefaultLineChart from "utils/Charts/LineCharts/DefaultLineChart";
+import HorizontalBarChart from "utils/Charts/BarCharts/HorizontalBarChart";
+import SalesTable from "utils/Tables/SalesTable";
+import DataTable from "utils/Tables/DataTable";
 
 // Sales dashboard components
 import ChannelsChart from "layouts/dashboards/sales/components/ChannelsChart";
@@ -89,8 +89,8 @@ function Sales() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
-        <MDBox mb={3}>
+      <DLBox py={3}>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
               <DefaultStatisticsCard
@@ -141,8 +141,8 @@ function Sales() {
               />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
+        </DLBox>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} lg={4}>
               <ChannelsChart />
@@ -151,14 +151,14 @@ function Sales() {
               <DefaultLineChart
                 title="Revenue"
                 description={
-                  <MDBox display="flex" justifyContent="space-between">
-                    <MDBox display="flex" ml={-1}>
-                      <MDBadgeDot color="info" size="sm" badgeContent="Facebook Ads" />
-                      <MDBadgeDot color="dark" size="sm" badgeContent="Google Ads" />
-                    </MDBox>
-                    <MDBox mt={-4} mr={-1} position="absolute" right="1.5rem">
+                  <DLBox display="flex" justifyContent="space-between">
+                    <DLBox display="flex" ml={-1}>
+                      <DLBadgeDot color="info" size="sm" badgeContent="Facebook Ads" />
+                      <DLBadgeDot color="dark" size="sm" badgeContent="Google Ads" />
+                    </DLBox>
+                    <DLBox mt={-4} mr={-1} position="absolute" right="1.5rem">
                       <Tooltip title="See which ads perform better" placement="left" arrow>
-                        <MDButton
+                        <DLButton
                           variant="outlined"
                           color="secondary"
                           size="small"
@@ -166,17 +166,17 @@ function Sales() {
                           iconOnly
                         >
                           <Icon>priority_high</Icon>
-                        </MDButton>
+                        </DLButton>
                       </Tooltip>
-                    </MDBox>
-                  </MDBox>
+                    </DLBox>
+                  </DLBox>
                 }
                 chart={defaultLineChartData}
               />
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
+        </DLBox>
+        <DLBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={8}>
               <HorizontalBarChart title="Sales by age" chart={horizontalBarChartData} />
@@ -185,16 +185,16 @@ function Sales() {
               <SalesTable title="Sales by Country" rows={salesTableData} />
             </Grid>
           </Grid>
-        </MDBox>
+        </DLBox>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Card>
-              <MDBox pt={3} px={3}>
-                <MDTypography variant="h6" fontWeight="medium">
+              <DLBox pt={3} px={3}>
+                <DLTypography variant="h6" fontWeight="medium">
                   Top Selling Products
-                </MDTypography>
-              </MDBox>
-              <MDBox py={1}>
+                </DLTypography>
+              </DLBox>
+              <DLBox py={1}>
                 <DataTable
                   table={dataTableData}
                   entriesPerPage={false}
@@ -202,11 +202,11 @@ function Sales() {
                   isSorted={false}
                   noEndBorder
                 />
-              </MDBox>
+              </DLBox>
             </Card>
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

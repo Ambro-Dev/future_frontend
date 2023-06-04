@@ -11,19 +11,19 @@ Coded by Ambro-Dev
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // NewProduct page components
 import FormField from "layouts/ecommerce/products/new-product/components/FormField";
 
 function Socials() {
   return (
-    <MDBox>
-      <MDTypography variant="h5" fontWeight="bold">
+    <DLBox>
+      <DLTypography variant="h5" fontWeight="bold">
         Socials
-      </MDTypography>
-      <MDBox mt={2}>
+      </DLTypography>
+      <DLBox mt={2}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <FormField type="text" label="Shoppify Handle" />
@@ -35,8 +35,8 @@ function Socials() {
             <FormField type="text" label="Instagram Account" />
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

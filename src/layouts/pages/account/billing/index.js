@@ -10,18 +10,18 @@ Coded by Ambro-Dev
 */
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
 import { useEffect, useState } from "react";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import GradesList from "examples/Lists/GradesList";
+import GradesList from "utils/Lists/GradesList";
 import { useTranslation } from "react-i18next";
-import TeacherGrades from "examples/Lists/TeacherGrades";
+import TeacherGrades from "utils/Lists/TeacherGrades";
 
 function Billing() {
   const { t } = useTranslation("translation", { keyPrefix: "grades" });
@@ -65,15 +65,15 @@ function Billing() {
       <DashboardLayout>
         <DashboardNavbar />
         {results ? (
-          <MDBox py={3}>
+          <DLBox py={3}>
             {auth.roles.includes(5150) ? (
               <TeacherGrades title={t("title")} userResults={results} />
             ) : (
               <GradesList title={t("title")} userResults={results} />
             )}
-          </MDBox>
+          </DLBox>
         ) : (
-          <MDBox py={3}>{t("nogrades")}</MDBox>
+          <DLBox py={3}>{t("nogrades")}</DLBox>
         )}
         <Footer />
       </DashboardLayout>

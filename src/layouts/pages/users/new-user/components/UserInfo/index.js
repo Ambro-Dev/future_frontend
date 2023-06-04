@@ -14,8 +14,8 @@ import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // NewUser page components
 import FormField from "layouts/pages/users/new-user/components/FormField";
@@ -33,14 +33,14 @@ function UserInfo({ formData }) {
   } = values;
 
   return (
-    <MDBox>
-      <MDBox lineHeight={0}>
-        <MDTypography variant="h5">About me</MDTypography>
-        <MDTypography variant="button" color="text">
+    <DLBox>
+      <DLBox lineHeight={0}>
+        <DLTypography variant="h5">About me</DLTypography>
+        <DLTypography variant="button" color="text">
           Mandatory informations
-        </MDTypography>
-      </MDBox>
-      <MDBox mt={1.625}>
+        </DLTypography>
+      </DLBox>
+      <DLBox mt={1.625}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <FormField
@@ -113,8 +113,8 @@ function UserInfo({ formData }) {
             />
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

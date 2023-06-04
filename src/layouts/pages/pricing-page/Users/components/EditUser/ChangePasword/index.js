@@ -9,14 +9,14 @@ Coded by Ambro-Dev
 */
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
+import DLButton from "components/DLButton";
 import { useEffect, useRef, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import MDSnackbar from "components/MDSnackbar";
+import DLSnackbar from "components/DLSnackbar";
 import { IconButton } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -44,7 +44,7 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
   const closeSuccessSB = () => setSuccessSB(false);
 
   const renderSuccessSB = (
-    <MDSnackbar
+    <DLSnackbar
       color="success"
       icon="check"
       title="User Created"
@@ -100,11 +100,11 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
   };
 
   return (
-    <MDBox>
-      <MDBox ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+    <DLBox>
+      <DLBox ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
         {errMsg}
-      </MDBox>
-      <MDBox
+      </DLBox>
+      <DLBox
         variant="gradient"
         bgColor="info"
         borderRadius="lg"
@@ -115,17 +115,17 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
         my={3}
         textAlign="start"
       >
-        <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+        <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
           Change Password
-        </MDTypography>
-        <MDTypography display="block" variant="button" color="white" my={1}>
+        </DLTypography>
+        <DLTypography display="block" variant="button" color="white" my={1}>
           Fill all the fields
-        </MDTypography>
-      </MDBox>
-      <MDBox pt={4} pb={3} px={3}>
-        <MDBox>
-          <MDBox mb={2} display="flex">
-            <MDInput
+        </DLTypography>
+      </DLBox>
+      <DLBox pt={4} pb={3} px={3}>
+        <DLBox>
+          <DLBox mb={2} display="flex">
+            <DLInput
               type={seePasswords ? "text" : "password"}
               label="Password"
               variant="standard"
@@ -139,9 +139,9 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
             />
             <CheckIcon color="success" style={{ display: validPwd ? "block" : "none" }} />
             <CloseIcon color="error" style={{ display: validPwd || !pwd ? "none" : "block" }} />
-          </MDBox>
-          <MDBox mb={2} display="flex">
-            <MDInput
+          </DLBox>
+          <DLBox mb={2} display="flex">
+            <DLInput
               type={seePasswords ? "text" : "password"}
               label="Repeat Password"
               variant="standard"
@@ -158,8 +158,8 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
               color="error"
               style={{ display: validRepeatPwd || !repeatPwd ? "none" : "block" }}
             />
-          </MDBox>
-          <MDBox mt={4} mb={1} textAlign="end">
+          </DLBox>
+          <DLBox mt={4} mb={1} textAlign="end">
             <IconButton
               variant="gradient"
               color="info"
@@ -168,30 +168,30 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
             >
               {!seePasswords ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </IconButton>
-          </MDBox>
-          <MDBox mt={4} mb={1} textAlign="start">
-            <MDButton
+          </DLBox>
+          <DLBox mt={4} mb={1} textAlign="start">
+            <DLButton
               variant="gradient"
               color="success"
               disabled={!!(!validPwd || !validRepeatPwd)}
               onClick={handleSubmit}
             >
               Change password
-            </MDButton>
-          </MDBox>
-          <MDBox mt={4} mb={1} textAlign="start">
-            <MDButton
+            </DLButton>
+          </DLBox>
+          <DLBox mt={4} mb={1} textAlign="start">
+            <DLButton
               variant="gradient"
               color="error"
               onClick={() => setChngPassword(!chngPassword)}
             >
               Cancel
-            </MDButton>
-          </MDBox>
-        </MDBox>
-      </MDBox>
+            </DLButton>
+          </DLBox>
+        </DLBox>
+      </DLBox>
       {renderSuccessSB}
-    </MDBox>
+    </DLBox>
   );
 }
 

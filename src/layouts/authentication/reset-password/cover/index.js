@@ -11,10 +11,10 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
+import DLButton from "components/DLButton";
 
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
@@ -26,7 +26,7 @@ function Cover() {
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>
       <Card>
-        <MDBox
+        <DLBox
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
@@ -37,25 +37,25 @@ function Cover() {
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="h3" fontWeight="medium" color="white" mt={1}>
+          <DLTypography variant="h3" fontWeight="medium" color="white" mt={1}>
             Reset Password
-          </MDTypography>
-          <MDTypography display="block" variant="button" color="white" my={1}>
+          </DLTypography>
+          <DLTypography display="block" variant="button" color="white" my={1}>
             You will receive an e-mail in maximum 60 seconds
-          </MDTypography>
-        </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mb={4}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
-            </MDBox>
-            <MDBox mt={6} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+          </DLTypography>
+        </DLBox>
+        <DLBox pt={4} pb={3} px={3}>
+          <DLBox component="form" role="form">
+            <DLBox mb={4}>
+              <DLInput type="email" label="Email" variant="standard" fullWidth />
+            </DLBox>
+            <DLBox mt={6} mb={1}>
+              <DLButton variant="gradient" color="info" fullWidth>
                 reset
-              </MDButton>
-            </MDBox>
-          </MDBox>
-        </MDBox>
+              </DLButton>
+            </DLBox>
+          </DLBox>
+        </DLBox>
       </Card>
     </CoverLayout>
   );

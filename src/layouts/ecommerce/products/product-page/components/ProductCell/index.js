@@ -11,20 +11,20 @@ Coded by Ambro-Dev
 import PropTypes from "prop-types";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLAvatar from "components/DLAvatar";
 
 function ProductCell({ image, name }) {
   return (
-    <MDBox display="flex" alignItems="center" pr={2}>
-      <MDBox mr={2}>
-        <MDAvatar src={image} alt={name} />
-      </MDBox>
-      <MDTypography variant="button" fontWeight="medium">
+    <DLBox display="flex" alignItems="center" pr={2}>
+      <DLBox mr={2}>
+        <DLAvatar src={image} alt={name} />
+      </DLBox>
+      <DLTypography variant="button" fontWeight="medium">
         {name}
-      </MDTypography>
-    </MDBox>
+      </DLTypography>
+    </DLBox>
   );
 }
 

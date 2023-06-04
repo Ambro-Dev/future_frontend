@@ -11,14 +11,14 @@ Coded by Ambro-Dev
 import PropTypes from "prop-types";
 
 // Distance Learning React components
-import MDInput from "components/MDInput";
-import MDBox from "components/MDBox";
+import DLInput from "components/DLInput";
+import DLBox from "components/DLBox";
 
 function FormField({ label, ...rest }) {
   return (
-    <MDBox mb={2}>
-      <MDInput {...rest} variant="standard" label={label} fullWidth />
-    </MDBox>
+    <DLBox mb={2}>
+      <DLInput {...rest} variant="standard" label={label} fullWidth />
+    </DLBox>
   );
 }
 

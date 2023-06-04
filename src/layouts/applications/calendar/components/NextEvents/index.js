@@ -13,11 +13,11 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DefaultItem from "examples/Items/DefaultItem";
+// Distance Learning React utils
+import DefaultItem from "utils/Items/DefaultItem";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -41,18 +41,18 @@ function NextEvents({ events }) {
 
   return (
     <Card sx={{ height: "600px" }}>
-      <MDBox
+      <DLBox
         pt={2}
         px={2}
         pb={1}
         lineHeight={1}
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
-        <MDTypography variant="h6" fontWeight="medium" pt={1}>
+        <DLTypography variant="h6" fontWeight="medium" pt={1}>
           {t("nextevents")}
-        </MDTypography>
-      </MDBox>
-      <MDBox sx={{ overflow: "auto" }}>
+        </DLTypography>
+      </DLBox>
+      <DLBox sx={{ overflow: "auto" }}>
         {events && events.length > 0 ? (
           events.map((event, index) => {
             const formattedStartDate = new Date(event.start).toLocaleDateString([t("date")], {
@@ -76,7 +76,7 @@ function NextEvents({ events }) {
               hour12: language === "en",
             });
             return (
-              <MDBox key={event._id}>
+              <DLBox key={event._id}>
                 <DefaultItem
                   color="dark"
                   type={event.className}
@@ -90,13 +90,13 @@ function NextEvents({ events }) {
                   start={`${formattedStartDate}, ${formattedStartTime}`}
                   end={`${formattedEndDate}, ${formattedEndTime}`}
                 />
-              </MDBox>
+              </DLBox>
             );
           })
         ) : (
-          <MDBox p={2}>{t("noevents")}</MDBox>
+          <DLBox p={2}>{t("noevents")}</DLBox>
         )}
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

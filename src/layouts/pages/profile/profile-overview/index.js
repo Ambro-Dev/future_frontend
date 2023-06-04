@@ -13,16 +13,16 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import ProfilesList from "examples/Lists/ProfilesList";
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import ProfileInfoCard from "utils/Cards/InfoCards/ProfileInfoCard";
+import ProfilesList from "utils/Lists/ProfilesList";
+import DefaultProjectCard from "utils/Cards/ProjectCards/DefaultProjectCard";
 import { useTranslation } from "react-i18next";
 
 // Overview page components
@@ -123,9 +123,9 @@ function Overview() {
     return (
       <DashboardLayout>
         <DashboardNavbar />
-        <MDBox mb={2} />
+        <DLBox mb={2} />
         <Header picture={picture}>
-          <MDBox mt={5} mb={3}>
+          <DLBox mt={5} mb={3}>
             <Grid container spacing={1}>
               <Grid item xs={12} md={6} xl={3} sx={{ display: "flex" }}>
                 <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
@@ -158,22 +158,22 @@ function Overview() {
                     shadow={false}
                   />
                 ) : (
-                  <MDBox>{t("noconversations")}</MDBox>
+                  <DLBox>{t("noconversations")}</DLBox>
                 )}
               </Grid>
             </Grid>
-          </MDBox>
-          <MDBox pt={2} px={2} lineHeight={1.25}>
-            <MDTypography variant="h6" fontWeight="medium">
+          </DLBox>
+          <DLBox pt={2} px={2} lineHeight={1.25}>
+            <DLTypography variant="h6" fontWeight="medium">
               {t("courses")}
-            </MDTypography>
-            <MDBox mb={1}>
-              <MDTypography variant="button" color="text">
+            </DLTypography>
+            <DLBox mb={1}>
+              <DLTypography variant="button" color="text">
                 {t("allcourses")}
-              </MDTypography>
-            </MDBox>
-          </MDBox>
-          <MDBox p={2}>
+              </DLTypography>
+            </DLBox>
+          </DLBox>
+          <DLBox p={2}>
             {courses.length > 0 ? (
               <Grid container spacing={6}>
                 {courses.map((course) => (
@@ -193,11 +193,11 @@ function Overview() {
                 ))}
               </Grid>
             ) : (
-              <MDBox>
-                <MDTypography>Loading</MDTypography>
-              </MDBox>
+              <DLBox>
+                <DLTypography>Loading</DLTypography>
+              </DLBox>
             )}
-          </MDBox>
+          </DLBox>
         </Header>
         <Footer />
       </DashboardLayout>

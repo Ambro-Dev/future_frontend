@@ -5,8 +5,8 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // Distance Learning React base styles
 import typography from "assets/theme/base/typography";
@@ -15,9 +15,9 @@ function Footer({ light }) {
   const { size } = typography;
 
   return (
-    <MDBox position="relative" width="100%" bottom={0} py={4}>
+    <DLBox position="relative" width="100%" bottom={0} py={4}>
       <Container>
-        <MDBox
+        <DLBox
           width="100%"
           display="flex"
           flexDirection={{ xs: "column", lg: "row" }}
@@ -25,7 +25,7 @@ function Footer({ light }) {
           alignItems="center"
           px={1.5}
         >
-          <MDBox
+          <DLBox
             display="flex"
             justifyContent="center"
             alignItems="center"
@@ -34,8 +34,8 @@ function Footer({ light }) {
             fontSize={size.sm}
           >
             &copy; 2022, made by Gwarant-Service
-          </MDBox>
-          <MDBox
+          </DLBox>
+          <DLBox
             component="ul"
             sx={({ breakpoints }) => ({
               display: "flex",
@@ -52,54 +52,54 @@ function Footer({ light }) {
               },
             })}
           >
-            <MDBox component="li" pr={2} lineHeight={1}>
+            <DLBox component="li" pr={2} lineHeight={1}>
               <Link href="https://mans.org.pl/" target="_blank">
-                <MDTypography
+                <DLTypography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
                   MANS
-                </MDTypography>
+                </DLTypography>
               </Link>
-            </MDBox>
-            <MDBox component="li" px={2} lineHeight={1}>
+            </DLBox>
+            <DLBox component="li" px={2} lineHeight={1}>
               <Link href="https://mans.org.pl/" target="_blank">
-                <MDTypography
+                <DLTypography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
                   About Us
-                </MDTypography>
+                </DLTypography>
               </Link>
-            </MDBox>
-            <MDBox component="li" px={2} lineHeight={1}>
+            </DLBox>
+            <DLBox component="li" px={2} lineHeight={1}>
               <Link href="https://mans.org.pl/" target="_blank">
-                <MDTypography
+                <DLTypography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
                   Blog
-                </MDTypography>
+                </DLTypography>
               </Link>
-            </MDBox>
-            <MDBox component="li" pl={2} lineHeight={1}>
+            </DLBox>
+            <DLBox component="li" pl={2} lineHeight={1}>
               <Link href="https://mans.org.pl/" target="_blank">
-                <MDTypography
+                <DLTypography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
                   License
-                </MDTypography>
+                </DLTypography>
               </Link>
-            </MDBox>
-          </MDBox>
-        </MDBox>
+            </DLBox>
+          </DLBox>
+        </DLBox>
       </Container>
-    </MDBox>
+    </DLBox>
   );
 }
 

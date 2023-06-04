@@ -14,17 +14,17 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
+import DLButton from "components/DLButton";
 import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { Chip, Dialog, DialogActions, Divider, Grid, Stack } from "@mui/material";
-import DataTable from "examples/Tables/DataTable";
+import DataTable from "utils/Tables/DataTable";
 import { useLocation, useNavigate } from "react-router-dom";
-import PageLayout from "examples/LayoutContainers/PageLayout";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+import PageLayout from "utils/LayoutContainers/PageLayout";
+import DefaultNavbar from "utils/Navbars/DefaultNavbar";
 import pageRoutes from "page.routes";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -247,9 +247,9 @@ function EditUser() {
   return (
     <PageLayout>
       <DefaultNavbar routes={pageRoutes} transparent />
-      <MDBox my={3} mt={12} ml={1} mr={1}>
+      <DLBox my={3} mt={12} ml={1} mr={1}>
         <Card sx={{ marginTop: 3 }}>
-          <MDBox
+          <DLBox
             variant="gradient"
             bgColor="secondary"
             borderRadius="lg"
@@ -261,20 +261,20 @@ function EditUser() {
             my={3}
             textAlign="center"
           >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Edit User
-            </MDTypography>
-          </MDBox>
+            </DLTypography>
+          </DLBox>
 
-          <MDBox pt={4} pb={3} px={3}>
+          <DLBox pt={4} pb={3} px={3}>
             {user ? (
-              <MDBox component="form" role="form">
+              <DLBox component="form" role="form">
                 <Grid container spacing={1}>
                   <Grid item xs={12} lg={chngPassword ? 4 : 10}>
                     {edit ? (
                       <>
-                        <MDBox mb={2} display="flex">
-                          <MDInput
+                        <DLBox mb={2} display="flex">
+                          <DLInput
                             type="text"
                             label="Name"
                             variant="standard"
@@ -283,9 +283,9 @@ function EditUser() {
                             onChange={(e) => setNewName(e.target.value)}
                             fullWidth
                           />
-                        </MDBox>
-                        <MDBox mb={2} display="flex">
-                          <MDInput
+                        </DLBox>
+                        <DLBox mb={2} display="flex">
+                          <DLInput
                             type="text"
                             label="Surname"
                             multiline
@@ -295,9 +295,9 @@ function EditUser() {
                             onChange={(e) => setNewSurname(e.target.value)}
                             fullWidth
                           />
-                        </MDBox>
-                        <MDBox mb={2} display="flex">
-                          <MDInput
+                        </DLBox>
+                        <DLBox mb={2} display="flex">
+                          <DLInput
                             type="text"
                             label="Email"
                             variant="standard"
@@ -306,10 +306,10 @@ function EditUser() {
                             onChange={(e) => setNewEmail(e.target.value)}
                             fullWidth
                           />
-                        </MDBox>
+                        </DLBox>
                         {studentNumber && (
-                          <MDBox mb={2} display="flex">
-                            <MDInput
+                          <DLBox mb={2} display="flex">
+                            <DLInput
                               type="text"
                               label="Student Number"
                               variant="standard"
@@ -318,116 +318,116 @@ function EditUser() {
                               onChange={(e) => setNewStudentNumber(e.target.value)}
                               fullWidth
                             />
-                          </MDBox>
+                          </DLBox>
                         )}
                       </>
                     ) : (
                       <>
-                        <MDBox mb={2} display="flex">
-                          <MDButton
+                        <DLBox mb={2} display="flex">
+                          <DLButton
                             variant="gradient"
                             color="info"
                             onClick={() => setChngPassword(true)}
                           >
                             Change password
-                          </MDButton>
-                        </MDBox>
+                          </DLButton>
+                        </DLBox>
                         {name && (
-                          <MDBox p={2}>
-                            <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                              <MDTypography
+                          <DLBox p={2}>
+                            <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                              <DLTypography
                                 component="label"
                                 variant="h6"
                                 fontWeight="medium"
                                 color="text"
                               >
                                 Name
-                              </MDTypography>
-                            </MDBox>
-                            <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                              <MDTypography color="text" variant="body2">
+                              </DLTypography>
+                            </DLBox>
+                            <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                              <DLTypography color="text" variant="body2">
                                 {name}
-                              </MDTypography>
-                            </MDBox>
-                          </MDBox>
+                              </DLTypography>
+                            </DLBox>
+                          </DLBox>
                         )}
                         {surname && (
-                          <MDBox p={2}>
-                            <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                              <MDTypography
+                          <DLBox p={2}>
+                            <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                              <DLTypography
                                 component="label"
                                 variant="h6"
                                 fontWeight="medium"
                                 color="text"
                               >
                                 Surname
-                              </MDTypography>
-                            </MDBox>
-                            <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                              <MDTypography color="text" variant="body2">
+                              </DLTypography>
+                            </DLBox>
+                            <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                              <DLTypography color="text" variant="body2">
                                 {surname}
-                              </MDTypography>
-                            </MDBox>
-                          </MDBox>
+                              </DLTypography>
+                            </DLBox>
+                          </DLBox>
                         )}
                         {email && (
-                          <MDBox p={2}>
-                            <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                              <MDTypography
+                          <DLBox p={2}>
+                            <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                              <DLTypography
                                 component="label"
                                 variant="h6"
                                 fontWeight="medium"
                                 color="text"
                               >
                                 Email
-                              </MDTypography>
-                            </MDBox>
-                            <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                              <MDTypography color="text" variant="body2">
+                              </DLTypography>
+                            </DLBox>
+                            <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                              <DLTypography color="text" variant="body2">
                                 {email}
-                              </MDTypography>
-                            </MDBox>
-                          </MDBox>
+                              </DLTypography>
+                            </DLBox>
+                          </DLBox>
                         )}
                         {studentNumber && (
-                          <MDBox p={2}>
-                            <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                              <MDTypography
+                          <DLBox p={2}>
+                            <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                              <DLTypography
                                 component="label"
                                 variant="h6"
                                 fontWeight="medium"
                                 color="text"
                               >
                                 Student Number
-                              </MDTypography>
-                            </MDBox>
-                            <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                              <MDTypography color="text" variant="body2">
+                              </DLTypography>
+                            </DLBox>
+                            <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                              <DLTypography color="text" variant="body2">
                                 {studentNumber}
-                              </MDTypography>
-                            </MDBox>
-                          </MDBox>
+                              </DLTypography>
+                            </DLBox>
+                          </DLBox>
                         )}
                         {roles && (
-                          <MDBox p={2}>
-                            <MDBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
-                              <MDTypography
+                          <DLBox p={2}>
+                            <DLBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                              <DLTypography
                                 component="label"
                                 variant="h6"
                                 fontWeight="medium"
                                 color="text"
                               >
                                 Role
-                              </MDTypography>
-                            </MDBox>
-                            <MDBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                              <MDTypography color="text" variant="body2">
+                              </DLTypography>
+                            </DLBox>
+                            <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
+                              <DLTypography color="text" variant="body2">
                                 {Object.values(roles).includes(5150) && "Teacher"}
                                 {Object.values(roles).includes(1984) && "Student"}
                                 {Object.values(roles).includes(1001) && "Admin"}
-                              </MDTypography>
-                            </MDBox>
-                          </MDBox>
+                              </DLTypography>
+                            </DLBox>
+                          </DLBox>
                         )}
                       </>
                     )}
@@ -450,23 +450,23 @@ function EditUser() {
                     flexDirection="column"
                   >
                     {Object.values(roles).includes(4004) && (
-                      <MDBox
+                      <DLBox
                         display="flex"
                         justifyContent="center"
                         textAlign="center"
                         alignItems="center"
                       >
-                        <MDTypography fontWeight="medium" mr={1}>
+                        <DLTypography fontWeight="medium" mr={1}>
                           User blocked
-                        </MDTypography>
+                        </DLTypography>
 
                         <BlockIcon color="error" sx={{ height: 40, width: 40 }} />
-                      </MDBox>
+                      </DLBox>
                     )}
 
-                    <MDBox mt={4} mb={1} textAlign="center">
+                    <DLBox mt={4} mb={1} textAlign="center">
                       {!edit && (
-                        <MDButton
+                        <DLButton
                           variant="gradient"
                           color="error"
                           onClick={() => {
@@ -474,10 +474,10 @@ function EditUser() {
                           }}
                         >
                           Go back
-                        </MDButton>
+                        </DLButton>
                       )}
-                    </MDBox>
-                    <MDButton
+                    </DLBox>
+                    <DLButton
                       sx={{ margin: 2 }}
                       color="warning"
                       onClick={() => {
@@ -492,11 +492,11 @@ function EditUser() {
                       }}
                     >
                       {!edit ? "Edit" : "Cancel"}
-                    </MDButton>
+                    </DLButton>
                     {edit && (
                       <>
-                        <MDBox>
-                          <MDButton
+                        <DLBox>
+                          <DLButton
                             sx={{ margin: 2 }}
                             variant="contained"
                             color={Object.values(roles).includes(4004) ? "info" : "error"}
@@ -507,10 +507,10 @@ function EditUser() {
                             }
                           >
                             {Object.values(roles).includes(4004) ? "Unblock user" : "Block user"}
-                          </MDButton>
-                        </MDBox>
-                        <MDBox m={2} textAlign="center">
-                          <MDButton
+                          </DLButton>
+                        </DLBox>
+                        <DLBox m={2} textAlign="center">
+                          <DLButton
                             variant="contained"
                             color="success"
                             disabled={
@@ -519,26 +519,26 @@ function EditUser() {
                             onClick={() => handleSubmitChanges()}
                           >
                             Save changes
-                          </MDButton>
-                        </MDBox>
+                          </DLButton>
+                        </DLBox>
                       </>
                     )}
                   </Grid>
                 </Grid>
                 <Divider />
-                <MDBox mt={5}>
+                <DLBox mt={5}>
                   {Object.values(user.roles).includes(5150) ? (
-                    <MDTypography
+                    <DLTypography
                       component="label"
                       variant="h4"
                       fontWeight="medium"
                       color="success"
                     >
                       Owner:
-                    </MDTypography>
+                    </DLTypography>
                   ) : (
-                    <MDBox>
-                      <MDBox
+                    <DLBox>
+                      <DLBox
                         variant="gradient"
                         bgColor="success"
                         borderRadius="lg"
@@ -548,12 +548,12 @@ function EditUser() {
                         my={3}
                         textAlign="center"
                       >
-                        <MDTypography variant="h5" fontWeight="medium" color="white">
+                        <DLTypography variant="h5" fontWeight="medium" color="white">
                           User courses
-                        </MDTypography>
-                      </MDBox>
-                      <MDBox sx={{ display: "flex" }}>
-                        <MDButton
+                        </DLTypography>
+                      </DLBox>
+                      <DLBox sx={{ display: "flex" }}>
+                        <DLButton
                           color={manage ? "warning" : "success"}
                           onClick={() => {
                             if (!addCourse) setManage(!manage);
@@ -564,23 +564,23 @@ function EditUser() {
                           variant="outlined"
                         >
                           {manage ? "Cancel" : "Manage courses"}
-                        </MDButton>
+                        </DLButton>
                         {manage && (
-                          <MDBox>
+                          <DLBox>
                             {!addCourse && (
-                              <MDButton
+                              <DLButton
                                 sx={{ margin: 1 }}
                                 color="error"
                                 disabled={!selectedUserRowIds.length}
                                 onClick={() => handleClickOpen()}
                               >
                                 Remove selected courses
-                              </MDButton>
+                              </DLButton>
                             )}
 
                             <Dialog open={open} onClose={handleClose}>
-                              <MDBox key="dialog-card" sx={{ padding: 3 }}>
-                                <MDBox
+                              <DLBox key="dialog-card" sx={{ padding: 3 }}>
+                                <DLBox
                                   variant="gradient"
                                   bgColor="info"
                                   borderRadius="lg"
@@ -591,21 +591,21 @@ function EditUser() {
                                   textAlign="center"
                                   key="title"
                                 >
-                                  <MDTypography
+                                  <DLTypography
                                     key="title-text"
                                     variant="h4"
                                     fontWeight="medium"
                                     color="white"
                                   >
                                     Confirm operation
-                                  </MDTypography>
-                                </MDBox>
-                                <MDBox key="title-description" m={2}>
-                                  <MDTypography key="title-description-text" variant="button">
+                                  </DLTypography>
+                                </DLBox>
+                                <DLBox key="title-description" m={2}>
+                                  <DLTypography key="title-description-text" variant="button">
                                     Remove user from courses:
-                                  </MDTypography>
-                                </MDBox>
-                                <MDBox key="content">
+                                  </DLTypography>
+                                </DLBox>
+                                <DLBox key="content">
                                   <Stack direction="column" spacing={1} key="dialog-stack">
                                     {selectedUserRowIds.flatMap((course, index) => (
                                       <Chip
@@ -616,29 +616,29 @@ function EditUser() {
                                       />
                                     ))}
                                   </Stack>
-                                </MDBox>
+                                </DLBox>
 
                                 <DialogActions>
-                                  <MDButton
+                                  <DLButton
                                     onClick={handleClose}
                                     variant="outlined"
                                     color="warning"
                                   >
                                     Cancel
-                                  </MDButton>
-                                  <MDButton
+                                  </DLButton>
+                                  <DLButton
                                     variant="outlined"
                                     color="success"
                                     onClick={handleRemoveFromCourses}
                                     autoFocus
                                   >
                                     Accept
-                                  </MDButton>
+                                  </DLButton>
                                 </DialogActions>
-                              </MDBox>
+                              </DLBox>
                             </Dialog>
 
-                            <MDButton
+                            <DLButton
                               color="info"
                               onClick={() => {
                                 if (selectedCoursesRowIds.length > 0) handleAddToCourses();
@@ -647,12 +647,12 @@ function EditUser() {
                               sx={{ margin: 1 }}
                             >
                               {addCourse ? "Add user to selected courses" : "Add user to courses"}
-                            </MDButton>
-                          </MDBox>
+                            </DLButton>
+                          </DLBox>
                         )}
-                      </MDBox>
+                      </DLBox>
                       <Divider />
-                      <MDBox sx={{ display: "flex", flexWrap: "wrap" }}>
+                      <DLBox sx={{ display: "flex", flexWrap: "wrap" }}>
                         {addCourse &&
                           selectedCoursesRowIds.length > 0 &&
                           selectedCoursesRowIds.flatMap((course, index) => (
@@ -665,12 +665,12 @@ function EditUser() {
                               sx={{ marginBottom: 1, marginRight: 1 }}
                             />
                           ))}
-                      </MDBox>
-                    </MDBox>
+                      </DLBox>
+                    </DLBox>
                   )}
 
                   {manage ? (
-                    <MDBox>
+                    <DLBox>
                       {!addCourse && (
                         <DataTable
                           table={{
@@ -679,7 +679,7 @@ function EditUser() {
                                 Header: "",
                                 accessor: "checkbox",
                                 Cell: ({ row }) => (
-                                  <MDButton
+                                  <DLButton
                                     onClick={() => {
                                       handleUserRowSelect(row.original);
                                     }}
@@ -690,7 +690,7 @@ function EditUser() {
                                     ) : (
                                       <CheckBoxOutlineBlankIcon sx={{ height: 20, width: 20 }} />
                                     )}
-                                  </MDButton>
+                                  </DLButton>
                                 ),
                                 isCheckbox: true,
                                 width: 10,
@@ -700,9 +700,9 @@ function EditUser() {
                                 Header: "teacher",
                                 accessor: "teacherId",
                                 Cell: ({ row }) => (
-                                  <MDBox>
+                                  <DLBox>
                                     {row.original.teacherId.name} {row.original.teacherId.surname}
-                                  </MDBox>
+                                  </DLBox>
                                 ),
                               },
                             ],
@@ -721,7 +721,7 @@ function EditUser() {
                                 Header: "",
                                 accessor: "checkbox",
                                 Cell: ({ row }) => (
-                                  <MDButton
+                                  <DLButton
                                     onClick={() => {
                                       handleCoursesRowSelect(row.original);
                                     }}
@@ -732,7 +732,7 @@ function EditUser() {
                                     ) : (
                                       <CheckBoxOutlineBlankIcon sx={{ height: 20, width: 20 }} />
                                     )}
-                                  </MDButton>
+                                  </DLButton>
                                 ),
                                 isCheckbox: true,
                                 width: 10,
@@ -742,15 +742,15 @@ function EditUser() {
                                 Header: "teacher",
                                 accessor: "teacherId",
                                 Cell: ({ row }) => (
-                                  <MDBox>
+                                  <DLBox>
                                     {row.original.teacherId.name} {row.original.teacherId.surname}
-                                  </MDBox>
+                                  </DLBox>
                                 ),
                               },
                               {
                                 Header: "members",
                                 accessor: "members",
-                                Cell: ({ row }) => <MDBox>{row.original.members.length}</MDBox>,
+                                Cell: ({ row }) => <DLBox>{row.original.members.length}</DLBox>,
                               },
                             ],
                             rows: allCourses,
@@ -759,7 +759,7 @@ function EditUser() {
                           canSearch
                         />
                       )}
-                    </MDBox>
+                    </DLBox>
                   ) : (
                     <DataTable
                       table={{
@@ -769,9 +769,9 @@ function EditUser() {
                             Header: "teacher",
                             accessor: "teacherId",
                             Cell: ({ row }) => (
-                              <MDBox>
+                              <DLBox>
                                 {row.original.teacherId.name} {row.original.teacherId.surname}
-                              </MDBox>
+                              </DLBox>
                             ),
                           },
                         ],
@@ -781,14 +781,14 @@ function EditUser() {
                       canSearch
                     />
                   )}
-                </MDBox>
-              </MDBox>
+                </DLBox>
+              </DLBox>
             ) : (
-              <MDBox>No course selected</MDBox>
+              <DLBox>No course selected</DLBox>
             )}
-          </MDBox>
+          </DLBox>
         </Card>
-      </MDBox>
+      </DLBox>
     </PageLayout>
   );
 }

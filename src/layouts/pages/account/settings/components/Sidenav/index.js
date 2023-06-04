@@ -12,8 +12,8 @@ import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // Distance Learning React context
 import { useMaterialUIController } from "context";
@@ -33,8 +33,8 @@ function Sidenav() {
     const itemKey = `item-${key}`;
 
     return (
-      <MDBox key={itemKey} component="li" pt={key === 0 ? 0 : 1}>
-        <MDTypography
+      <DLBox key={itemKey} component="li" pt={key === 0 ? 0 : 1}>
+        <DLTypography
           component="a"
           href={`#${href}`}
           variant="button"
@@ -60,12 +60,12 @@ function Sidenav() {
             },
           })}
         >
-          <MDBox mr={1.5} lineHeight={1} color={darkMode ? "white" : "dark"}>
+          <DLBox mr={1.5} lineHeight={1} color={darkMode ? "white" : "dark"}>
             <Icon fontSize="small">{icon}</Icon>
-          </MDBox>
+          </DLBox>
           {label}
-        </MDTypography>
-      </MDBox>
+        </DLTypography>
+      </DLBox>
     );
   });
 
@@ -77,7 +77,7 @@ function Sidenav() {
         top: "1%",
       }}
     >
-      <MDBox
+      <DLBox
         component="ul"
         display="flex"
         flexDirection="column"
@@ -86,7 +86,7 @@ function Sidenav() {
         sx={{ listStyle: "none" }}
       >
         {renderSidenavItems}
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

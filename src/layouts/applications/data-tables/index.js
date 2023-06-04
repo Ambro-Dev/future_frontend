@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
 import { Card, Grid, Toolbar } from "@mui/material";
 
 import { useContext, useEffect, useRef, useState } from "react";
@@ -17,10 +17,10 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { SocketContext } from "context/socket";
 
 import useAuth from "hooks/useAuth";
-import MDButton from "components/MDButton";
-import { navbarContainer } from "examples/Navbars/DashboardNavbar/styles";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
+import DLButton from "components/DLButton";
+import { navbarContainer } from "utils/Navbars/DashboardNavbar/styles";
+import DLTypography from "components/DLTypography";
+import DLInput from "components/DLInput";
 import "./styles/styles.css";
 import Lottie from "lottie-react-web";
 import conversationAnimation from "assets/images/illustrations/981-consultation-flat-edited.json";
@@ -154,12 +154,12 @@ function DataTables() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
+      <DLBox pt={6} pb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} xl={4}>
-            <MDBox mb={3}>
+            <DLBox mb={3}>
               <Toolbar sx={(theme) => navbarContainer(theme)}>
-                <MDBox pr={1}>
+                <DLBox pr={1}>
                   <Autocomplete
                     disablePortal
                     options={usersList}
@@ -168,19 +168,19 @@ function DataTables() {
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label={t("search")} />}
                   />
-                </MDBox>
+                </DLBox>
               </Toolbar>
-              <MDBox pl={3}>
-                <MDButton onClick={() => handleUserClick(query)}>{t("create")}</MDButton>
-              </MDBox>
-            </MDBox>
-            <MDBox mb={3}>
-              <MDTypography pb={1} variant="h5">
+              <DLBox pl={3}>
+                <DLButton onClick={() => handleUserClick(query)}>{t("create")}</DLButton>
+              </DLBox>
+            </DLBox>
+            <DLBox mb={3}>
+              <DLTypography pb={1} variant="h5">
                 {t("conversations")}
-              </MDTypography>
+              </DLTypography>
               {conversationsList.map((conversation) => (
-                <MDBox key={conversation._id} pt={1}>
-                  <MDButton
+                <DLBox key={conversation._id} pt={1}>
+                  <DLButton
                     size="large"
                     role="button"
                     onClick={() => handleConversationSelect(conversation._id)}
@@ -188,22 +188,22 @@ function DataTables() {
                     fullWidth
                   >
                     {conversation.name}
-                  </MDButton>
-                </MDBox>
+                  </DLButton>
+                </DLBox>
               ))}
-            </MDBox>
+            </DLBox>
           </Grid>
           <Grid item xs={12} xl={8} sx={{ height: "max-content" }}>
             <Card className="chat-conversation">
-              <MDBox m={3}>
+              <DLBox m={3}>
                 {selectedConversation ? (
                   <>
-                    <MDBox className="chat-header">
-                      <MDTypography variant="h5">
+                    <DLBox className="chat-header">
+                      <DLTypography variant="h5">
                         {conversationsList.find((conv) => conv._id === selectedConversation)?.name}
-                      </MDTypography>
-                    </MDBox>
-                    <MDBox
+                      </DLTypography>
+                    </DLBox>
+                    <DLBox
                       ref={messagesContainerRef}
                       className="messages-container"
                       display="flex"
@@ -236,22 +236,22 @@ function DataTables() {
                               }`}
                               key={message._id}
                             >
-                              <MDTypography
+                              <DLTypography
                                 className="sender"
                                 fontWeight="medium"
                                 variant="caption"
-                              >{`${sender.name} ${sender.surname}`}</MDTypography>
-                              <MDTypography className="text" variant="button" color="text">
+                              >{`${sender.name} ${sender.surname}`}</DLTypography>
+                              <DLTypography className="text" variant="button" color="text">
                                 {message.text}
-                              </MDTypography>
-                              <MDTypography
+                              </DLTypography>
+                              <DLTypography
                                 className="date"
                                 variant="caption"
                                 pt={2}
                                 sx={({ justifyContent: "flex-end" }, { alignSelf: "flex-end" })}
                               >
                                 {`${formattedDate} ${formattedTime}`}
-                              </MDTypography>
+                              </DLTypography>
                             </Card>
                           );
                         })
@@ -265,13 +265,13 @@ function DataTables() {
                             justifyContent="center"
                             display="flex"
                           >
-                            <MDTypography
+                            <DLTypography
                               variant="h5"
                               fontWeight="medium"
                               textTransform="uppercase"
                             >
                               {t("nomessages")}
-                            </MDTypography>
+                            </DLTypography>
                           </Grid>
                           <Grid item xs={12} xl={6} sx={{ height: "300px" }}>
                             <Lottie
@@ -284,8 +284,8 @@ function DataTables() {
                           </Grid>
                         </Grid>
                       )}
-                    </MDBox>
-                    <MDBox
+                    </DLBox>
+                    <DLBox
                       display="flex"
                       component="form"
                       role="form"
@@ -293,15 +293,15 @@ function DataTables() {
                       justifyContent="flex-end"
                       mt={2}
                     >
-                      <MDInput
+                      <DLInput
                         type="text"
                         placeholder="Type a message..."
                         value={messageText}
                         onChange={(e) => setMessageText(e.target.value)}
                         fullWidth
                       />
-                      <MDButton type="submit">{t("send")}</MDButton>
-                    </MDBox>
+                      <DLButton type="submit">{t("send")}</DLButton>
+                    </DLBox>
                   </>
                 ) : (
                   <Grid container spacing={2} display="flex" alignItems="center">
@@ -313,9 +313,9 @@ function DataTables() {
                       justifyContent="center"
                       display="flex"
                     >
-                      <MDTypography variant="h5" fontWeight="medium" textTransform="uppercase">
+                      <DLTypography variant="h5" fontWeight="medium" textTransform="uppercase">
                         {t("select")}
-                      </MDTypography>
+                      </DLTypography>
                     </Grid>
                     <Grid item xs={12} xl={6} sx={{ height: "400px" }}>
                       <Lottie
@@ -328,12 +328,12 @@ function DataTables() {
                     </Grid>
                   </Grid>
                 )}
-              </MDBox>
+              </DLBox>
             </Card>
-            <MDBox ref={sendRef} />
+            <DLBox ref={sendRef} />
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

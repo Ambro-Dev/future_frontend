@@ -14,11 +14,11 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLAvatar from "components/DLAvatar";
 import Tooltip from "@mui/material/Tooltip";
-import MDButton from "components/MDButton";
+import DLButton from "components/DLButton";
 import Icon from "@mui/material/Icon";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
@@ -66,23 +66,23 @@ function Header() {
 
   return (
     <Card id="profile">
-      <MDBox p={2}>
+      <DLBox p={2}>
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDBox position="relative" height="max-content" mx="auto">
+            <DLBox position="relative" height="max-content" mx="auto">
               {picture ? (
-                <MDAvatar
+                <DLAvatar
                   src={URL.createObjectURL(picture)}
                   alt="profile picture"
                   size="xxl"
                   variant="rounded"
                 />
               ) : (
-                <MDAvatar src={imageIrl} alt="profile picture" size="xxl" variant="rounded" />
+                <DLAvatar src={imageIrl} alt="profile picture" size="xxl" variant="rounded" />
               )}
-              <MDBox alt="spotify logo" position="absolute" left={0} bottom={0} mr={-1} mb={-1}>
+              <DLBox alt="spotify logo" position="absolute" left={0} bottom={0} mr={-1} mb={-1}>
                 <Tooltip title="Edit" placement="top">
-                  <MDButton
+                  <DLButton
                     onClick={handleOpen}
                     variant="gradient"
                     color="info"
@@ -91,7 +91,7 @@ function Header() {
                     iconOnly
                   >
                     <Icon>edit</Icon>
-                  </MDButton>
+                  </DLButton>
                 </Tooltip>
                 <DropzoneDialog
                   open={open}
@@ -101,21 +101,21 @@ function Header() {
                   maxFileSize={1000000}
                   onClose={handleClose}
                 />
-              </MDBox>
-            </MDBox>
+              </DLBox>
+            </DLBox>
           </Grid>
           <Grid item>
-            <MDBox height="100%" mt={0.5} lineHeight={1}>
-              <MDTypography variant="h5" fontWeight="medium">
+            <DLBox height="100%" mt={0.5} lineHeight={1}>
+              <DLTypography variant="h5" fontWeight="medium">
                 {auth.name} {auth.surname}
-              </MDTypography>
-              <MDTypography variant="button" color="text" fontWeight="medium">
+              </DLTypography>
+              <DLTypography variant="button" color="text" fontWeight="medium">
                 {auth.studentNumber}
-              </MDTypography>
-            </MDBox>
+              </DLTypography>
+            </DLBox>
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

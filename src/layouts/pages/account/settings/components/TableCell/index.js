@@ -11,12 +11,12 @@ Coded by Ambro-Dev
 import PropTypes from "prop-types";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 function TableCell({ width, align, padding, noBorder, children }) {
   return (
-    <MDBox
+    <DLBox
       component="th"
       width={width}
       pt={padding[0]}
@@ -29,10 +29,10 @@ function TableCell({ width, align, padding, noBorder, children }) {
           noBorder ? 0 : `${borderWidth[1]} solid ${light.main}`,
       }}
     >
-      <MDTypography component="div" variant="body2" color="text">
+      <DLTypography component="div" variant="body2" color="text">
         {children}
-      </MDTypography>
-    </MDBox>
+      </DLTypography>
+    </DLBox>
   );
 }
 

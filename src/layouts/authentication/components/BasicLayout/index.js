@@ -14,10 +14,10 @@ import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
-// Distance Learning React examples
-import PageLayout from "examples/LayoutContainers/PageLayout";
+// Distance Learning React utils
+import PageLayout from "utils/LayoutContainers/PageLayout";
 
 // Distance Learning React page layout routes
 
@@ -27,7 +27,7 @@ import Footer from "layouts/authentication/components/Footer";
 function BasicLayout({ image, children }) {
   return (
     <PageLayout>
-      <MDBox
+      <DLBox
         position="absolute"
         width="100%"
         minHeight="100vh"
@@ -43,14 +43,14 @@ function BasicLayout({ image, children }) {
           backgroundRepeat: "no-repeat",
         }}
       />
-      <MDBox px={1} width="100%" height="100vh" mx="auto">
+      <DLBox px={1} width="100%" height="100vh" mx="auto">
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             {children}
           </Grid>
         </Grid>
         <Footer light />
-      </MDBox>
+      </DLBox>
     </PageLayout>
   );
 }

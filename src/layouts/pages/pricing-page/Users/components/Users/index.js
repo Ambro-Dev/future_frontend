@@ -6,12 +6,12 @@ import { CircularProgress, Divider } from "@mui/material";
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLButton from "components/DLButton";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DataTable from "examples/Tables/DataTable";
+// Distance Learning React utils
+import DataTable from "utils/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -57,43 +57,43 @@ function Users({ setVisible, visible, loading }) {
 
   return (
     <Card style={{ marginTop: 25 }}>
-      <MDBox>
-        <MDBox>
-          <MDBox pt={2} px={2} lineHeight={1}>
-            <MDTypography variant="h6" fontWeight="medium" pb={1}>
+      <DLBox>
+        <DLBox>
+          <DLBox pt={2} px={2} lineHeight={1}>
+            <DLTypography variant="h6" fontWeight="medium" pb={1}>
               Users
-            </MDTypography>
-          </MDBox>
-          <MDBox pl={2}>
-            <MDButton color="primary" sx={{ margin: 1 }} onClick={() => setVisible(!visible)}>
+            </DLTypography>
+          </DLBox>
+          <DLBox pl={2}>
+            <DLButton color="primary" sx={{ margin: 1 }} onClick={() => setVisible(!visible)}>
               Add User
-            </MDButton>
-            <MDButton
+            </DLButton>
+            <DLButton
               color="info"
               sx={{ margin: 1 }}
               onClick={() => navigate("/admin/import-students")}
               endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
             >
-              <MDTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
+              <DLTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
                 Import students (CSV)
-              </MDTypography>
-            </MDButton>
-            <MDButton
+              </DLTypography>
+            </DLButton>
+            <DLButton
               color="info"
               sx={{ margin: 1 }}
               onClick={() => navigate("/admin/import-teachers")}
               endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
             >
-              <MDTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
+              <DLTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
                 Import teachers (CSV)
-              </MDTypography>
-            </MDButton>
-          </MDBox>
+              </DLTypography>
+            </DLButton>
+          </DLBox>
           <Divider />
           {!dataLoading ? (
-            <MDBox>
+            <DLBox>
               {users?.length > 0 && (
-                <MDBox>
+                <DLBox>
                   <DataTable
                     table={{
                       columns: [
@@ -111,7 +111,7 @@ function Users({ setVisible, visible, loading }) {
                           accessor: "actions",
                           width: "15%",
                           Cell: ({ row }) => (
-                            <MDButton onClick={() => openEdit(row)}>Edit</MDButton>
+                            <DLButton onClick={() => openEdit(row)}>Edit</DLButton>
                           ),
                         },
                       ],
@@ -119,11 +119,11 @@ function Users({ setVisible, visible, loading }) {
                     }}
                     canSearch
                   />
-                </MDBox>
+                </DLBox>
               )}
-            </MDBox>
+            </DLBox>
           ) : (
-            <MDBox
+            <DLBox
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -132,10 +132,10 @@ function Users({ setVisible, visible, loading }) {
               }}
             >
               <CircularProgress />
-            </MDBox>
+            </DLBox>
           )}
-        </MDBox>
-      </MDBox>
+        </DLBox>
+      </DLBox>
     </Card>
   );
 }

@@ -13,13 +13,13 @@ import { useEffect, useMemo, useState } from "react";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
+import DLBox from "components/DLBox";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import EventCalendar from "examples/Calendar";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
+import EventCalendar from "utils/Calendar";
 
 // Calendar application components
 import NextEvents from "layouts/applications/calendar/components/NextEvents";
@@ -74,7 +74,7 @@ function Calendar() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={3}>
+      <DLBox pt={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} xl={9} sx={{ height: "max-content" }}>
             {useMemo(
@@ -90,12 +90,12 @@ function Calendar() {
             )}
           </Grid>
           <Grid item xs={12} xl={3}>
-            <MDBox mb={3}>
+            <DLBox mb={3}>
               <NextEvents events={nextEvents} />
-            </MDBox>
+            </DLBox>
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

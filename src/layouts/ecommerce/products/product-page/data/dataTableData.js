@@ -8,8 +8,8 @@ Coded by Ambro-Dev
 */
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDProgress from "components/MDProgress";
+import DLBox from "components/DLBox";
+import DLProgress from "components/DLProgress";
 
 // ProductPage page components
 import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
@@ -37,9 +37,9 @@ const dataTableData = {
       price: <DefaultCell>$89.53</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (
-        <MDBox width="8rem">
-          <MDProgress variant="gradient" value={80} color="success" />
-        </MDBox>
+        <DLBox width="8rem">
+          <DLProgress variant="gradient" value={80} color="success" />
+        </DLBox>
       ),
       id: <DefaultCell>230019</DefaultCell>,
     },
@@ -48,9 +48,9 @@ const dataTableData = {
       price: <DefaultCell>$99.99</DefaultCell>,
       review: <ReviewCell rating={5} />,
       availability: (
-        <MDBox width="8rem">
-          <MDProgress variant="gradient" value={90} color="success" />
-        </MDBox>
+        <DLBox width="8rem">
+          <DLProgress variant="gradient" value={90} color="success" />
+        </DLBox>
       ),
       id: <DefaultCell>87120</DefaultCell>,
     },
@@ -59,9 +59,9 @@ const dataTableData = {
       price: <DefaultCell>$129.00</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (
-        <MDBox width="8rem">
-          <MDProgress variant="gradient" value={60} color="warning" />
-        </MDBox>
+        <DLBox width="8rem">
+          <DLProgress variant="gradient" value={60} color="warning" />
+        </DLBox>
       ),
       id: <DefaultCell>412301</DefaultCell>,
     },
@@ -70,9 +70,9 @@ const dataTableData = {
       price: <DefaultCell>$59.99</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (
-        <MDBox width="8rem">
-          <MDProgress variant="gradient" value={40} color="warning" />
-        </MDBox>
+        <DLBox width="8rem">
+          <DLProgress variant="gradient" value={40} color="warning" />
+        </DLBox>
       ),
       id: <DefaultCell>001992</DefaultCell>,
     },

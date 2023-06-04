@@ -1,4 +1,4 @@
-import MDSnackbar from "components/MDSnackbar";
+import DLSnackbar from "components/DLSnackbar";
 import React, { createContext, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 
@@ -74,7 +74,7 @@ export function ErrorProvider({ children }) {
     <ErrorContext.Provider value={errorContextValue}>
       {children}
       {errorSB && (
-        <MDSnackbar
+        <DLSnackbar
           color="error"
           icon="warning"
           title="Time out"
@@ -87,7 +87,7 @@ export function ErrorProvider({ children }) {
         />
       )}
       {warningSB && (
-        <MDSnackbar
+        <DLSnackbar
           color="warning"
           icon="star"
           title="Warning"
@@ -100,7 +100,7 @@ export function ErrorProvider({ children }) {
         />
       )}
       {infoSB && (
-        <MDSnackbar
+        <DLSnackbar
           icon="notifications"
           title="Info"
           content={info}
@@ -111,7 +111,7 @@ export function ErrorProvider({ children }) {
         />
       )}
       {successSB && (
-        <MDSnackbar
+        <DLSnackbar
           color="success"
           icon="check"
           title="Success"

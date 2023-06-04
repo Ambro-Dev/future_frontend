@@ -12,8 +12,8 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
 // EditProduct page components
 import FormField from "layouts/ecommerce/products/edit-product/components/FormField";
@@ -21,11 +21,11 @@ import FormField from "layouts/ecommerce/products/edit-product/components/FormFi
 function Socials() {
   return (
     <Card>
-      <MDBox p={3}>
-        <MDTypography variant="h5" fontWeight="bold">
+      <DLBox p={3}>
+        <DLTypography variant="h5" fontWeight="bold">
           Socials
-        </MDTypography>
-        <MDBox mt={1}>
+        </DLTypography>
+        <DLBox mt={1}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormField type="text" label="Shoppify Handle" defaultValue="@soft" />
@@ -37,8 +37,8 @@ function Socials() {
               <FormField type="text" label="Instagram Account" defaultValue="https://..." />
             </Grid>
           </Grid>
-        </MDBox>
-      </MDBox>
+        </DLBox>
+      </DLBox>
     </Card>
   );
 }

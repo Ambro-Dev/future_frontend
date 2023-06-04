@@ -14,10 +14,10 @@ import Icon from "@mui/material/Icon";
 import Tooltip from "@mui/material/Tooltip";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLAvatar from "components/DLAvatar";
+import DLButton from "components/DLButton";
 
 // Wizard application components
 import FormField from "layouts/applications/wizard/components/FormField";
@@ -48,22 +48,22 @@ function About({ setDescription, setName, name, description, setPic }) {
   };
 
   return (
-    <MDBox sx={{ my: 4 }}>
-      <MDBox width="82%" textAlign="center" mx="auto" my={4}>
-        <MDBox mb={1}>
-          <MDTypography variant="h5" fontWeight="regular">
+    <DLBox sx={{ my: 4 }}>
+      <DLBox width="82%" textAlign="center" mx="auto" my={4}>
+        <DLBox mb={1}>
+          <DLTypography variant="h5" fontWeight="regular">
             {t("courseinfo")}
-          </MDTypography>
-        </MDBox>
-        <MDTypography variant="body2" color="text">
+          </DLTypography>
+        </DLBox>
+        <DLTypography variant="body2" color="text">
           {t("courseimage")}
-        </MDTypography>
-      </MDBox>
-      <MDBox mt={2}>
+        </DLTypography>
+      </DLBox>
+      <DLBox mt={2}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4} container justifyContent="center">
-            <MDBox position="relative" height="max-content" mx="auto">
-              <MDAvatar
+            <DLBox position="relative" height="max-content" mx="auto">
+              <DLAvatar
                 src={
                   selectedAvatar
                     ? `${serverUrl}/${selectedAvatar}`
@@ -73,9 +73,9 @@ function About({ setDescription, setName, name, description, setPic }) {
                 size="xxl"
                 variant="rounded"
               />
-              <MDBox alt="spotify logo" position="absolute" right={0} bottom={0} mr={-1} mb={-1}>
+              <DLBox alt="spotify logo" position="absolute" right={0} bottom={0} mr={-1} mb={-1}>
                 <Tooltip title="Edit" placement="top">
-                  <MDButton
+                  <DLButton
                     variant="gradient"
                     color="info"
                     size="small"
@@ -83,14 +83,14 @@ function About({ setDescription, setName, name, description, setPic }) {
                     onClick={openModal}
                   >
                     <Icon>edit</Icon>
-                  </MDButton>
+                  </DLButton>
                 </Tooltip>
                 <NewEvent open={isModalOpen} onClose={closeModal} setSelectedAvatar={savePicture} />
-              </MDBox>
-            </MDBox>
+              </DLBox>
+            </DLBox>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <MDBox mb={2}>
+            <DLBox mb={2}>
               <FormField
                 type="text"
                 label={t("coursename")}
@@ -98,8 +98,8 @@ function About({ setDescription, setName, name, description, setPic }) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-            </MDBox>
-            <MDBox mb={2}>
+            </DLBox>
+            <DLBox mb={2}>
               <FormField
                 type="text"
                 label={t("coursedesc")}
@@ -108,11 +108,11 @@ function About({ setDescription, setName, name, description, setPic }) {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-            </MDBox>
+            </DLBox>
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </DLBox>
+    </DLBox>
   );
 }
 

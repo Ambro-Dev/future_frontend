@@ -14,16 +14,16 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAlert from "components/MDAlert";
-import MDButton from "components/MDButton";
-import MDSnackbar from "components/MDSnackbar";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLAlert from "components/DLAlert";
+import DLButton from "components/DLButton";
+import DLSnackbar from "components/DLSnackbar";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
 
 function Notifications() {
   const [successSB, setSuccessSB] = useState(false);
@@ -41,17 +41,17 @@ function Notifications() {
   const closeErrorSB = () => setErrorSB(false);
 
   const alertContent = (name) => (
-    <MDTypography variant="body2" color="white">
+    <DLTypography variant="body2" color="white">
       A simple {name} alert with{" "}
-      <MDTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
+      <DLTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
         an example link
-      </MDTypography>
+      </DLTypography>
       . Give it a click if you like.
-    </MDTypography>
+    </DLTypography>
   );
 
   const renderSuccessSB = (
-    <MDSnackbar
+    <DLSnackbar
       color="success"
       icon="check"
       title="Material Dashboard"
@@ -65,7 +65,7 @@ function Notifications() {
   );
 
   const renderInfoSB = (
-    <MDSnackbar
+    <DLSnackbar
       icon="notifications"
       title="Material Dashboard"
       content="Hello, world! This is a notification message"
@@ -77,7 +77,7 @@ function Notifications() {
   );
 
   const renderWarningSB = (
-    <MDSnackbar
+    <DLSnackbar
       color="warning"
       icon="star"
       title="Material Dashboard"
@@ -91,7 +91,7 @@ function Notifications() {
   );
 
   const renderErrorSB = (
-    <MDSnackbar
+    <DLSnackbar
       color="error"
       icon="warning"
       title="Material Dashboard"
@@ -107,82 +107,82 @@ function Notifications() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox mt={6} mb={3}>
+      <DLBox mt={6} mb={3}>
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Card>
-              <MDBox p={2}>
-                <MDTypography variant="h5">Alerts</MDTypography>
-              </MDBox>
-              <MDBox pt={2} px={2}>
-                <MDAlert color="primary" dismissible>
+              <DLBox p={2}>
+                <DLTypography variant="h5">Alerts</DLTypography>
+              </DLBox>
+              <DLBox pt={2} px={2}>
+                <DLAlert color="primary" dismissible>
                   {alertContent("primary")}
-                </MDAlert>
-                <MDAlert color="secondary" dismissible>
+                </DLAlert>
+                <DLAlert color="secondary" dismissible>
                   {alertContent("secondary")}
-                </MDAlert>
-                <MDAlert color="success" dismissible>
+                </DLAlert>
+                <DLAlert color="success" dismissible>
                   {alertContent("success")}
-                </MDAlert>
-                <MDAlert color="error" dismissible>
+                </DLAlert>
+                <DLAlert color="error" dismissible>
                   {alertContent("error")}
-                </MDAlert>
-                <MDAlert color="warning" dismissible>
+                </DLAlert>
+                <DLAlert color="warning" dismissible>
                   {alertContent("warning")}
-                </MDAlert>
-                <MDAlert color="info" dismissible>
+                </DLAlert>
+                <DLAlert color="info" dismissible>
                   {alertContent("info")}
-                </MDAlert>
-                <MDAlert color="light" dismissible>
+                </DLAlert>
+                <DLAlert color="light" dismissible>
                   {alertContent("light")}
-                </MDAlert>
-                <MDAlert color="dark" dismissible>
+                </DLAlert>
+                <DLAlert color="dark" dismissible>
                   {alertContent("dark")}
-                </MDAlert>
-              </MDBox>
+                </DLAlert>
+              </DLBox>
             </Card>
           </Grid>
 
           <Grid item xs={12} lg={8}>
             <Card>
-              <MDBox p={2} lineHeight={0}>
-                <MDTypography variant="h5">Notifications</MDTypography>
-                <MDTypography variant="button" color="text" fontWeight="regular">
+              <DLBox p={2} lineHeight={0}>
+                <DLTypography variant="h5">Notifications</DLTypography>
+                <DLTypography variant="button" color="text" fontWeight="regular">
                   Notifications on this page use Toasts from Bootstrap. Read more details here.
-                </MDTypography>
-              </MDBox>
-              <MDBox p={2}>
+                </DLTypography>
+              </DLBox>
+              <DLBox p={2}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6} lg={3}>
-                    <MDButton variant="gradient" color="success" onClick={openSuccessSB} fullWidth>
+                    <DLButton variant="gradient" color="success" onClick={openSuccessSB} fullWidth>
                       success notification
-                    </MDButton>
+                    </DLButton>
                     {renderSuccessSB}
                   </Grid>
                   <Grid item xs={12} sm={6} lg={3}>
-                    <MDButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
+                    <DLButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
                       info notification
-                    </MDButton>
+                    </DLButton>
                     {renderInfoSB}
                   </Grid>
                   <Grid item xs={12} sm={6} lg={3}>
-                    <MDButton variant="gradient" color="warning" onClick={openWarningSB} fullWidth>
+                    <DLButton variant="gradient" color="warning" onClick={openWarningSB} fullWidth>
                       warning notification
-                    </MDButton>
+                    </DLButton>
                     {renderWarningSB}
                   </Grid>
                   <Grid item xs={12} sm={6} lg={3}>
-                    <MDButton variant="gradient" color="error" onClick={openErrorSB} fullWidth>
+                    <DLButton variant="gradient" color="error" onClick={openErrorSB} fullWidth>
                       error notification
-                    </MDButton>
+                    </DLButton>
                     {renderErrorSB}
                   </Grid>
                 </Grid>
-              </MDBox>
+              </DLBox>
             </Card>
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );

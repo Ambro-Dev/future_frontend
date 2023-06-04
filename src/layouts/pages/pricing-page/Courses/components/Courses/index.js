@@ -6,12 +6,12 @@ import { CircularProgress, Divider } from "@mui/material";
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLButton from "components/DLButton";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import DataTable from "examples/Tables/DataTable";
+// Distance Learning React utils
+import DataTable from "utils/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -49,36 +49,36 @@ function Courses({ setVisible, visible, loading }) {
 
   return (
     <Card style={{ marginTop: 25 }}>
-      <MDBox>
-        <MDBox pt={2} px={2} lineHeight={1}>
-          <MDTypography variant="h6" fontWeight="medium" pb={1}>
+      <DLBox>
+        <DLBox pt={2} px={2} lineHeight={1}>
+          <DLTypography variant="h6" fontWeight="medium" pb={1}>
             Courses
-          </MDTypography>
-        </MDBox>
-        <MDBox pl={2}>
-          <MDButton
+          </DLTypography>
+        </DLBox>
+        <DLBox pl={2}>
+          <DLButton
             color="primary"
             onClick={() => setVisible(!visible)}
             sx={{ marginRight: 1, marginTop: 1, marginBottom: 1 }}
           >
             Add Course
-          </MDButton>
-          <MDButton
+          </DLButton>
+          <DLButton
             color="info"
             sx={{ margin: 1 }}
             onClick={() => navigate("/admin/import-courses")}
             endIcon={<AddIcon sx={{ height: 20, width: 20 }} />}
           >
-            <MDTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
+            <DLTypography variant="button" sx={{ color: "#FFFFFF" }} fontWeight="medium">
               Import courses (CSV)
-            </MDTypography>
-          </MDButton>
-        </MDBox>
+            </DLTypography>
+          </DLButton>
+        </DLBox>
         <Divider />
         {!dataLoading ? (
-          <MDBox>
+          <DLBox>
             {courses.length > 0 && (
-              <MDBox>
+              <DLBox>
                 <DataTable
                   table={{
                     columns: [
@@ -87,7 +87,7 @@ function Courses({ setVisible, visible, loading }) {
                         Header: "action",
                         accessor: "actions",
                         width: "15%",
-                        Cell: ({ row }) => <MDButton onClick={() => openEdit(row)}>Edit</MDButton>,
+                        Cell: ({ row }) => <DLButton onClick={() => openEdit(row)}>Edit</DLButton>,
                       },
                     ],
                     rows: courses,
@@ -95,11 +95,11 @@ function Courses({ setVisible, visible, loading }) {
                   entriesPerPage={false}
                   canSearch
                 />
-              </MDBox>
+              </DLBox>
             )}
-          </MDBox>
+          </DLBox>
         ) : (
-          <MDBox
+          <DLBox
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -108,9 +108,9 @@ function Courses({ setVisible, visible, loading }) {
             }}
           >
             <CircularProgress />
-          </MDBox>
+          </DLBox>
         )}
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

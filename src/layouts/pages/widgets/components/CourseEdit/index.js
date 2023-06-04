@@ -11,11 +11,11 @@ Coded by Ambro-Dev
 import Grid from "@mui/material/Grid";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
-import MDAvatar from "components/MDAvatar";
-import MDBadge from "components/MDBadge";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
+import DLAvatar from "components/DLAvatar";
+import DLBadge from "components/DLBadge";
 import PropTypes from "prop-types";
 
 // Images
@@ -40,31 +40,31 @@ function CourseEdit({ courseId, setEditing, handleSave, editing }) {
   return (
     <Grid container spacing={3} alignItems="center">
       <Grid item xs={12} md={6}>
-        <MDBox display="flex" alignItems="center">
-          <MDBox mr={2}>
-            <MDAvatar size="xxl" src={pictureUrl} alt="course image" />
-          </MDBox>
-          <MDBox lineHeight={1}>
-            <MDTypography variant="h6" fontWeight="medium">
+        <DLBox display="flex" alignItems="center">
+          <DLBox mr={2}>
+            <DLAvatar size="xxl" src={pictureUrl} alt="course image" />
+          </DLBox>
+          <DLBox lineHeight={1}>
+            <DLTypography variant="h6" fontWeight="medium">
               {course?.name}
-            </MDTypography>
-            <MDBadge
+            </DLTypography>
+            <DLBadge
               variant="gradient"
               color="info"
               size="xs"
               badgeContent={t("badge")}
               container
             />
-          </MDBox>
-        </MDBox>
+          </DLBox>
+        </DLBox>
       </Grid>
       <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
         {editing ? (
-          <MDButton color="success" onClick={handleSave}>
+          <DLButton color="success" onClick={handleSave}>
             {t("save")}
-          </MDButton>
+          </DLButton>
         ) : (
-          <MDButton onClick={setEditing}>{t("edit")}</MDButton>
+          <DLButton onClick={setEditing}>{t("edit")}</DLButton>
         )}
       </Grid>
     </Grid>

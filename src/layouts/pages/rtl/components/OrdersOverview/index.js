@@ -12,33 +12,33 @@ import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
 
-// Distance Learning React examples
-import TimelineItem from "examples/Timeline/TimelineItem";
+// Distance Learning React utils
+import TimelineItem from "utils/Timeline/TimelineItem";
 
 function OrdersOverview() {
   return (
     <Card sx={{ height: "100%" }}>
-      <MDBox pt={3} px={3}>
-        <MDTypography variant="h6" fontWeight="medium">
+      <DLBox pt={3} px={3}>
+        <DLTypography variant="h6" fontWeight="medium">
           نظرة عامة على الطلبات
-        </MDTypography>
-        <MDBox mt={0} mb={2}>
-          <MDTypography variant="button" color="text" fontWeight="regular">
-            <MDTypography display="inline" variant="body2" verticalAlign="middle">
+        </DLTypography>
+        <DLBox mt={0} mb={2}>
+          <DLTypography variant="button" color="text" fontWeight="regular">
+            <DLTypography display="inline" variant="body2" verticalAlign="middle">
               <Icon sx={{ color: ({ palette: { success } }) => success.main }}>arrow_upward</Icon>
-            </MDTypography>
+            </DLTypography>
             &nbsp;
-            <MDTypography variant="button" color="text" fontWeight="medium">
+            <DLTypography variant="button" color="text" fontWeight="medium">
               24%
-            </MDTypography>{" "}
+            </DLTypography>{" "}
             هذا الشهر
-          </MDTypography>
-        </MDBox>
-      </MDBox>
-      <MDBox p={2}>
+          </DLTypography>
+        </DLBox>
+      </DLBox>
+      <DLBox p={2}>
         <TimelineItem
           color="success"
           icon="notifications"
@@ -70,7 +70,7 @@ function OrdersOverview() {
           dateTime="18 ديسمبر ، 4:54 صباحًا"
           lastItem
         />
-      </MDBox>
+      </DLBox>
     </Card>
   );
 }

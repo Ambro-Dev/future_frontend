@@ -11,9 +11,9 @@ Coded by Ambro-Dev
 import Card from "@mui/material/Card";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLTypography from "components/DLTypography";
+import DLButton from "components/DLButton";
 
 // Images
 import productImage from "assets/images/products/product-11.jpg";
@@ -27,7 +27,7 @@ function ProductImage() {
         },
       }}
     >
-      <MDBox
+      <DLBox
         position="relative"
         borderRadius="lg"
         mt={-3}
@@ -35,7 +35,7 @@ function ProductImage() {
         className="card-header"
         sx={{ transition: "transform 300ms cubic-bezier(0.34, 1.61, 0.7, 1)" }}
       >
-        <MDBox
+        <DLBox
           component="img"
           src={productImage}
           alt="Product Image"
@@ -47,9 +47,9 @@ function ProductImage() {
           zIndex={10}
           mb={2}
         />
-      </MDBox>
-      <MDBox textAlign="center" pt={2} pb={3} px={3}>
-        <MDBox
+      </DLBox>
+      <DLBox textAlign="center" pt={2} pb={3} px={3}>
+        <DLBox
           display="flex"
           justifyContent="center"
           alignItems="center"
@@ -57,23 +57,23 @@ function ProductImage() {
           position="relative"
           zIndex={1}
         >
-          <MDBox mr={1}>
-            <MDButton variant="gradient" color="info" size="small">
+          <DLBox mr={1}>
+            <DLButton variant="gradient" color="info" size="small">
               edit
-            </MDButton>
-          </MDBox>
-          <MDButton variant="outlined" color="dark" size="small">
+            </DLButton>
+          </DLBox>
+          <DLButton variant="outlined" color="dark" size="small">
             remove
-          </MDButton>
-        </MDBox>
-        <MDTypography variant="h5" fontWeight="regular" sx={{ mt: 4 }}>
+          </DLButton>
+        </DLBox>
+        <DLTypography variant="h5" fontWeight="regular" sx={{ mt: 4 }}>
           Product Image
-        </MDTypography>
-        <MDTypography variant="body2" color="text" sx={{ mt: 1.5, mb: 1 }}>
+        </DLTypography>
+        <DLTypography variant="body2" color="text" sx={{ mt: 1.5, mb: 1 }}>
           The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to
           &#8220;Naviglio&#8221; where you can enjoy the main night life in Barcelona.
-        </MDTypography>
-      </MDBox>
+        </DLTypography>
+      </DLBox>
     </Card>
   );
 }

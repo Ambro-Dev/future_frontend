@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import MDBox from "components/MDBox";
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DLBox from "components/DLBox";
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
@@ -114,7 +114,7 @@ function SurveyViewer() {
     <DashboardLayout>
       <DashboardNavbar />
       {resultExam?.json?.completed ? (
-        <MDBox>You alredy completed this quiz</MDBox>
+        <DLBox>You alredy completed this quiz</DLBox>
       ) : (
         <Survey model={survey} />
       )}

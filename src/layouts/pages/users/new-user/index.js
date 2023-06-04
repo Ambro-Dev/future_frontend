@@ -20,13 +20,13 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
 // Distance Learning React components
-import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
+import DLBox from "components/DLBox";
+import DLButton from "components/DLButton";
 
-// Distance Learning React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+// Distance Learning React utils
+import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "utils/Navbars/DashboardNavbar";
+import Footer from "utils/Footer";
 
 // NewUser page components
 import UserInfo from "layouts/pages/users/new-user/components/UserInfo";
@@ -96,7 +96,7 @@ function NewUser() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3} mb={20} height="65vh">
+      <DLBox py={3} mb={20} height="65vh">
         <Grid container justifyContent="center" alignItems="center" sx={{ height: "100%", mt: 8 }}>
           <Grid item xs={12} lg={8}>
             <Formik
@@ -107,7 +107,7 @@ function NewUser() {
               {({ values, errors, touched, isSubmitting }) => (
                 <Form id={formId} autoComplete="off">
                   <Card sx={{ height: "100%" }}>
-                    <MDBox mx={2} mt={-3}>
+                    <DLBox mx={2} mt={-3}>
                       <Stepper activeStep={activeStep} alternativeLabel>
                         {steps.map((label) => (
                           <Step key={label}>
@@ -115,41 +115,41 @@ function NewUser() {
                           </Step>
                         ))}
                       </Stepper>
-                    </MDBox>
-                    <MDBox p={3}>
-                      <MDBox>
+                    </DLBox>
+                    <DLBox p={3}>
+                      <DLBox>
                         {getStepContent(activeStep, {
                           values,
                           touched,
                           formField,
                           errors,
                         })}
-                        <MDBox mt={2} width="100%" display="flex" justifyContent="space-between">
+                        <DLBox mt={2} width="100%" display="flex" justifyContent="space-between">
                           {activeStep === 0 ? (
-                            <MDBox />
+                            <DLBox />
                           ) : (
-                            <MDButton variant="gradient" color="light" onClick={handleBack}>
+                            <DLButton variant="gradient" color="light" onClick={handleBack}>
                               back
-                            </MDButton>
+                            </DLButton>
                           )}
-                          <MDButton
+                          <DLButton
                             disabled={isSubmitting}
                             type="submit"
                             variant="gradient"
                             color="dark"
                           >
                             {isLastStep ? "send" : "next"}
-                          </MDButton>
-                        </MDBox>
-                      </MDBox>
-                    </MDBox>
+                          </DLButton>
+                        </DLBox>
+                      </DLBox>
+                    </DLBox>
                   </Card>
                 </Form>
               )}
             </Formik>
           </Grid>
         </Grid>
-      </MDBox>
+      </DLBox>
       <Footer />
     </DashboardLayout>
   );
