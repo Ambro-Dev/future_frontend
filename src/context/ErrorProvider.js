@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 const ErrorContext = createContext();
 
 export function ErrorProvider({ children }) {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [errorTitle, setErrorTitle] = useState("");
   const [info, setInfo] = useState(null);
   const [warning, setWarning] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -24,8 +25,9 @@ export function ErrorProvider({ children }) {
   const openErrorSB = () => setErrorSB(true);
   const closeErrorSB = () => setErrorSB(false);
 
-  const showErrorNotification = (errorMessage) => {
+  const showErrorNotification = (errorName, errorMessage) => {
     setError(errorMessage);
+    setErrorTitle(errorName);
     openErrorSB();
     setTimeout(() => {
       setErrorSB(false);
@@ -77,7 +79,7 @@ export function ErrorProvider({ children }) {
         <DLSnackbar
           color="error"
           icon="warning"
-          title="Time out"
+          title={errorTitle}
           content={error}
           dateTime=""
           open={errorSB}

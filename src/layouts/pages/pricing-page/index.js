@@ -8,13 +8,14 @@ import pageRoutes from "page.routes";
 import PeopleIcon from "@mui/icons-material/People";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import DLTypography from "components/DLTypography";
 import DLProgress from "components/DLProgress";
 import VerticalBarChart from "utils/Charts/BarCharts/VerticalBarChart";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import Fade from "@mui/material/Fade";
+import ErrorContext from "context/ErrorProvider";
 
 function PricingPage() {
   const navigate = useNavigate();
@@ -36,14 +37,33 @@ function PricingPage() {
     },
   });
 
+  const { showErrorNotification } = useContext(ErrorContext);
+
   const [progress, setProgress] = useState(null);
   const [allFiles, setAllFiles] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [usersCount, setUserCount] = useState([]);
   const [users, setUsers] = useState([]);
   const [courses, setCourses] = useState([]);
 
   const axiosPrivate = useAxiosPrivate();
+
+  function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    return `${day}-${month}`;
+  }
+  const days = [];
+
+  for (let i = 6; i >= 0; i -= 1) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    const formattedDate = formatDate(date);
+    if (i === 1) days.push("yesterday");
+    else if (i === 0) days.push("today");
+    else days.push(formattedDate);
+  }
 
   useEffect(() => {
     axiosPrivate.get("files").then((response) => {
@@ -61,12 +81,16 @@ function PricingPage() {
       if (spaceTaken < 1024 * 1024 * 1024 && spaceTaken > 1024 * 1024)
         setProgress({ value: GB, amount: progressAmount, metric: "GB" });
     });
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
     axiosPrivate
-      .get("admin/users")
+      .get("admin/login-count")
+      .then((response) => {
+        console.log(response.data);
+        const newData = response.data.map((row) => row.count);
+        setUserCount(newData.reverse());
+      })
+      .catch(() => showErrorNotification("Error", "Couldn't load user logins count"));
+    axiosPrivate
+      .get(process.env.REACT_APP_GET_USERS_URL)
       .then((response) => {
         const rowStatus = response.data.map((row) => {
           if (row.roles.Blocked) {
@@ -107,11 +131,11 @@ function PricingPage() {
         });
         setUsers(newRows);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        showErrorNotification("Error", "Couldn't load users to export");
       });
     axiosPrivate
-      .get("admin/courses/all")
+      .get(process.env.REACT_APP_GET_EXPORT_COURSES_URL)
       .then((response) => {
         const newRowes = response.data.map((row) => ({
           title: row.name,
@@ -121,10 +145,11 @@ function PricingPage() {
         }));
         setCourses(newRowes);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        showErrorNotification("Error", "Couldn't load courses to export");
       });
-  }, [loading]);
+    setLoading(false);
+  }, []);
 
   const exportCSV = (data, tableData) => {
     const separator = ",";
@@ -261,22 +286,24 @@ function PricingPage() {
             <Grid item lg={6} xs={12}>
               <Grid container spacing={3}>
                 <Grid item lg={6} xs={12} sx={{ marginTop: 2 }}>
-                  <VerticalBarChart
-                    fullWidth
-                    icon={{ color: "info", component: "leaderboard" }}
-                    title="Vertical Bar Chart"
-                    description="Sales related to age average"
-                    chart={{
-                      labels: ["16-20", "21-25", "26-30", "31-36", "36-42", "42+"],
-                      datasets: [
-                        {
-                          label: "Sales by age",
-                          color: "dark",
-                          data: [15, 20, 12, 60, 20, 15],
-                        },
-                      ],
-                    }}
-                  />
+                  {days.length > 0 && (
+                    <VerticalBarChart
+                      fullWidth
+                      icon={{ color: "info", component: "leaderboard" }}
+                      title="Last week users"
+                      description="Users that logged into app"
+                      chart={{
+                        labels: days,
+                        datasets: [
+                          {
+                            label: "Users",
+                            color: "dark",
+                            data: usersCount,
+                          },
+                        ],
+                      }}
+                    />
+                  )}
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <Card sx={{ height: "50%", overflow: "hidden", marginBottom: 1 }}>
