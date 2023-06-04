@@ -113,17 +113,12 @@ function PricingPage() {
     axiosPrivate
       .get("admin/courses/all")
       .then((response) => {
-        const newRowes = response.data.map((row) => {
-          const membersList =
-            row.members.length > 0 ? row.members.map((member) => member.studentNumber) : [];
-
-          return {
-            title: row.name,
-            teacher: `${row.teacherId.name} ${row.teacherId.surname}`,
-            members: membersList,
-            events: row.events.length,
-          };
-        });
+        const newRowes = response.data.map((row) => ({
+          title: row.name,
+          teacher: `${row.teacherId.name} ${row.teacherId.surname}`,
+          members: row.members.length,
+          events: row.events.length,
+        }));
         setCourses(newRowes);
       })
       .catch((err) => {
