@@ -33,7 +33,7 @@ import { useTranslation } from "react-i18next";
 function Invoice() {
   const { t } = useTranslation("translation", { keyPrefix: "seeevent" });
   const serverUrl = process.env.REACT_APP_SERVER_URL;
-  const [course, setCourse] = useState();
+  const [course, setCourse] = useState(null);
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
   const [controller] = useMaterialUIController();
@@ -53,13 +53,18 @@ function Invoice() {
     }
 
     axiosPrivate
-      .get(`/courses/${selectedEvent._id}/event`)
+      .get(`/courses/${selectedEvent._id}/event`, {
+        // connect the controller with the fetch request
+        signal: controller.signal,
+      })
       .then((response) => {
         setCourse(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
+
+    return () => controller?.abort();
   }, []);
 
   const handleClick = (e) => {

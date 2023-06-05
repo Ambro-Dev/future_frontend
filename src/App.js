@@ -39,9 +39,8 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
 import RequireAuth from "components/RequireAuth";
-import PricingPage from "layouts/pages/pricing-page";
+import PricingPage from "layouts/pages/admin-page";
 import Widgets from "layouts/pages/widgets";
-import Timeline from "layouts/pages/projects/timeline";
 import Invoice from "layouts/pages/account/invoice";
 import NewProduct from "layouts/ecommerce/products/new-product";
 import EditProduct from "layouts/ecommerce/products/edit-product";
@@ -51,16 +50,17 @@ import PersistLogin from "components/PersistLogin";
 import { SocketContext } from "context/socket";
 import io from "socket.io-client";
 import Unauthorized from "components/Unauthorized";
-import AdminCourses from "layouts/pages/pricing-page/Courses";
-import AdminUsers from "layouts/pages/pricing-page/Users";
-import EditCourse from "layouts/pages/pricing-page/Courses/components/EditCourse";
-import EditUser from "layouts/pages/pricing-page/Users/components/EditUser";
+import AdminCourses from "layouts/pages/admin-page/Courses";
+import AdminUsers from "layouts/pages/admin-page/Users";
+import EditCourse from "layouts/pages/admin-page/Courses/components/EditCourse";
+import EditUser from "layouts/pages/admin-page/Users/components/EditUser";
 import { ErrorProvider } from "context/ErrorProvider";
-import ImportMembers from "layouts/pages/pricing-page/ImportMembers";
+import ImportMembers from "layouts/pages/admin-page/ImportMembers";
 import useAuth from "hooks/useAuth";
-import ImportStudents from "layouts/pages/pricing-page/ImportStudents";
-import ImportTeachers from "layouts/pages/pricing-page/ImportTeachers";
-import ImportCourses from "layouts/pages/pricing-page/ImportCourses";
+import ImportStudents from "layouts/pages/admin-page/ImportStudents";
+import ImportTeachers from "layouts/pages/admin-page/ImportTeachers";
+import ImportCourses from "layouts/pages/admin-page/ImportCourses";
+import VideoCallPage from "layouts/pages/VideoCallPage";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -281,7 +281,7 @@ export default function App() {
                 </Route>
                 <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
                   <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
-                  <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
+                  <Route path="/video-lesson/:id" element={<VideoCallPage />} key="video-lesson" />
                   <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
                   <Route
                     path="/ecommerce/products/new-product"
@@ -371,7 +371,7 @@ export default function App() {
               </Route>
               <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
                 <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
-                <Route path="/video-lesson/:id" element={<Timeline />} key="video-lesson" />
+                <Route path="/video-lesson/:id" element={<VideoCallPage />} key="video-lesson" />
                 <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
                 <Route
                   path="/ecommerce/products/new-product"

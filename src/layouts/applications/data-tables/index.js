@@ -37,11 +37,11 @@ function DataTables() {
   const { socket } = useContext(SocketContext);
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState(null);
   const [usersList, setUsersList] = useState([]);
   const [conversationsList, setConversationsList] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [messagesList, setMessagesList] = useState({});
+  const [messagesList, setMessagesList] = useState([]);
   const [messageText, setMessageText] = useState("");
   const messagesContainerRef = useRef();
   const sendRef = useRef();
@@ -73,7 +73,9 @@ function DataTables() {
     socket.on("conversation-messages", (messages) => {
       setMessagesList(messages);
     });
+  }, []);
 
+  useEffect(() => {
     socket.on("message", (message) => {
       setMessagesList((prevMessages) => [...prevMessages, message]);
     });
@@ -109,8 +111,8 @@ function DataTables() {
         .post("/conversations/", newConversation)
         .then((response) => {
           setConversationsList((prevConversations) => [...prevConversations, response.data]);
-          setSelectedConversation(response.data._id);
-          setMessagesList([]);
+          handleConversationSelect(response.data._id);
+          setQuery(null);
         })
         .catch((err) => {
           console.error(err);
@@ -163,7 +165,9 @@ function DataTables() {
                   <Autocomplete
                     disablePortal
                     options={usersList}
-                    getOptionLabel={(user) => `${user.name} ${user.surname} ${user.studentNumber}`}
+                    getOptionLabel={(user) =>
+                      `${user.name} ${user.surname} ${user.studentNumber || ""}`
+                    }
                     onChange={(event, value) => setQuery(value ? value._id : "")}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label={t("search")} />}
@@ -174,29 +178,31 @@ function DataTables() {
                 <DLButton onClick={() => handleUserClick(query)}>{t("create")}</DLButton>
               </DLBox>
             </DLBox>
-            <DLBox mb={3}>
-              <DLTypography pb={1} variant="h5">
-                {t("conversations")}
-              </DLTypography>
-              {conversationsList.map((conversation) => (
-                <DLBox key={conversation._id} pt={1}>
-                  <DLButton
-                    size="large"
-                    role="button"
-                    onClick={() => handleConversationSelect(conversation._id)}
-                    onKeyDown={() => handleConversationSelect(conversation._id)}
-                    fullWidth
-                  >
-                    {conversation.name}
-                  </DLButton>
-                </DLBox>
-              ))}
-            </DLBox>
+            {conversationsList.length > 0 && (
+              <DLBox mb={3}>
+                <DLTypography pb={1} variant="h5">
+                  {t("conversations")}
+                </DLTypography>
+                {conversationsList.map((conversation) => (
+                  <DLBox key={conversation._id} pt={1}>
+                    <DLButton
+                      size="large"
+                      role="button"
+                      onClick={() => handleConversationSelect(conversation._id)}
+                      onKeyDown={() => handleConversationSelect(conversation._id)}
+                      fullWidth
+                    >
+                      {conversation.name}
+                    </DLButton>
+                  </DLBox>
+                ))}
+              </DLBox>
+            )}
           </Grid>
           <Grid item xs={12} xl={8} sx={{ height: "max-content" }}>
             <Card className="chat-conversation">
               <DLBox m={3}>
-                {selectedConversation ? (
+                {selectedConversation && conversationsList.length > 0 ? (
                   <>
                     <DLBox className="chat-header">
                       <DLTypography variant="h5">
@@ -210,7 +216,7 @@ function DataTables() {
                       flexDirection="column"
                       mt={2}
                     >
-                      {messagesList && Object.values(messagesList).length > 0 ? (
+                      {messagesList.length > 0 ? (
                         Object.values(messagesList).map((message) => {
                           const sender = usersList.find((user) => user._id === message.sender);
                           const formattedDate = new Date(message.createdAt).toLocaleDateString(
@@ -240,7 +246,7 @@ function DataTables() {
                                 className="sender"
                                 fontWeight="medium"
                                 variant="caption"
-                              >{`${sender.name} ${sender.surname}`}</DLTypography>
+                              >{`${sender.name || ""} ${sender.surname || ""}`}</DLTypography>
                               <DLTypography className="text" variant="button" color="text">
                                 {message.text}
                               </DLTypography>

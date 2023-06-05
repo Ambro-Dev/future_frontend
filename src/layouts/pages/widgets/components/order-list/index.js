@@ -76,6 +76,13 @@ function OrderList({ courseId }) {
           surname: user.surname,
           studentNumber: user.studentNumber,
         }));
+        const tableData = data.map((user) => ({
+          id: user._id,
+          name: user.name,
+          surname: user.surname,
+          studentNumber: user.studentNumber,
+        }));
+        setListUsers(tableData);
         Promise.all(
           data.map((user) =>
             axiosPrivate
@@ -98,20 +105,14 @@ function OrderList({ courseId }) {
   }, []);
 
   useEffect(() => {
-    if (users.length === imageUrls.length) {
-      try {
-        const tableData = users.map((user, index) => ({
-          id: user._id,
-          name: user.name,
-          surname: user.surname,
-          studentNumber: user.studentNumber,
-          picture: imageUrls[index],
-        }));
-        setListUsers(tableData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    const tableData = users.map((user, index) => ({
+      id: user._id,
+      name: user.name,
+      surname: user.surname,
+      studentNumber: user.studentNumber,
+      picture: imageUrls[index],
+    }));
+    setListUsers(tableData);
   }, [imageUrls]);
 
   const handlePdfExport = () => {
@@ -166,7 +167,7 @@ function OrderList({ courseId }) {
             </DLBox>
           </DLBox>
           <DLBox>
-            {users.length > 0 && (
+            {listUsers.length > 0 && (
               <DLBox>
                 <Card>
                   <DLBox pt={2} px={2} lineHeight={1}>
@@ -181,7 +182,14 @@ function OrderList({ courseId }) {
                           Header: [t("picture")],
                           accessor: "picture",
                           width: "10%",
-                          Cell: ({ row }) => <DLAvatar src={row.original.picture} size="sm" />,
+                          Cell: ({ row }) => (
+                            <DLAvatar
+                              src={row.original.picture}
+                              size="sm"
+                              alt={`${row.original.name} ${row.original.surname}`}
+                              sx={{ color: "#000000" }}
+                            />
+                          ),
                         },
                         { Header: [t("name")], accessor: "name" },
                         { Header: [t("surname")], accessor: "surname" },

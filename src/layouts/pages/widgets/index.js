@@ -98,7 +98,7 @@ function Widgets() {
         console.error(error);
       });
 
-    socket.emit("join-course", courseId);
+    if (courseId !== "") socket.emit("join-course", courseId);
 
     socket.on("event", (event) => {
       setCalendarEventsData((prevEvents) => [...prevEvents, event]);

@@ -60,11 +60,11 @@ function CourseEdit({ courseId, setEditing, handleSave, editing }) {
       </Grid>
       <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
         {editing ? (
-          <DLButton color="success" onClick={handleSave}>
+          <DLButton color="success" onClick={() => handleSave()}>
             {t("save")}
           </DLButton>
         ) : (
-          <DLButton onClick={setEditing}>{t("edit")}</DLButton>
+          <DLButton onClick={() => setEditing(!editing)}>{t("edit")}</DLButton>
         )}
       </Grid>
     </Grid>

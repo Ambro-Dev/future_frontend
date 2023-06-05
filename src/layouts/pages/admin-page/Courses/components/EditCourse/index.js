@@ -33,6 +33,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ErrorContext from "context/ErrorProvider";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import FooterAdmin from "layouts/pages/admin-page/FooterAdmin";
 
 function EditCourse() {
   const [manage, setManage] = useState(false);
@@ -662,6 +663,7 @@ function EditCourse() {
           </DLBox>
         </Card>
       </DLBox>
+      <FooterAdmin />
     </PageLayout>
   );
 }

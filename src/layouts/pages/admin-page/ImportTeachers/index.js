@@ -10,6 +10,7 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { DropzoneDialog } from "mui-file-dropzone";
 import pageRoutes from "page.routes";
 import { useState } from "react";
+import FooterAdmin from "../FooterAdmin";
 
 function ImportTeachers() {
   const axiosPrivate = useAxiosPrivate();
@@ -162,6 +163,7 @@ function ImportTeachers() {
           )}
         </Card>
       </DLBox>
+      <FooterAdmin />
     </PageLayout>
   );
 }

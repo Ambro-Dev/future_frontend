@@ -10,8 +10,9 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { DropzoneDialog } from "mui-file-dropzone";
 import pageRoutes from "page.routes";
 import { useState } from "react";
+import FooterAdmin from "../FooterAdmin";
 
-function ImportCourses() {
+function ImportStudents() {
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
 
@@ -21,13 +22,13 @@ function ImportCourses() {
   const handleDownloadSchema = async (event) => {
     event.preventDefault();
     try {
-      const response = await axiosPrivate.get("/admin/courses-schema", {
+      const response = await axiosPrivate.get("/admin/student-schema", {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "courses-schema.csv");
+      link.setAttribute("download", "student-schema.csv");
       document.body.appendChild(link);
       link.click();
     } catch (error) {
@@ -40,7 +41,7 @@ function ImportCourses() {
     const formData = new FormData();
     formData.append("file", files[0]);
     await axiosPrivate
-      .post("/admin/import-courses", formData, {
+      .post("/admin/import-students", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -48,7 +49,7 @@ function ImportCourses() {
       .then((response) => {
         setResults(response.data.results);
         setErrors(response.data.errors);
-        alert("Courses imported successfully");
+        alert("Students imported successfully");
       })
       .catch((error) => {
         alert(error.response.data);
@@ -81,7 +82,7 @@ function ImportCourses() {
             textAlign="center"
           >
             <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Import courses
+              Import students
             </DLTypography>
           </DLBox>
           <DLBox pl={2}>
@@ -162,8 +163,9 @@ function ImportCourses() {
           )}
         </Card>
       </DLBox>
+      <FooterAdmin />
     </PageLayout>
   );
 }
 
-export default ImportCourses;
+export default ImportStudents;

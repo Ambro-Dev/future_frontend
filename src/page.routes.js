@@ -33,7 +33,7 @@ const pageRoutes = [
       {
         name: "Manage Courses",
         route: "/admin/courses",
-        icon: "widgets",
+        icon: "class",
       },
     ],
   },
@@ -43,22 +43,17 @@ const pageRoutes = [
       {
         name: "Manage Users",
         route: "/admin/users",
-        icon: "import_contacts",
+        icon: "person",
       },
     ],
   },
   {
-    name: "Raports",
+    name: "Exports",
     collapse: [
       {
-        name: "Courses Raports",
-        route: "/admin/courses",
-        icon: "widgets",
-      },
-      {
-        name: "Users Raports",
-        route: "/applications/wizard",
-        icon: "import_contacts",
+        name: "Go to exports",
+        route: "/admin",
+        icon: "import_export",
       },
     ],
   },
@@ -68,7 +63,7 @@ const pageRoutes = [
       {
         name: "Logout",
         route: "/sign-out",
-        icon: "widgets",
+        icon: "logout",
       },
     ],
   },

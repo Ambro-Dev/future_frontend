@@ -10,28 +10,25 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { DropzoneDialog } from "mui-file-dropzone";
 import pageRoutes from "page.routes";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import FooterAdmin from "../FooterAdmin";
 
-function ImportMembers() {
+function ImportCourses() {
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
 
   const [errors, setErrors] = useState([]);
   const [results, setResults] = useState([]);
 
-  const location = useLocation();
-  const courseInfo = location.state;
-
   const handleDownloadSchema = async (event) => {
     event.preventDefault();
     try {
-      const response = await axiosPrivate.get("/admin/import-members/schema", {
+      const response = await axiosPrivate.get("/admin/courses-schema", {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "import-members.csv");
+      link.setAttribute("download", "courses-schema.csv");
       document.body.appendChild(link);
       link.click();
     } catch (error) {
@@ -44,7 +41,7 @@ function ImportMembers() {
     const formData = new FormData();
     formData.append("file", files[0]);
     await axiosPrivate
-      .post(`/admin/import-members/${courseInfo.id}`, formData, {
+      .post("/admin/import-courses", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -52,7 +49,7 @@ function ImportMembers() {
       .then((response) => {
         setResults(response.data.results);
         setErrors(response.data.errors);
-        alert("Members imported successfully");
+        alert("Courses imported successfully");
       })
       .catch((error) => {
         alert(error.response.data);
@@ -85,7 +82,7 @@ function ImportMembers() {
             textAlign="center"
           >
             <DLTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Import members
+              Import courses
             </DLTypography>
           </DLBox>
           <DLBox pl={2}>
@@ -166,8 +163,9 @@ function ImportMembers() {
           )}
         </Card>
       </DLBox>
+      <FooterAdmin />
     </PageLayout>
   );
 }
 
-export default ImportMembers;
+export default ImportCourses;

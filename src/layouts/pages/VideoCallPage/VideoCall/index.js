@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import { VideoSDKMeeting } from "@videosdk.live/rtc-js-prebuilt";
 import useAuth from "hooks/useAuth";
-import { useParams } from "react-router-dom";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import DLBox from "components/DLBox";
-import "./styles/index.css";
 
-export default function App() {
-  const { id: meetingId } = useParams();
+import PropTypes from "prop-types";
+
+export default function VideoCall({ meetingId }) {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   useEffect(() => {
@@ -26,14 +24,12 @@ export default function App() {
       apiKey,
 
       containerId: null,
-      redirectOnLeave: "https://mans.org.pl",
 
       micEnabled: true,
       webcamEnabled: true,
       participantCanToggleSelfWebcam: true,
       participantCanToggleSelfMic: true,
       participantCanLeave: true, // if false, leave button won't be visible
-
       chatEnabled: true,
       screenShareEnabled: true,
       whiteboardEnabled: true,
@@ -52,8 +48,8 @@ export default function App() {
       },
 
       layout: {
-        type: "SPOTLIGHT", // "SPOTLIGHT" | "SIDEBAR" | "GRID"
-        priority: "PIN", // "SPEAKER" | "PIN",
+        type: "SIDEBAR", // "SPOTLIGHT" | "SIDEBAR" | "GRID"
+        priority: "SPEAKER", //  | "PIN",
         // gridSize: 3,
       },
 
@@ -61,21 +57,23 @@ export default function App() {
         enabled: true,
         logoURL: "http://localhost:3000/static/media/logo-ct.9b8693ea4783e10fad4b.png",
         name: "Distance Learning",
-        poweredBy: true,
+        poweredBy: false,
       },
 
       permissions: {
         pin: true,
         askToJoin: false, // Ask joined participants for entry in meeting
-        toggleParticipantMic: true, // Can toggle other participant's mic
-        toggleParticipantWebcam: true, // Can toggle other participant's webcam
-        drawOnWhiteboard: true, // Can draw on whiteboard
-        toggleWhiteboard: true, // Can toggle whiteboard
-        toggleRecording: true, // Can toggle meeting recording
+        toggleParticipantMic: auth.roles.includes(5150), // Can toggle other participant's mic
+        toggleParticipantWebcam: auth.roles.includes(5150), // Can toggle other participant's webcam
+        toggleVirtualBackground: false,
+        drawOnWhiteboard: auth.roles.includes(5150), // Can draw on whiteboard
+        toggleWhiteboard: auth.roles.includes(5150), // Can toggle whiteboard
+        toggleRecording: auth.roles.includes(5150), // Can toggle meeting recording
         toggleLivestream: false, // can toggle live stream
-        removeParticipant: true, // Can remove participant
-        endMeeting: true, // Can end meeting
-        changeLayout: true, // can change layout
+        removeParticipant: auth.roles.includes(5150), // Can remove participant
+        endMeeting: auth.roles.includes(5150), // Can end meeting
+        changeLayout: auth.roles.includes(5150), // can change layout
+        canCreatePoll: false,
       },
 
       joinScreen: {
@@ -90,6 +88,10 @@ export default function App() {
           // optional action button
           label: "MANS", // action button label
           href: "https://mans.org.pl/", // action button href
+          onClick: () => {
+            // Close the current tab/window
+            window.close();
+          },
         },
       },
 
@@ -106,5 +108,9 @@ export default function App() {
     meeting.init(config);
   }, []);
 
-  return <DLBox />;
+  return <div />;
 }
+
+VideoCall.propTypes = {
+  meetingId: PropTypes.string.isRequired,
+};

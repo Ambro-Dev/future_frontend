@@ -30,6 +30,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import ErrorContext from "context/ErrorProvider";
 import BlockIcon from "@mui/icons-material/Block";
+import FooterAdmin from "layouts/pages/admin-page/FooterAdmin";
 import ChangePassword from "./ChangePasword";
 
 function EditUser() {
@@ -789,6 +790,7 @@ function EditUser() {
           </DLBox>
         </Card>
       </DLBox>
+      <FooterAdmin />
     </PageLayout>
   );
 }
