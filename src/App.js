@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -17,16 +17,9 @@ import Configurator from "utils/Configurator";
 
 // Distance Learning React themes
 import theme from "assets/theme";
-import themeRTL from "assets/theme/theme-rtl";
 
 // Distance Learning React Dark Mode themes
 import themeDark from "assets/theme-dark";
-import themeDarkRTL from "assets/theme-dark/theme-rtl";
-
-// RTL plugins
-import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
 
 // Distance Learning React routes
 
@@ -39,12 +32,9 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
 import RequireAuth from "components/RequireAuth";
-import PricingPage from "layouts/pages/admin-page";
-import Widgets from "layouts/pages/widgets";
-import Invoice from "layouts/pages/account/invoice";
-import NewProduct from "layouts/ecommerce/products/new-product";
-import EditProduct from "layouts/ecommerce/products/edit-product";
-import Wizard from "layouts/applications/wizard";
+import AdminPage from "layouts/pages/admin-page";
+import ViewExamPage from "layouts/pages/exam-pages/view-page";
+import ExamBuilder from "layouts/pages/exam-pages/create-page";
 import { useTranslation } from "react-i18next";
 import PersistLogin from "components/PersistLogin";
 import { SocketContext } from "context/socket";
@@ -61,6 +51,9 @@ import ImportStudents from "layouts/pages/admin-page/ImportStudents";
 import ImportTeachers from "layouts/pages/admin-page/ImportTeachers";
 import ImportCourses from "layouts/pages/admin-page/ImportCourses";
 import VideoCallPage from "layouts/pages/VideoCallPage";
+import CourseInfo from "layouts/pages/course-info";
+import EventInfo from "layouts/pages/EventInfo";
+import EventWizard from "layouts/pages/EventWizard";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -125,18 +118,7 @@ export default function App() {
   };
 
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
-
-  // Cache for the rtl
-  useMemo(() => {
-    const cacheRtl = createCache({
-      key: "rtl",
-      stylisPlugins: [rtlPlugin],
-    });
-
-    setRtlCache(cacheRtl);
-  }, []);
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -215,87 +197,7 @@ export default function App() {
     </DLBox>
   );
 
-  return direction === "rtl" ? (
-    <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
-        <ErrorProvider>
-          <CssBaseline />
-          {layout === "dashboard" && (
-            <>
-              <Sidenav
-                color={sidenavColor}
-                brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-                brandName="Distance Learning"
-                routes={routes}
-                onMouseEnter={handleOnMouseEnter}
-                onMouseLeave={handleOnMouseLeave}
-              />
-              <Configurator />
-              {configsButton}
-            </>
-          )}
-          {layout === "vr" && <Configurator />}
-          <Routes>
-            <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
-            <Route element={<PersistLogin />}>
-              <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-                <Route
-                  path="*"
-                  element={
-                    auth.roles.includes(1001) ? (
-                      <Navigate to="/admin" />
-                    ) : (
-                      <Navigate to="/profile-overview" />
-                    )
-                  }
-                />
-                <Route path="/unauthorized" element={<Unauthorized />} key="unauthorized" />
-                {getRoutes(routes)}
-                <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-                  <Route path="/admin" element={<PricingPage />} key="admin-page" />
-                  <Route
-                    path="/admin/import-members"
-                    element={<ImportMembers />}
-                    key="import-members"
-                  />
-                  <Route path="/admin/users" element={<AdminUsers />} key="admin-users" />
-                  <Route path="/admin/courses" element={<AdminCourses />} key="admin-courses" />
-                  <Route
-                    path="/admin/courses/edit-course"
-                    element={<EditCourse />}
-                    key="admin-edit-course"
-                  />
-                  <Route
-                    path="/admin/users/edit-user"
-                    element={<EditUser />}
-                    key="admin-edit-user"
-                  />
-                </Route>
-                <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
-                  <Route
-                    path="/ecommerce/products/edit-product"
-                    element={<EditProduct />}
-                    key="edit-product"
-                  />
-                  <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
-                </Route>
-                <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
-                  <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
-                  <Route path="/video-lesson/:id" element={<VideoCallPage />} key="video-lesson" />
-                  <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
-                  <Route
-                    path="/ecommerce/products/new-product"
-                    element={<NewProduct />}
-                    key="new-product"
-                  />
-                </Route>
-              </Route>
-            </Route>
-          </Routes>
-        </ErrorProvider>
-      </ThemeProvider>
-    </CacheProvider>
-  ) : (
+  return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <ErrorProvider>
         <CssBaseline />
@@ -331,7 +233,7 @@ export default function App() {
               />
               {getRoutes(routes)}
               <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-                <Route path="/admin" element={<PricingPage />} key="admin-page" />
+                <Route path="/admin" element={<AdminPage />} key="admin-page" />
                 <Route
                   path="/admin/import-members"
                   element={<ImportMembers />}
@@ -363,20 +265,20 @@ export default function App() {
               </Route>
               <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
                 <Route
-                  path="/ecommerce/products/edit-product"
-                  element={<EditProduct />}
-                  key="edit-product"
+                  path="/exam-pages/create-page"
+                  element={<ExamBuilder />}
+                  key="create-exam-page"
                 />
-                <Route path="/applications/wizard" element={<Wizard />} key="wizard" />
+                <Route path="/applications/wizard" element={<EventWizard />} key="wizard" />
               </Route>
               <Route element={<RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Student]} />}>
-                <Route path="/courses/course-info/:id" element={<Widgets />} key="course-info" />
+                <Route path="/courses/course-info/:id" element={<CourseInfo />} key="course-info" />
                 <Route path="/video-lesson/:id" element={<VideoCallPage />} key="video-lesson" />
-                <Route path="/pages/account/invoice" element={<Invoice />} key="event-info" />
+                <Route path="/pages/account/event-info" element={<EventInfo />} key="event-info" />
                 <Route
-                  path="/ecommerce/products/new-product"
-                  element={<NewProduct />}
-                  key="new-product"
+                  path="/exam-pages/view-page"
+                  element={<ViewExamPage />}
+                  key="view-exam-page"
                 />
               </Route>
             </Route>

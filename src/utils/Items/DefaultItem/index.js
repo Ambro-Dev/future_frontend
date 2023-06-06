@@ -63,7 +63,7 @@ const DefaultItem = forwardRef(
         _id: event,
         url,
       };
-      navigate("/pages/account/invoice", { state: selectedEvent });
+      navigate("/pages/account/event-info", { state: selectedEvent });
     };
     return (
       <DLBox {...rest} ref={ref} display="flex" alignItems="center">
@@ -82,7 +82,7 @@ const DefaultItem = forwardRef(
           <AccordionDetails>
             <DLBox>
               <Card>
-                {/* Invoice header */}
+                {/* EventInfo header */}
                 <DLBox p={1}>
                   <DLBox p={1}>
                     <DLBox width="100%" overflow="auto">

@@ -1,14 +1,14 @@
 // Distance Learning React layouts
 import ProfileOverview from "layouts/pages/profile/profile-overview";
-import Settings from "layouts/pages/account/settings";
-import Billing from "layouts/pages/account/billing";
-import Kanban from "layouts/applications/kanban";
-import Chat from "layouts/applications/data-tables";
-import Calendar from "layouts/applications/calendar";
+import Calendar from "layouts/pages/Calendar";
 import LogoutPage from "layouts/authentication/sign-out";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Settings from "layouts/pages/profile/settings";
+import GradesPage from "layouts/pages/grades-page/GradesPage";
+import CoursesPage from "layouts/pages/CoursesPage";
+import ChatPage from "layouts/pages/ChatPage";
 
 const routes = [
   { type: "title", title: "Profile", key: "profile-pages" },
@@ -48,7 +48,7 @@ const routes = [
     key: "courses",
     route: "/courses",
     icon: <Icon fontSize="medium">class</Icon>,
-    component: <Kanban />,
+    component: <CoursesPage />,
     noCollapse: true,
   },
   {
@@ -57,16 +57,16 @@ const routes = [
     key: "chat",
     route: "/chat",
     icon: <Icon fontSize="medium">chat</Icon>,
-    component: <Chat />,
+    component: <ChatPage />,
     noCollapse: true,
   },
   {
     type: "collapse",
     name: "Grades",
-    key: "billing",
-    route: "/billing",
+    key: "GradesPage",
+    route: "/grades-page",
     icon: <Icon fontSize="medium">grade</Icon>,
-    component: <Billing />,
+    component: <GradesPage />,
     noCollapse: true,
   },
   {
