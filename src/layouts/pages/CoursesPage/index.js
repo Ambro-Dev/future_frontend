@@ -16,13 +16,14 @@ import DLBox from "components/DLBox";
 import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "utils/Navbars/DashboardNavbar";
 import Footer from "utils/Footer";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import DLTypography from "components/DLTypography";
 import CategoriesList from "utils/Lists/CategoriesList";
 import DLButton from "components/DLButton";
 import { useTranslation } from "react-i18next";
+import ErrorContext from "context/ErrorProvider";
 import About from "./components/About";
 
 function CoursesPage() {
@@ -35,6 +36,7 @@ function CoursesPage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [refresh, setRefresh] = useState(true);
+  const { showErrorNotification } = useContext(ErrorContext);
   const [pic, setPic] = useState("/storage/courses/course_images/course_image_11.gif");
 
   useEffect(() => {
@@ -44,7 +46,7 @@ function CoursesPage() {
         setCourses(data);
         setLoading(false);
       } catch (err) {
-        console.error(err);
+        showErrorNotification("Error", err.message);
         setLoading(false);
       }
     };
@@ -55,7 +57,7 @@ function CoursesPage() {
         setCourses(data);
         setLoading(false);
       } catch (err) {
-        console.error(err);
+        showErrorNotification("Error", err.message);
         setLoading(false);
       }
     };

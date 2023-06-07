@@ -13,14 +13,16 @@ import DLTypography from "components/DLTypography";
 // Distance Learning React utils
 import DataTable from "utils/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import ErrorContext from "context/ErrorProvider";
 
 function Courses({ setVisible, visible, loading }) {
   const axiosPrivate = useAxiosPrivate();
   const [courses, setCourses] = useState();
   const navigate = useNavigate();
+  const { showErrorNotification } = useContext(ErrorContext);
   const [dataLoading, setDataLoading] = useState(true);
   useEffect(() => {
     axiosPrivate
@@ -29,8 +31,8 @@ function Courses({ setVisible, visible, loading }) {
         setCourses(response.data);
         setDataLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        showErrorNotification("Error", "Couldn't load courses");
         setDataLoading(false);
       });
   }, [loading]);
@@ -44,7 +46,6 @@ function Courses({ setVisible, visible, loading }) {
     };
 
     navigate("/admin/courses/edit-course", { state: course });
-    console.log(row.original);
   };
 
   return (

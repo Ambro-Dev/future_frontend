@@ -79,20 +79,11 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
     }
     try {
       const newUser = { id: userId, newPassword: pwd };
-      console.log(newUser);
-      const response = await axiosPrivate.post(
-        process.env.REACT_APP_ADMIN_CHANGE_PASSWORD,
-        newUser
-      );
-      // TODO: remove console.logs before deployment
-      console.log(response);
-      // console.log(JSON.stringify(response))
-      // clear state and controlled inputs
+      await axiosPrivate.post(process.env.REACT_APP_ADMIN_CHANGE_PASSWORD, newUser);
       setPwd("");
       openSuccessSB();
     } catch (err) {
       if (err?.response) {
-        console.log(err.response);
         setErrMsg(err.response?.data.message);
       }
       errRef.current.focus();

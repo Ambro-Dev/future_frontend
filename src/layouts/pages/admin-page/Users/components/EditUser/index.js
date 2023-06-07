@@ -87,7 +87,7 @@ function EditUser() {
           setRoles(response.data.roles);
         })
         .catch((error) => {
-          console.error(error);
+          showErrorNotification("Error", error.message);
         });
 
       axiosPrivate
@@ -102,7 +102,7 @@ function EditUser() {
           setAllCourses(newRows);
         })
         .catch((error) => {
-          console.error(error);
+          showErrorNotification("Error", error.message);
         });
 
       if (Object.values(user.roles).includes(5150)) {
@@ -118,7 +118,7 @@ function EditUser() {
             setCourses(newRows);
           })
           .catch((error) => {
-            console.error(error);
+            showErrorNotification("Error", error.message);
           });
       } else {
         axiosPrivate
@@ -133,7 +133,7 @@ function EditUser() {
             setCourses(newRows);
           })
           .catch((error) => {
-            console.error(error);
+            showErrorNotification("Error", error.message);
           });
       }
     }

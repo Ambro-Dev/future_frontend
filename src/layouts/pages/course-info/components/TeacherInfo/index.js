@@ -19,11 +19,12 @@ import DLBadge from "components/DLBadge";
 import PropTypes from "prop-types";
 
 // Images
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import useAuth from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ErrorContext from "context/ErrorProvider";
 
 function OrderInfo({ courseId }) {
   const { t } = useTranslation("translation", { keyPrefix: "editinfo" });
@@ -31,6 +32,7 @@ function OrderInfo({ courseId }) {
   const [imageIrl, setImageUrl] = useState();
   const { auth } = useAuth();
   const [teacher, setTeacher] = useState();
+  const { showErrorNotification } = useContext(ErrorContext);
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
@@ -44,7 +46,7 @@ function OrderInfo({ courseId }) {
         setImageUrl(URL.createObjectURL(response.data));
       })
       .catch((error) => {
-        console.error("Error fetching image:", error);
+        showErrorNotification("Error", error.message);
       });
   }, []);
 

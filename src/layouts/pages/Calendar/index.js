@@ -7,7 +7,7 @@
 Coded by Ambro-Dev
 
 */
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -26,6 +26,7 @@ import useAxiosPrivate from "hooks/useAxiosPrivate";
 import useAuth from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ErrorContext from "context/ErrorProvider";
 import NextEvents from "./components/NextEvents";
 
 function Calendar() {
@@ -35,6 +36,7 @@ function Calendar() {
   const [calendarEventsData, setCalendarEventsData] = useState([]);
   const [nextEvents, setNextEvents] = useState([]);
   const { auth } = useAuth();
+  const { showErrorNotification } = useContext(ErrorContext);
 
   const handleOpen = async (info) => {
     info.jsEvent.preventDefault();
@@ -65,7 +67,7 @@ function Calendar() {
         setNextEvents(futureEvents);
       })
       .catch((error) => {
-        console.error(error);
+        showErrorNotification("Error", error.message);
       });
   }, []);
 

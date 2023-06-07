@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -18,6 +18,7 @@ import useAuth from "hooks/useAuth";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 import DLAvatar from "components/DLAvatar";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
+import ErrorContext from "context/ErrorProvider";
 
 // Images
 
@@ -25,6 +26,7 @@ function Header({ children }) {
   const axiosPrivate = useAxiosPrivate();
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const { auth } = useAuth();
+  const { showErrorNotification } = useContext(ErrorContext);
   const [imageIrl, setImageUrl] = useState();
 
   useEffect(() => {
@@ -41,7 +43,7 @@ function Header({ children }) {
         setImageUrl(URL.createObjectURL(response.data));
       })
       .catch((error) => {
-        console.error("Error fetching image:", error);
+        showErrorNotification("Error", error.message);
       });
     /** 
      The event listener that's calling the handleTabsOrientation function when resizing the window.

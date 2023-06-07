@@ -73,8 +73,8 @@ function EditCourse() {
           setTeacher(response.data);
           setNewTeacher(response.data);
         })
-        .catch((error) => {
-          console.error(error);
+        .catch(() => {
+          showErrorNotification("Error", "Couldn't load users");
         });
 
       axiosPrivate
@@ -91,11 +91,11 @@ function EditCourse() {
               setAllStudents(getStudents);
             })
             .catch((error) => {
-              console.error(error);
+              showErrorNotification("Error", error.message);
             });
         })
         .catch((error) => {
-          console.error(error);
+          showErrorNotification("Error", error.message);
         });
 
       axiosPrivate
@@ -104,7 +104,7 @@ function EditCourse() {
           setTeachersList(response.data);
         })
         .catch((error) => {
-          console.error(error);
+          showErrorNotification("Error", error.message);
         });
     }
   }, [reload]);
@@ -178,8 +178,7 @@ function EditCourse() {
   };
 
   const deleteCourse = () => {
-    axiosPrivate.delete(`/admin/delete-course/${course.id}`).then((response) => {
-      console.log(response);
+    axiosPrivate.delete(`/admin/delete-course/${course.id}`).then(() => {
       navigate(-1);
     });
   };

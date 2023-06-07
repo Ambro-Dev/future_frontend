@@ -28,6 +28,7 @@ import messageAnimation from "assets/images/illustrations/177-envelope-mail-send
 import { useTranslation } from "react-i18next";
 import DLAvatar from "components/DLAvatar";
 import EmojiPicker from "emoji-picker-react";
+import ErrorContext from "context/ErrorProvider";
 
 // Connect to the Socket.io server
 
@@ -44,6 +45,7 @@ function ChatPage() {
   const [conversationsList, setConversationsList] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [messagesList, setMessagesList] = useState([]);
+  const { showErrorNotification } = useContext(ErrorContext);
   const [messageText, setMessageText] = useState("");
   const messagesContainerRef = useRef();
   const sendRef = useRef();
@@ -76,7 +78,7 @@ function ChatPage() {
           })
           .then((response) => URL.createObjectURL(response.data))
           .catch((error) => {
-            console.error("Error fetching image:", error);
+            showErrorNotification("Error", error.message);
             return null;
           });
       })
@@ -92,7 +94,7 @@ function ChatPage() {
         getImages(response.data);
       })
       .catch((err) => {
-        console.error(err);
+        showErrorNotification("Error", err.message);
       });
     setLoading(false);
   }, []);
@@ -105,7 +107,7 @@ function ChatPage() {
         setUsersList(response.data);
       })
       .catch((err) => {
-        console.error(err);
+        showErrorNotification("Error", err.message);
       });
   }, []);
 
@@ -144,7 +146,7 @@ function ChatPage() {
           getImages(newList);
         })
         .catch((err) => {
-          console.error(err);
+          showErrorNotification("Error", err.message);
         });
     }
   };
@@ -166,7 +168,7 @@ function ChatPage() {
       await socket.emit("send-message", newMessage);
       setMessageText("");
     } catch (err) {
-      console.error(err);
+      showErrorNotification("Error", err.message);
     }
   };
 

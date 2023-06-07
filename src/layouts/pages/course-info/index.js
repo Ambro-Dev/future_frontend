@@ -34,6 +34,7 @@ import DLTypography from "components/DLTypography";
 import DLEditor from "components/DLEditor";
 import { Card } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import ErrorContext from "context/ErrorProvider";
 import TeacherInfo from "./components/TeacherInfo";
 import MembersList from "./components/MembersList";
 import UploadFile from "./components/UploadFile/index";
@@ -53,6 +54,7 @@ function CourseInfo() {
   const axiosPrivate = useAxiosPrivate();
   const [description, setDescription] = useState();
   const [editing, setEditing] = useState(false);
+  const { showErrorNotification } = useContext(ErrorContext);
 
   const handleOpen = async (info) => {
     info.jsEvent.preventDefault();
@@ -84,7 +86,7 @@ function CourseInfo() {
         setNextEvents(futureEvents);
       })
       .catch((error) => {
-        console.error(error);
+        showErrorNotification("Error", error.message);
       });
 
     axiosPrivate
@@ -95,7 +97,7 @@ function CourseInfo() {
         setDescription(data.description);
       })
       .catch((error) => {
-        console.error(error);
+        showErrorNotification("Error", error.message);
       });
 
     socket.emit("join-course", courseId);

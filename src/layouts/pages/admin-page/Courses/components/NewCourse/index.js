@@ -44,7 +44,7 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
         setTeachersList(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        showErrorNotification("Error", error.message);
       });
   }, []);
 
@@ -66,19 +66,10 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
     e.preventDefault();
     try {
       const newCourse = { name, description, teacherId: teacher };
-      console.log(newCourse);
-      const response = await axiosPrivate.post(
-        process.env.REACT_APP_CREATE_COURSE_URL,
-        JSON.stringify(newCourse),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      // TODO: remove console.logs before deployment
-      console.log(JSON.stringify(response?.data));
-      // console.log(JSON.stringify(response))
-      // clear state and controlled inputs
+      await axiosPrivate.post(process.env.REACT_APP_CREATE_COURSE_URL, JSON.stringify(newCourse), {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
       setName("");
       setDescription("");
       setTeacher("");

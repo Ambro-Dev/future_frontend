@@ -4,10 +4,11 @@ import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "utils/Navbars/DashboardNavbar";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Model, Serializer } from "survey-core";
 import { Survey } from "survey-react-ui";
+import ErrorContext from "context/ErrorProvider";
 
 // Add a custom `score` property to survey questions
 Serializer.addProperty("question", {
@@ -22,6 +23,7 @@ function SurveyViewer() {
   const sendEvent = location.state;
   const [resultExam, setResultExam] = useState();
   const navigate = useNavigate();
+  const { showErrorNotification } = useContext(ErrorContext);
 
   const saveResult = (sender, options) => {
     axiosPrivate
@@ -53,7 +55,7 @@ function SurveyViewer() {
           }
         })
         .catch((error) => {
-          console.error(error);
+          showErrorNotification("Error", error.message);
         });
     }
   }, []);

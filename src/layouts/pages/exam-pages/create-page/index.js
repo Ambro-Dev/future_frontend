@@ -2,8 +2,9 @@
 import PageLayout from "utils/LayoutContainers/PageLayout";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ErrorContext from "context/ErrorProvider";
 import FormCreatorRenderComponent from "./components/FormCreatorComponent";
 import examJSON from "./form_json";
 
@@ -16,6 +17,7 @@ function ExamBuilder() {
   const axiosPrivate = useAxiosPrivate();
   const [loading, setLoading] = useState(false);
   const [surveyJSON, setSurveyJSON] = useState(examJSON);
+  const { showErrorNotification } = useContext(ErrorContext);
 
   useEffect(() => {
     if (!sendEvent) {
@@ -31,7 +33,7 @@ function ExamBuilder() {
           }
         })
         .catch((error) => {
-          console.error(error);
+          showErrorNotification("Error", error.message);
         });
     }
   }, []);

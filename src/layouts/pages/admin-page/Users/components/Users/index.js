@@ -13,14 +13,16 @@ import DLTypography from "components/DLTypography";
 // Distance Learning React utils
 import DataTable from "utils/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import ErrorContext from "context/ErrorProvider";
 
 function Users({ setVisible, visible, loading }) {
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [users, setUsers] = useState();
+  const { showErrorNotification } = useContext(ErrorContext);
 
   const [dataLoading, setDataLoading] = useState(true);
 
@@ -41,7 +43,7 @@ function Users({ setVisible, visible, loading }) {
         setDataLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        showErrorNotification("Error", err.message);
         setDataLoading(false);
       });
   }, [loading]);

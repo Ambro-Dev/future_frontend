@@ -108,19 +108,10 @@ function NewUser({ visible, setVisible, loading, setLoading }) {
     }
     try {
       const newUser = { email, password: pwd, name, surname, roles: role, studentNumber };
-      console.log(newUser);
-      const response = await axios.post(
-        process.env.REACT_APP_REGISTER_URL,
-        JSON.stringify(newUser),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      // TODO: remove console.logs before deployment
-      console.log(JSON.stringify(response?.data));
-      // console.log(JSON.stringify(response))
-      // clear state and controlled inputs
+      await axios.post(process.env.REACT_APP_REGISTER_URL, JSON.stringify(newUser), {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
       setEmail("");
       setPwd("");
       setName("");

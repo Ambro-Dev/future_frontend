@@ -60,7 +60,7 @@ function Header() {
         setImageUrl(URL.createObjectURL(response.data));
       })
       .catch((error) => {
-        console.error("Error fetching image:", error);
+        showErrorNotification("Error", error.message);
       });
   }, []);
 

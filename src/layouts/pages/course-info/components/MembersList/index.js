@@ -14,7 +14,7 @@ import DLButton from "components/DLButton";
 import DataTable from "utils/Tables/DataTable";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import useAuth from "hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import DLAvatar from "components/DLAvatar";
@@ -23,6 +23,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import DLTypography from "components/DLTypography";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ErrorContext from "context/ErrorProvider";
 
 // Set up the fonts
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -34,6 +35,7 @@ function OrderList({ courseId }) {
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [imageUrls, setImageUrls] = useState([]);
+  const { showErrorNotification } = useContext(ErrorContext);
 
   const { auth } = useAuth();
 
@@ -91,14 +93,14 @@ function OrderList({ courseId }) {
               })
               .then((response) => URL.createObjectURL(response.data))
               .catch((error) => {
-                console.error("Error fetching image:", error);
+                showErrorNotification("Error", error.message);
                 return null;
               })
           )
         ).then(setImageUrls);
         setCsvList(processedData);
       } catch (error) {
-        console.error(error);
+        showErrorNotification("Error", error.message);
       }
     };
     fetchUsers();

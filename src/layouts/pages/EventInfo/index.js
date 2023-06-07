@@ -22,10 +22,11 @@ import { useMaterialUIController } from "context";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useTranslation } from "react-i18next";
+import ErrorContext from "context/ErrorProvider";
 import BaseLayout from "./components/BaseLayout";
 
 function EventInfo() {
@@ -35,6 +36,7 @@ function EventInfo() {
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
   const [controller] = useMaterialUIController();
+  const { showErrorNotification } = useContext(ErrorContext);
   const { darkMode } = controller;
   const navigate = useNavigate();
 
@@ -59,7 +61,7 @@ function EventInfo() {
         setCourse(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        showErrorNotification("Error", error.message);
       });
 
     return () => controller?.abort();

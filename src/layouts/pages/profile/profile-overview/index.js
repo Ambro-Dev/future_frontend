@@ -29,9 +29,10 @@ import { useTranslation } from "react-i18next";
 import Header from "layouts/pages/profile/components/Header";
 
 import useAuth from "hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { Backdrop, CircularProgress } from "@mui/material";
+import ErrorContext from "context/ErrorProvider";
 
 function Overview() {
   const { i18n } = useTranslation();
@@ -43,6 +44,7 @@ function Overview() {
   const [picture, setPicture] = useState();
   const [loading, setLoading] = useState(true);
   const [conversationList, setConversationList] = useState();
+  const { showErrorNotification } = useContext(ErrorContext);
 
   useEffect(() => {
     axiosPrivate
@@ -51,7 +53,7 @@ function Overview() {
         setPicture(URL.createObjectURL(response.data));
       })
       .catch((error) => {
-        console.error("Error fetching image:", error);
+        showErrorNotification("Error", error.message);
       });
 
     const fetchUserCourses = async () => {
@@ -60,7 +62,7 @@ function Overview() {
         setCourses(data);
         setLoading(false);
       } catch (err) {
-        console.error(err);
+        showErrorNotification("Error", err.message);
         setLoading(false);
       }
     };
@@ -71,7 +73,7 @@ function Overview() {
         setCourses(data);
         setLoading(false);
       } catch (err) {
-        console.error(err);
+        showErrorNotification("Error", err.message);
         setLoading(false);
       }
     };
