@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
 =========================================================
 * Distance Learning React - v1.1.0
@@ -21,7 +22,6 @@ import PropTypes from "prop-types";
 // Images
 import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
-import useAuth from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ErrorContext from "context/ErrorProvider";
@@ -30,7 +30,6 @@ function OrderInfo({ courseId }) {
   const { t } = useTranslation("translation", { keyPrefix: "editinfo" });
   const navigate = useNavigate();
   const [imageIrl, setImageUrl] = useState();
-  const { auth } = useAuth();
   const [teacher, setTeacher] = useState();
   const { showErrorNotification } = useContext(ErrorContext);
   const axiosPrivate = useAxiosPrivate();
@@ -38,16 +37,15 @@ function OrderInfo({ courseId }) {
   useEffect(() => {
     axiosPrivate.get(`/courses/${courseId}/teacher`).then((response) => {
       setTeacher(response.data);
+      axiosPrivate
+        .get(`/profile-picture/users/${response.data._id}/picture`, { responseType: "blob" })
+        .then((res) => {
+          setImageUrl(URL.createObjectURL(res.data));
+        })
+        .catch((error) => {
+          showErrorNotification("Error", error.message);
+        });
     });
-
-    axiosPrivate
-      .get(`/profile-picture/users/${auth.userId}/picture`, { responseType: "blob" })
-      .then((response) => {
-        setImageUrl(URL.createObjectURL(response.data));
-      })
-      .catch((error) => {
-        showErrorNotification("Error", error.message);
-      });
   }, []);
 
   return (
@@ -72,7 +70,17 @@ function OrderInfo({ courseId }) {
         </DLBox>
       </Grid>
       <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
-        <DLButton variant="gradient" color="dark" size="small" onClick={() => navigate("/chat")}>
+        <DLButton
+          variant="gradient"
+          color="dark"
+          size="small"
+          onClick={() => {
+            const messageUser = {
+              id: teacher._id,
+            };
+            navigate("/chat", { state: messageUser });
+          }}
+        >
           {t("sendmessage")}
         </DLButton>
         <DLBox mt={0.5}>

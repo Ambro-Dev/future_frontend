@@ -17,10 +17,11 @@ import DLBox from "components/DLBox";
 import DLTypography from "components/DLTypography";
 import DLInput from "components/DLInput";
 import DLButton from "components/DLButton";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import DLSnackbar from "components/DLSnackbar";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { Autocomplete, TextField } from "@mui/material";
+import ErrorContext from "context/ErrorProvider";
 
 function NewCourse({ visible, setVisible, loading, setLoading }) {
   const axiosPrivate = useAxiosPrivate();
@@ -28,7 +29,7 @@ function NewCourse({ visible, setVisible, loading, setLoading }) {
   const [description, setDescription] = useState("");
   const [teachersList, setTeachersList] = useState([]);
   const [teacher, setTeacher] = useState("");
-
+  const { showErrorNotification } = useContext(ErrorContext);
   const [successSB, setSuccessSB] = useState(false);
   const errRef = useRef();
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import DLBox from "components/DLBox";
@@ -13,6 +13,7 @@ function ProfilesList({ title, profiles, shadow }) {
   const axiosPrivate = useAxiosPrivate();
   const [imageUrls, setImageUrls] = useState([]);
   const { showErrorNotification } = useContext(ErrorContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     Promise.all(
@@ -30,7 +31,7 @@ function ProfilesList({ title, profiles, shadow }) {
     ).then(setImageUrls);
   }, [axiosPrivate, profiles]);
 
-  const renderProfiles = profiles.map(({ name, description, action }, index) => (
+  const renderProfiles = profiles.map(({ name, description, user, action }, index) => (
     <DLBox key={name} component="li" display="flex" alignItems="center" py={1} mb={1}>
       <DLBox mr={2}>
         <DLAvatar src={imageUrls[index]} alt="something here" shadow="md" />
@@ -45,16 +46,27 @@ function ProfilesList({ title, profiles, shadow }) {
       </DLBox>
       <DLBox ml="auto">
         {action.type === "internal" ? (
-          <DLButton component={Link} to="/chat" variant="text" color="info">
+          <DLButton
+            onClick={() => {
+              const messageUser = {
+                id: user,
+              };
+              navigate("/chat", { state: messageUser });
+            }}
+            variant="text"
+            color="info"
+          >
             {action.label}
           </DLButton>
         ) : (
           <DLButton
-            component="a"
-            href="/chat"
-            target="_blank"
-            rel="noreferrer"
             variant="text"
+            onClick={() => {
+              const messageUser = {
+                id: user,
+              };
+              navigate("/chat", { state: messageUser });
+            }}
             color={action.color}
           >
             {action.label}

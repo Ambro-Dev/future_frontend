@@ -209,7 +209,12 @@ function OrderList({ courseId }) {
                       accessor: "actions",
                       Cell: ({ row }) => (
                         <DLButton
-                          onClick={() => navigate("/chat")}
+                          onClick={() => {
+                            const messageUser = {
+                              id: row.original.id,
+                            };
+                            navigate("/chat", { state: messageUser });
+                          }}
                           disabled={row.original.studentNumber === auth.studentNumber}
                         >
                           {t("message")}

@@ -6,7 +6,7 @@ import DLBox from "components/DLBox";
 import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "utils/Navbars/DashboardNavbar";
 import Footer from "utils/Footer";
-import { Backdrop, Card, CircularProgress, Grid, Popover, Toolbar } from "@mui/material";
+import { Backdrop, Card, CircularProgress, Divider, Grid, Popover, Toolbar } from "@mui/material";
 
 import { useContext, useEffect, useRef, useState } from "react";
 
@@ -30,6 +30,7 @@ import DLAvatar from "components/DLAvatar";
 import EmojiPicker from "emoji-picker-react";
 import ErrorContext from "context/ErrorProvider";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+import { useLocation } from "react-router-dom";
 
 // Connect to the Socket.io server
 
@@ -47,7 +48,7 @@ function ChatPage() {
   const [conversationsList, setConversationsList] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [messagesList, setMessagesList] = useState([]);
-  const { showErrorNotification } = useContext(ErrorContext);
+  const { showErrorNotification, showInfoNotification } = useContext(ErrorContext);
   const [messageText, setMessageText] = useState("");
   const messagesContainerRef = useRef();
   const sendRef = useRef();
@@ -55,6 +56,9 @@ function ChatPage() {
   const [loading, setLoading] = useState(true);
   const [imageUrls, setImageUrls] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const location = useLocation();
+  const messageUser = location.state;
 
   const open = Boolean(anchorEl);
 
@@ -99,19 +103,58 @@ function ChatPage() {
     ).then(setImageUrls);
   };
 
+  const handleUserClick = (chatUser, list) => {
+    const selectedUser = usersList?.find((user) => user._id === chatUser);
+    const conversations = list || conversationsList;
+
+    if (selectedUser) {
+      const activeConversation = conversations.find((conversation) =>
+        conversation.members.some((member) => member._id === selectedUser._id)
+      );
+      if (activeConversation) {
+        showInfoNotification("Conversation with this user alredy exists");
+        return;
+      }
+      const newConversation = {
+        name: `${selectedUser.name} ${selectedUser.surname} - ${auth.name} ${auth.surname}`,
+        members: [auth.userId, selectedUser._id],
+      };
+      axiosPrivate
+        .post("/conversations/", newConversation)
+        .then((response) => {
+          const newList = [...conversations, response.data];
+          setConversationsList(newList);
+          handleConversationSelect(response.data._id);
+          setQuery(null);
+          getImages(newList);
+        })
+        .catch((err) => {
+          showErrorNotification("Error", err.message);
+        });
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    // Fetch the list of conversations from the server
     axiosPrivate
       .get(`/conversations/${auth.userId}`)
       .then((response) => {
-        setConversationsList(response.data);
-        getImages(response.data);
+        if (messageUser && response.data.length > 0 && !selectedConversation) {
+          const activeConversation = response.data.find((conversation) =>
+            conversation.members.some((member) => member._id === messageUser.id)
+          );
+          if (activeConversation) handleConversationSelect(activeConversation._id);
+          else handleUserClick(messageUser.id, response.data);
+        } else {
+          setConversationsList(response.data);
+          getImages(response.data);
+          setLoading(false);
+        }
       })
       .catch((err) => {
         showErrorNotification("Error", err.message);
       });
-    setLoading(false);
-  }, []);
+  }, [usersList]);
 
   useEffect(() => {
     // Fetch the list of users from the server
@@ -142,28 +185,6 @@ function ChatPage() {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
   }, [messagesList]);
-
-  const handleUserClick = (chatUser) => {
-    const selectedUser = usersList.find((user) => user._id === chatUser);
-    if (selectedUser) {
-      const newConversation = {
-        name: `${selectedUser.name} ${selectedUser.surname} - ${auth.name} ${auth.surname}`,
-        members: [auth.userId, selectedUser._id],
-      };
-      axiosPrivate
-        .post("/conversations/", newConversation)
-        .then((response) => {
-          const newList = [...conversationsList, response.data];
-          setConversationsList((prevConversations) => [...prevConversations, response.data]);
-          handleConversationSelect(response.data._id);
-          setQuery(null);
-          getImages(newList);
-        })
-        .catch((err) => {
-          showErrorNotification("Error", err.message);
-        });
-    }
-  };
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
@@ -222,7 +243,7 @@ function ChatPage() {
         }}
       >
         <DLBox mr={2}>
-          <DLAvatar src={imageUrls[index]} alt="something here" shadow="md" />
+          <DLAvatar src={imageUrls[index]} alt="something here" size="lg" shadow="md" />
         </DLBox>
         <DLBox
           display="flex"
@@ -303,6 +324,7 @@ function ChatPage() {
                           }
                         </DLTypography>
                       </DLBox>
+                      <Divider />
                       <DLBox
                         ref={messagesContainerRef}
                         className="messages-container"
@@ -401,7 +423,7 @@ function ChatPage() {
                           fullWidth
                         />
                         <DLButton type="button" onClick={handleClick} iconOnly>
-                          <EmojiEmotionsIcon />
+                          <EmojiEmotionsIcon sx={{ height: 20, width: 20 }} />
                         </DLButton>
                         <Popover
                           open={open}
@@ -418,6 +440,9 @@ function ChatPage() {
                         >
                           <EmojiPicker
                             onEmojiClick={(e) => setMessageText(`${messageText}${e.emoji}`)}
+                            lazyLoadEmojis
+                            categories={["suggested", "smileys_people", "animals_nature"]}
+                            emojiStyle="google"
                           />
                         </Popover>
 
