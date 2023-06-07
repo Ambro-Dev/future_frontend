@@ -6,7 +6,7 @@ import DLBox from "components/DLBox";
 import DashboardLayout from "utils/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "utils/Navbars/DashboardNavbar";
 import Footer from "utils/Footer";
-import { Backdrop, Card, CircularProgress, Grid, Toolbar } from "@mui/material";
+import { Backdrop, Card, CircularProgress, Grid, Popover, Toolbar } from "@mui/material";
 
 import { useContext, useEffect, useRef, useState } from "react";
 
@@ -29,6 +29,7 @@ import { useTranslation } from "react-i18next";
 import DLAvatar from "components/DLAvatar";
 import EmojiPicker from "emoji-picker-react";
 import ErrorContext from "context/ErrorProvider";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 
 // Connect to the Socket.io server
 
@@ -40,6 +41,7 @@ function ChatPage() {
   const { socket } = useContext(SocketContext);
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
+  const [addEmoji, setAddEmoji] = useState(false);
   const [query, setQuery] = useState(null);
   const [usersList, setUsersList] = useState([]);
   const [conversationsList, setConversationsList] = useState([]);
@@ -52,6 +54,18 @@ function ChatPage() {
   const [language, setLanguage] = useState("pl");
   const [loading, setLoading] = useState(true);
   const [imageUrls, setImageUrls] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setAddEmoji(!addEmoji);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleConversationSelect = (conversationId) => {
     if (selectedConversation) {
@@ -260,7 +274,7 @@ function ChatPage() {
                 </DLBox>
               </DLBox>
               {conversationsList && conversationsList.length > 0 ? (
-                <Card sx={{ height: "100%", boxShadow: "none" }}>
+                <Card sx={{ height: "auto", boxShadow: "none" }}>
                   <DLBox pt={2} px={2}>
                     <DLTypography variant="h6" fontWeight="medium" textTransform="capitalize">
                       {t("conversations")}
@@ -386,7 +400,27 @@ function ChatPage() {
                           onChange={(e) => setMessageText(e.target.value)}
                           fullWidth
                         />
-                        <EmojiPicker />
+                        <DLButton type="button" onClick={handleClick} iconOnly>
+                          <EmojiEmotionsIcon />
+                        </DLButton>
+                        <Popover
+                          open={open}
+                          anchorEl={anchorEl}
+                          onClose={handleClose}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "center",
+                          }}
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "center",
+                          }}
+                        >
+                          <EmojiPicker
+                            onEmojiClick={(e) => setMessageText(`${messageText}${e.emoji}`)}
+                          />
+                        </Popover>
+
                         <DLButton type="submit">{t("send")}</DLButton>
                       </DLBox>
                     </>
