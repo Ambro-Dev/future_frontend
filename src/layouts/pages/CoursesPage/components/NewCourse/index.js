@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
+import { Grid } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import DLBox from "components/DLBox";
 import DLButton from "components/DLButton";
+import DLTypography from "components/DLTypography";
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 function NewEvent(props) {
@@ -24,9 +27,11 @@ function NewEvent(props) {
     "/storage/courses/course_images/course_image_11.gif",
     "/storage/courses/course_images/course_image_12.gif",
   ];
-  const { open, setSelectedAvatar, onClose, selectedAvatar } = props;
+  const [avatarSelect, setAvatarSelect] = useState(null);
+  const { open, setSelectedAvatar, onClose } = props;
   const handleAvatarClick = (avatar) => {
     setSelectedAvatar(avatar);
+    setAvatarSelect(avatar);
   };
 
   const style = {
@@ -34,12 +39,13 @@ function NewEvent(props) {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "auto",
-    maxWidth: 380,
-    minWidth: 300,
+    width: "70%",
     bgcolor: "background.paper",
     border: "2px solid #000",
+    borderRadius: 5,
     boxShadow: 24,
+    maxWidth: 800,
+    background: "#f0f2f5",
     p: 4,
   };
 
@@ -57,21 +63,35 @@ function NewEvent(props) {
         onSubmit={setSelectedAvatar}
         sx={style}
       >
-        <DLBox id="modal-modal-title">{t("avatar")}</DLBox>
-        <DLBox id="modal-modal-description">
-          {imageOptions.map((avatar) => (
-            <DLBox
-              sx={{ height: 150 }}
-              component="img"
-              key={avatar}
-              src={`${serverUrl}/${avatar}`}
-              alt="Avatar"
-              onClick={() => handleAvatarClick(avatar)}
-              style={{ border: avatar === selectedAvatar ? "2px solid #333" : "none" }}
-            />
-          ))}
+        <DLBox id="modal-modal-title" textAlign="center" mb={2}>
+          <DLTypography variant="button" fontWeight="medium" sx={{ fontSize: 20 }}>
+            {t("avatar")}
+          </DLTypography>
         </DLBox>
-        <DLButton onClick={onClose}>{t("close")}</DLButton>
+        <DLBox id="modal-modal-description" sx={{ overflow: "auto", maxHeight: 400 }}>
+          <Grid container spacing={1}>
+            {imageOptions.map((avatar) => (
+              <Grid item xs={12} md={6} xl={4}>
+                <DLBox
+                  component="img"
+                  key={avatar}
+                  src={`${serverUrl}/${avatar}`}
+                  alt="Avatar"
+                  onClick={() => handleAvatarClick(avatar)}
+                  sx={{
+                    border: avatar === avatarSelect ? "2px solid #1A73E8" : "none",
+                    width: "100%",
+                  }}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </DLBox>
+        <DLBox mt={2}>
+          <DLButton onClick={onClose} variant="text" color="info">
+            {t("close")}
+          </DLButton>
+        </DLBox>
       </DLBox>
     </Modal>
   );

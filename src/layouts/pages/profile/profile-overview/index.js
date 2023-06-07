@@ -127,7 +127,7 @@ function Overview() {
         <Header picture={picture}>
           <DLBox mt={5} mb={3}>
             <Grid container spacing={1}>
-              <Grid item xs={12} md={6} xl={3} sx={{ display: "flex" }}>
+              <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
                 <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
                 {auth.studentNumber ? (
                   <ProfileInfoCard
@@ -150,7 +150,7 @@ function Overview() {
                   />
                 )}
               </Grid>
-              <Grid item xs={12} xl={4}>
+              <Grid item xs={12} md={6} xl={4}>
                 {conversationList && conversationList.length > 0 ? (
                   <ProfilesList
                     title={t("conversations")}
@@ -175,9 +175,9 @@ function Overview() {
           </DLBox>
           <DLBox p={2}>
             {courses.length > 0 ? (
-              <Grid container spacing={6}>
+              <Grid container spacing={3}>
                 {courses.map((course) => (
-                  <Grid item xs={12} md={6} xl={3} key={course._id}>
+                  <Grid item xs={6} md={4} xl={2} key={course._id}>
                     <DefaultProjectCard
                       image={`${serverUrl}/${course.pic}`}
                       title={`${course.name}`}

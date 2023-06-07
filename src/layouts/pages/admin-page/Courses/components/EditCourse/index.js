@@ -128,13 +128,13 @@ function EditCourse() {
           if (response.status === 200) {
             showSuccessNotification(response.data.message);
             setEdit(!edit);
-          } else showErrorNotification(response.data.message);
+          } else showErrorNotification("Error", response.data.message);
         });
       // clear state and controlled inputs
       setChanged(false);
     } catch (err) {
       if (!err?.response) {
-        showErrorNotification("Changing failed, server error");
+        showErrorNotification("Error", "Changing failed, server error");
       } else {
         showInfoNotification(err.response.data.message);
       }
@@ -155,7 +155,7 @@ function EditCourse() {
       .post(`/admin/${course.id}/members`, { memberIds: selectedRowIds })
       .then((response) => {
         if (response.status === 200) showInfoNotification(response.data.message);
-        else showErrorNotification(response.data.message);
+        else showErrorNotification("Error", response.data.message);
         setReload(!reload);
       });
   };
@@ -199,7 +199,7 @@ function EditCourse() {
     await axiosPrivate
       .put(`admin/${course.id}/members`, { memberIds: newMembers })
       .then((response) => {
-        if (response.status === 500) showErrorNotification(response.data.message);
+        if (response.status === 500) showErrorNotification("Error", response.data.message);
         else showInfoNotification(response.data.message);
       });
     setMembersToAdd([]);

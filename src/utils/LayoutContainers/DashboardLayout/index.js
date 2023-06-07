@@ -33,7 +33,7 @@ function DashboardLayout({ children }) {
   return (
     <DLBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
-        p: 3,
+        p: 1,
         position: "relative",
 
         [breakpoints.up("xl")]: {

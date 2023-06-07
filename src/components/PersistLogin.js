@@ -23,8 +23,9 @@ function PersistLogin() {
       try {
         await refresh();
       } catch (err) {
-        if (err.response.status === 401) showErrorNotification("You have been logged out");
-        else showErrorNotification(err.message);
+        if (err.response.status === 401)
+          showErrorNotification("Time out", "You have been logged out");
+        else showErrorNotification("Error", err.message);
       } finally {
         isMounted && setIsLoading(false);
       }

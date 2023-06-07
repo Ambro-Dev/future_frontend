@@ -50,12 +50,7 @@ function DefaultProjectCard({ image, title, description, action }) {
       <DLBox mt={1} mx={0.5}>
         <DLBox mb={1}>
           {action.type === "internal" ? (
-            <DLTypography
-              component={Link}
-              to={action.route}
-              variant="h5"
-              textTransform="capitalize"
-            >
+            <DLTypography component={Link} to={action.route} variant="h6">
               {title}
             </DLTypography>
           ) : (

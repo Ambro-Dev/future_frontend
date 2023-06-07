@@ -78,7 +78,7 @@ function Header({ children }) {
         sx={{
           position: "relative",
           mt: -8,
-          mx: 3,
+          mx: 1,
           py: 2,
           px: 2,
         }}

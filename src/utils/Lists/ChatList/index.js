@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import DLBox from "components/DLBox";
@@ -8,7 +7,7 @@ import DLButton from "components/DLButton";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useState, useEffect } from "react";
 
-function ProfilesList({ title, profiles, shadow }) {
+function ChatList({ title, profiles, shadow }) {
   const axiosPrivate = useAxiosPrivate();
   const [imageUrls, setImageUrls] = useState([]);
 
@@ -28,10 +27,20 @@ function ProfilesList({ title, profiles, shadow }) {
     ).then(setImageUrls);
   }, [axiosPrivate, profiles]);
 
-  const renderProfiles = profiles.map(({ name, description, action }, index) => {
+  const renderProfiles = profiles.map(({ name, description, action, selected, key }, index) => {
     console.log(imageUrls);
+    const selectConversation = action.func();
+
     return (
-      <DLBox key={name} component="li" display="flex" alignItems="center" py={1} mb={1}>
+      <DLBox
+        key={name}
+        component="li"
+        display="flex"
+        alignItems="center"
+        py={1}
+        mb={1}
+        color={selected ? "info" : "transparent"}
+      >
         <DLBox mr={2}>
           <DLAvatar src={imageUrls[index]} alt="something here" shadow="md" />
         </DLBox>
@@ -50,18 +59,11 @@ function ProfilesList({ title, profiles, shadow }) {
         </DLBox>
         <DLBox ml="auto">
           {action.type === "internal" ? (
-            <DLButton component={Link} to="/chat" variant="text" color="info">
+            <DLButton onClick={() => selectConversation(key)} variant="text" color="info">
               {action.label}
             </DLButton>
           ) : (
-            <DLButton
-              component="a"
-              href="/chat"
-              target="_blank"
-              rel="noreferrer"
-              variant="text"
-              color={action.color}
-            >
+            <DLButton variant="text" color={action.color}>
               {action.label}
             </DLButton>
           )}
@@ -86,14 +88,14 @@ function ProfilesList({ title, profiles, shadow }) {
   );
 }
 
-ProfilesList.defaultProps = {
+ChatList.defaultProps = {
   shadow: true,
 };
 
-ProfilesList.propTypes = {
+ChatList.propTypes = {
   title: PropTypes.string.isRequired,
   profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
   shadow: PropTypes.bool,
 };
 
-export default ProfilesList;
+export default ChatList;

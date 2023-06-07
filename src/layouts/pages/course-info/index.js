@@ -98,7 +98,7 @@ function CourseInfo() {
         console.error(error);
       });
 
-    if (courseId !== "") socket.emit("join-course", courseId);
+    socket.emit("join-course", courseId);
 
     socket.on("event", (event) => {
       setCalendarEventsData((prevEvents) => [...prevEvents, event]);
@@ -107,7 +107,7 @@ function CourseInfo() {
     return () => {
       socket.emit("leave-course", courseId);
     };
-  }, []);
+  }, [courseId]);
 
   const handleSave = () => {
     setEditing(!editing);

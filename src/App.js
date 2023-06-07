@@ -185,7 +185,7 @@ export default function App() {
       borderRadius="50%"
       position="fixed"
       right="2rem"
-      bottom="2rem"
+      bottom="4rem"
       zIndex={99}
       color="dark"
       sx={{ cursor: "pointer" }}

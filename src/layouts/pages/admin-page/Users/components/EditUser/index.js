@@ -172,7 +172,7 @@ function EditUser() {
     await axiosPrivate
       .put(`/admin/${user.id}/remove-courses`, { courses: rowsToRemove })
       .then((response) => {
-        if (response.status === 500) showErrorNotification(response.data.message);
+        if (response.status === 500) showErrorNotification("Error", response.data.message);
         else showInfoNotification(response.data.message);
       });
     setSelectedUserRowIds([]);
@@ -184,7 +184,7 @@ function EditUser() {
     await axiosPrivate
       .put(`/admin/${user.id}/add-courses`, { courses: rowsToAdd })
       .then((response) => {
-        if (response.status === 500) showErrorNotification(response.data.message);
+        if (response.status === 500) showErrorNotification("Error", response.data.message);
         else showInfoNotification(response.data.message);
       });
     setSelectedCoursesRowIds([]);
@@ -213,14 +213,14 @@ function EditUser() {
         if (response.status === 200) {
           showSuccessNotification(response.data.message);
           setEdit(!edit);
-        } else showErrorNotification(response.data.message);
+        } else showErrorNotification("Error", response.data.message);
       });
       // clear state and controlled inputs
       setChanged(false);
       setReload(!reload);
     } catch (err) {
       if (!err?.response) {
-        showErrorNotification("Changing failed, server error");
+        showErrorNotification("Error", "Changing failed, server error");
       } else {
         showInfoNotification(err.response.data.message);
       }
@@ -229,8 +229,8 @@ function EditUser() {
 
   const handleBlockUser = async () => {
     await axiosPrivate.put(`/admin/${user.id}/block-user`).then((response) => {
-      if (response.status === 400) showErrorNotification(response.data.message);
-      else if (response.status === 204) showErrorNotification(response.data.message);
+      if (response.status === 400) showErrorNotification("Error", response.data.message);
+      else if (response.status === 204) showErrorNotification("Error", response.data.message);
       else showSuccessNotification(response.data.message);
     });
     setReload(!reload);
@@ -238,8 +238,8 @@ function EditUser() {
 
   const handleUnblockUser = async () => {
     await axiosPrivate.put(`/admin/${user.id}/unblock-user`).then((response) => {
-      if (response.status === 400) showErrorNotification(response.data.message);
-      else if (response.status === 204) showErrorNotification(response.data.message);
+      if (response.status === 400) showErrorNotification("Error", response.data.message);
+      else if (response.status === 204) showErrorNotification("Error", response.data.message);
       else showSuccessNotification(response.data.message);
     });
     setReload(!reload);

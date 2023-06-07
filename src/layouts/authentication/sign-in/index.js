@@ -23,11 +23,15 @@ import axios from "api/axios";
 import appIcon from "assets/images/logo/logo-mans.png";
 import { useTranslation } from "react-i18next";
 import ErrorContext from "context/ErrorProvider";
+import { SocketContext } from "context/socket";
+import io from "socket.io-client";
 
 function Login() {
   const { t } = useTranslation("translation", { keyPrefix: "login" });
 
   const { setAuth, persist, setPersist } = useAuth();
+
+  const { socket, setSocket } = useContext(SocketContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -80,7 +84,7 @@ function Login() {
       const studentNumber = response?.data?.studentNumber;
 
       if (roles.includes(4004)) {
-        showErrorNotification("Your account have been blocked");
+        showErrorNotification("Error", "Your account have been blocked");
       } else {
         setAuth({
           userId,
@@ -92,6 +96,10 @@ function Login() {
           accessToken,
           picture,
         });
+        if (!socket) {
+          const newSocket = io(process.env.REACT_APP_SERVER_URL);
+          setSocket(newSocket);
+        }
         setEmail("");
         setPassword("");
         if (roles.includes(1001)) {

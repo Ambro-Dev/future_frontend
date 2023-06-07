@@ -148,78 +148,81 @@ function OrderList({ courseId }) {
 
   return (
     <DLBox>
-      {listUsers && listUsers.length > 0 ? (
-        <DLBox my={3}>
-          <DLBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-            <DLBox display="flex">
-              <DLBox ml={1}>
-                <DLButton variant="outlined" color="dark" onClick={() => exportCSV(csvList)}>
-                  <Icon>description</Icon>
-                  &nbsp;{t("exportcsv")}
-                </DLButton>
-              </DLBox>
-              <DLBox ml={1}>
-                <DLButton variant="outlined" color="dark" onClick={handlePdfExport}>
-                  <Icon>picture_as_pdf</Icon>
-                  &nbsp;{t("exportpdf")}
-                </DLButton>
-              </DLBox>
+      <DLBox my={3}>
+        <DLBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
+          <DLBox display="flex">
+            <DLBox ml={1}>
+              <DLButton
+                variant="outlined"
+                color="dark"
+                onClick={() => exportCSV(csvList)}
+                disabled={listUsers.length === 0}
+              >
+                <Icon>description</Icon>
+                &nbsp;{t("exportcsv")}
+              </DLButton>
+            </DLBox>
+            <DLBox ml={1}>
+              <DLButton
+                variant="outlined"
+                color="dark"
+                onClick={handlePdfExport}
+                disabled={listUsers.length === 0}
+              >
+                <Icon>picture_as_pdf</Icon>
+                &nbsp;{t("exportpdf")}
+              </DLButton>
             </DLBox>
           </DLBox>
+        </DLBox>
+        <DLBox>
           <DLBox>
-            {listUsers.length > 0 && (
-              <DLBox>
-                <Card>
-                  <DLBox pt={2} px={2} lineHeight={1}>
-                    <DLTypography variant="h6" fontWeight="medium">
-                      {t("members")}
-                    </DLTypography>
-                  </DLBox>
-                  <DataTable
-                    table={{
-                      columns: [
-                        {
-                          Header: [t("picture")],
-                          accessor: "picture",
-                          width: "10%",
-                          Cell: ({ row }) => (
-                            <DLAvatar
-                              src={row.original.picture}
-                              size="sm"
-                              alt={`${row.original.name} ${row.original.surname}`}
-                              sx={{ color: "#000000" }}
-                            />
-                          ),
-                        },
-                        { Header: [t("name")], accessor: "name" },
-                        { Header: [t("surname")], accessor: "surname" },
-                        { Header: [t("studentnumber")], accessor: "studentNumber" },
-                        {
-                          Header: [t("actions")],
-                          accessor: "actions",
-                          Cell: ({ row }) => (
-                            <DLButton
-                              onClick={() => navigate("/chat")}
-                              disabled={row.original.studentNumber === auth.studentNumber}
-                            >
-                              {t("message")}
-                            </DLButton>
-                          ),
-                        },
-                      ],
-                      rows: listUsers,
-                    }}
-                    entriesPerPage={false}
-                    canSearch
-                  />
-                </Card>
+            <Card>
+              <DLBox pt={2} px={2} lineHeight={1}>
+                <DLTypography variant="h6" fontWeight="medium">
+                  {t("members")}
+                </DLTypography>
               </DLBox>
-            )}
+              <DataTable
+                table={{
+                  columns: [
+                    {
+                      Header: [t("picture")],
+                      accessor: "picture",
+                      width: "10%",
+                      Cell: ({ row }) => (
+                        <DLAvatar
+                          src={row.original.picture}
+                          size="sm"
+                          alt={`${row.original.name} ${row.original.surname}`}
+                          sx={{ color: "#000000" }}
+                        />
+                      ),
+                    },
+                    { Header: [t("name")], accessor: "name" },
+                    { Header: [t("surname")], accessor: "surname" },
+                    { Header: [t("studentnumber")], accessor: "studentNumber" },
+                    {
+                      Header: [t("actions")],
+                      accessor: "actions",
+                      Cell: ({ row }) => (
+                        <DLButton
+                          onClick={() => navigate("/chat")}
+                          disabled={row.original.studentNumber === auth.studentNumber}
+                        >
+                          {t("message")}
+                        </DLButton>
+                      ),
+                    },
+                  ],
+                  rows: listUsers,
+                }}
+                canSearch
+              />
+            </Card>
           </DLBox>
         </DLBox>
-      ) : (
-        <DLBox>{t("stillloading")}</DLBox>
-      )}
+      </DLBox>
     </DLBox>
   );
 }

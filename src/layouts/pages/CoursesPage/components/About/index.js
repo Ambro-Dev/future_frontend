@@ -70,7 +70,7 @@ function About({ setDescription, setName, name, description, setPic }) {
                     : `${serverUrl}/storage/courses/course_images/course_image_11.gif`
                 }
                 alt="profile picture"
-                size="xxl"
+                sx={{ width: "100%", height: "auto" }}
                 variant="rounded"
               />
               <DLBox alt="spotify logo" position="absolute" right={0} bottom={0} mr={-1} mb={-1}>

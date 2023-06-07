@@ -24,16 +24,20 @@ import { useTranslation } from "react-i18next";
 
 function TeacherGrades({ title, userResults }) {
   const { t } = useTranslation("translation", { keyPrefix: "grades" });
-  const renderItems = userResults.map(({ courseName, examId, examTitle, results }) => (
+  const renderItems = userResults.map(({ courseName, examId, examTitle, results, index }) => (
     <DLBox
-      key={`${examId}-${courseName}`}
+      key={`${examId}-${courseName}-${index}`}
       component="li"
       display="flex"
       flexDirection="column"
-      borderRadius="lg"
       py={1}
       pr={2}
       mb={2}
+      sx={{
+        borderRadius: 3,
+        background: "#f0f0f0",
+        boxShadow: "-2px 2px 10px #cccccc, 2px -2px 10px #ffffff",
+      }}
     >
       <DLAccordion key={examId} sx={{ width: "100%" }}>
         <AccordionSummary expandIcon={<ExpandMore />} aria-controls={`panel${examId}-content`}>
@@ -44,24 +48,26 @@ function TeacherGrades({ title, userResults }) {
           </DLBox>
         </AccordionSummary>
         <AccordionDetails>
-          {results.map(({ userId, userName, userSurname, totalScore, maxScore }) => (
-            <Card sx={{ marginTop: 1 }}>
-              <DLBox p={1} key={`${examId}-${userId}`} display="flex">
-                <DLBox ml={2} mt={2} lineHeight={1.4}>
-                  <DLTypography display="block" variant="button" fontWeight="medium">
-                    {userName} {userSurname}
-                  </DLTypography>
-                </DLBox>
-                <DLBox p={1}>
-                  <DLBox width="100%" overflow="auto">
-                    <DLTypography variant="button" fontWeight="regular">
-                      {t("score")} {totalScore} / {maxScore}
+          <DLBox sx={{ overflow: "auto", maxHeight: 300, padding: 1 }}>
+            {results.map(({ userId, userName, userSurname, totalScore, maxScore, i }) => (
+              <Card sx={{ marginTop: 1 }}>
+                <DLBox p={1} key={`${examId}-${userId}-${i}`} display="flex">
+                  <DLBox ml={2} mt={2} lineHeight={1.4}>
+                    <DLTypography display="block" variant="button" fontWeight="medium">
+                      {userName} {userSurname}
                     </DLTypography>
                   </DLBox>
+                  <DLBox p={1}>
+                    <DLBox width="100%">
+                      <DLTypography variant="button" fontWeight="regular">
+                        {t("score")} {totalScore} / {maxScore}
+                      </DLTypography>
+                    </DLBox>
+                  </DLBox>
                 </DLBox>
-              </DLBox>
-            </Card>
-          ))}
+              </Card>
+            ))}
+          </DLBox>
         </AccordionDetails>
       </DLAccordion>
     </DLBox>
