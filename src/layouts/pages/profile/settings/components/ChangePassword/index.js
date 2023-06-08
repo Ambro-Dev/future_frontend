@@ -151,7 +151,6 @@ function ChangePassword() {
             onChange={(e) => setCurrentPwd(e.target.value)}
             value={currentPwd}
             required
-            aria-describedby="pwdnote"
             fullWidth
           />
         </DLBox>
@@ -162,7 +161,6 @@ function ChangePassword() {
             onChange={(e) => setPwd(e.target.value)}
             value={pwd}
             required
-            aria-invalid={validPwd ? "false" : "true"}
             fullWidth
             helperText="8 to 24 characters. Must include uppercase and lowercase letters, a number and a special character. Allowed special characters: ! @ # $ % & *"
           />
@@ -176,7 +174,6 @@ function ChangePassword() {
             onChange={(e) => setRepeatPwd(e.target.value)}
             value={repeatPwd}
             required
-            aria-invalid={validRepeatPwd && validPwd === validRepeatPwd ? "false" : "true"}
             fullWidth
             helperText="Must be identical as password above"
           />
