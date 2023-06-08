@@ -31,6 +31,7 @@ import EmojiPicker from "emoji-picker-react";
 import ErrorContext from "context/ErrorProvider";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 // Connect to the Socket.io server
 
@@ -85,22 +86,37 @@ function ChatPage() {
   };
 
   const getImages = (list) => {
-    Promise.all(
-      list.map((row) => {
-        const otherUser = row.members.find((member) => member._id !== auth.userId);
+    const { CancelToken } = axios;
+    const source = CancelToken.source();
 
-        if (!otherUser) return null;
-        return axiosPrivate
-          .get(`/profile-picture/users/${otherUser._id}/picture`, {
+    const userImages = list.map((row) => {
+      const otherUser = row.members.find((member) => member._id !== auth.userId);
+
+      if (!otherUser) return null;
+      return axiosPrivate
+        .get(
+          `/profile-picture/users/${otherUser._id}/picture`,
+
+          {
             responseType: "blob",
-          })
-          .then((response) => URL.createObjectURL(response.data))
-          .catch((error) => {
-            showErrorNotification("Error", error.message);
-            return null;
-          });
-      })
-    ).then(setImageUrls);
+          },
+          {
+            cancelToken: source.token,
+          }
+        )
+        .then((response) => URL.createObjectURL(response.data))
+        .catch((error) => {
+          if (axios.isCancel(error)) {
+            return () => {
+              // cancel the request before component unmounts
+              source.cancel();
+            };
+          }
+          showErrorNotification("Error", error.message);
+          return null;
+        });
+    });
+    Promise.all(userImages).then(setImageUrls);
   };
 
   const handleUserClick = (chatUser, list) => {
@@ -136,24 +152,61 @@ function ChatPage() {
   };
 
   useEffect(() => {
-    axiosPrivate
-      .get(`/conversations/${auth.userId}`)
-      .then((response) => {
-        if (messageUser && response.data.length > 0 && !selectedConversation) {
-          const activeConversation = response.data.find((conversation) =>
-            conversation.members.some((member) => member._id === messageUser.id)
-          );
-          if (activeConversation) handleConversationSelect(activeConversation._id);
-          else handleUserClick(messageUser.id, response.data);
-        } else {
-          setConversationsList(response.data);
-          getImages(response.data);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        showErrorNotification("Error", err.message);
-      });
+    const { CancelToken } = axios;
+    const source = CancelToken.source();
+    if (usersList) {
+      axiosPrivate
+        .get(`/conversations/${auth.userId}`, { cancelToken: source.token })
+        .then((response) => {
+          if (messageUser && response.data.length > 0 && !selectedConversation) {
+            const activeConversation = response.data.find((conversation) =>
+              conversation.members.some((member) => member._id === messageUser.id)
+            );
+            if (activeConversation) handleConversationSelect(activeConversation._id);
+            else handleUserClick(messageUser.id, response.data);
+          } else {
+            setConversationsList(response?.data);
+            const userImages = response.data.map((row) => {
+              const otherUser = row.members.find((member) => member._id !== auth.userId);
+
+              if (!otherUser) return null;
+              return axiosPrivate
+                .get(
+                  `/profile-picture/users/${otherUser._id}/picture`,
+
+                  {
+                    responseType: "blob",
+                  },
+                  {
+                    cancelToken: source.token,
+                  }
+                )
+                .then((res) => URL.createObjectURL(res.data))
+                .catch((error) => {
+                  if (axios.isCancel(error)) {
+                    return () => {};
+                  }
+                  showErrorNotification("Error", error.message);
+                  return null;
+                });
+            });
+            if (userImages) Promise.all(userImages).then(setImageUrls);
+
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          if (axios.isCancel(err)) {
+            return;
+          }
+          showErrorNotification("Error", err.message);
+        });
+    }
+
+    return () => {
+      // cancel the request before component unmounts
+      source.cancel();
+    };
   }, [usersList]);
 
   useEffect(() => {
@@ -208,15 +261,7 @@ function ChatPage() {
   };
 
   useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(i18n.language);
-    };
-
-    i18n.on("languageChanged", handleLanguageChange);
-
-    return () => {
-      i18n.off("languageChanged", handleLanguageChange);
-    };
+    setLanguage(i18n.language);
   }, [i18n]);
 
   const renderProfiles = conversationsList?.map((row, index) => {

@@ -13,25 +13,25 @@ import DLBox from "components/DLBox";
 import DLTypography from "components/DLTypography";
 import DLInput from "components/DLInput";
 import DLButton from "components/DLButton";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import DLSnackbar from "components/DLSnackbar";
 import { IconButton } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
+import ErrorContext from "context/ErrorProvider";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&*]).{8,24}$/;
 
 function ChangePassword({ setChngPassword, chngPassword, userId }) {
-  const [successSB, setSuccessSB] = useState(false);
   const errRef = useRef();
   const axiosPrivate = useAxiosPrivate();
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
+  const { showSuccessNotification } = useContext(ErrorContext);
 
   const [seePasswords, setSeePasswords] = useState(false);
 
@@ -40,22 +40,6 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
 
   const [errMsg, setErrMsg] = useState("");
 
-  const openSuccessSB = () => setSuccessSB(true);
-  const closeSuccessSB = () => setSuccessSB(false);
-
-  const renderSuccessSB = (
-    <DLSnackbar
-      color="success"
-      icon="check"
-      title="User Created"
-      content="User created successfully"
-      dateTime="now"
-      open={successSB}
-      onClose={closeSuccessSB}
-      close={closeSuccessSB}
-      bgWhite
-    />
-  );
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
   }, [pwd]);
@@ -81,7 +65,7 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
       const newUser = { id: userId, newPassword: pwd };
       await axiosPrivate.post(process.env.REACT_APP_ADMIN_CHANGE_PASSWORD, newUser);
       setPwd("");
-      openSuccessSB();
+      showSuccessNotification("Password changed");
     } catch (err) {
       if (err?.response) {
         setErrMsg(err.response?.data.message);
@@ -181,7 +165,6 @@ function ChangePassword({ setChngPassword, chngPassword, userId }) {
           </DLBox>
         </DLBox>
       </DLBox>
-      {renderSuccessSB}
     </DLBox>
   );
 }

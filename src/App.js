@@ -58,6 +58,7 @@ import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
 import routesua from "./routesua";
+import { ROLES } from "./context/userRoles";
 
 export default function App() {
   const { i18n } = useTranslation();
@@ -79,17 +80,21 @@ export default function App() {
 
   useEffect(() => {
     const handleLanguageChange = () => {
-      if (i18n.language === "en") {
-        setRoutes(routesen);
-      }
-      if (i18n.language === "pl") {
-        setRoutes(routespl);
-      }
-      if (i18n.language === "ru") {
-        setRoutes(routesru);
-      }
-      if (i18n.language === "ua") {
-        setRoutes(routesua);
+      switch (i18n.language) {
+        case "en":
+          setRoutes(routesen);
+          break;
+        case "pl":
+          setRoutes(routespl);
+          break;
+        case "ru":
+          setRoutes(routesru);
+          break;
+        case "ua":
+          setRoutes(routesua);
+          break;
+        default:
+          break;
       }
     };
 
@@ -108,14 +113,6 @@ export default function App() {
       newSocket.disconnect();
     };
   }, []);
-
-  // eslint-disable-next-line no-unused-vars
-  const ROLES = {
-    Teacher: 5150,
-    Student: 1984,
-    User: 2001,
-    Admin: 1001,
-  };
 
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();

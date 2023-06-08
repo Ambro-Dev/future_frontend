@@ -16,19 +16,41 @@ function ProfilesList({ title, profiles, shadow }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    Promise.all(
-      profiles.map((profile) =>
-        axiosPrivate
-          .get(`/profile-picture/users/${profile.user}/picture`, {
-            responseType: "blob",
+    let isMounted = true; // Add a flag to track if the component is mounted
+
+    const fetchProfilePictures = async () => {
+      try {
+        const urls = await Promise.all(
+          profiles.map(async (profile) => {
+            try {
+              const response = await axiosPrivate.get(
+                `/profile-picture/users/${profile.user}/picture`,
+                {
+                  responseType: "blob",
+                }
+              );
+              return URL.createObjectURL(response.data);
+            } catch (error) {
+              showErrorNotification("Error fetching image:", error);
+              return null;
+            }
           })
-          .then((response) => URL.createObjectURL(response.data))
-          .catch((error) => {
-            showErrorNotification("Error fetching image:", error);
-            return null;
-          })
-      )
-    ).then(setImageUrls);
+        );
+
+        if (isMounted) {
+          // Check if the component is still mounted before updating the state
+          setImageUrls(urls);
+        }
+      } catch (error) {
+        showErrorNotification("Error fetching profile pictures:", error);
+      }
+    };
+
+    fetchProfilePictures();
+
+    return () => {
+      isMounted = false; // Set the flag to false when the component is unmounted
+    };
   }, [axiosPrivate, profiles]);
 
   const renderProfiles = profiles.map(({ name, description, user, action }, index) => (

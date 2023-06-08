@@ -7,7 +7,7 @@ Coded by Ambro-Dev
 
 */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -23,6 +23,7 @@ import Icon from "@mui/material/Icon";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { DropzoneDialog } from "mui-file-dropzone";
+import ErrorContext from "context/ErrorProvider";
 
 // Images
 
@@ -33,16 +34,20 @@ function Header() {
   const [open, setOpen] = useState(false);
   const [imageIrl, setImageUrl] = useState();
 
+  const { showErrorNotification } = useContext(ErrorContext);
+
   const handleSave = async (files) => {
     setPicture(files[0]);
     setOpen(false);
     const formData = new FormData();
     formData.append("picture", files[0]);
-    await axiosPrivate.post(`/profile-picture/users/${auth.userId}/picture`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    await axiosPrivate
+      .post(`/profile-picture/users/${auth.userId}/picture`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .catch((error) => showErrorNotification("Error", error.message));
   };
 
   const handleOpen = () => {

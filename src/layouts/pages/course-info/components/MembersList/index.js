@@ -67,6 +67,8 @@ function OrderList({ courseId }) {
   };
 
   useEffect(() => {
+    let isMounted = true; // Add a flag to track if the component is mounted
+
     const fetchUsers = async () => {
       try {
         const { data } = await axiosPrivate.get(`courses/${courseId}/members`, {
@@ -85,25 +87,35 @@ function OrderList({ courseId }) {
           studentNumber: user.studentNumber,
         }));
         setListUsers(tableData);
-        Promise.all(
-          data.map((user) =>
-            axiosPrivate
-              .get(`/profile-picture/users/${user._id}/picture`, {
-                responseType: "blob",
-              })
-              .then((response) => URL.createObjectURL(response.data))
-              .catch((error) => {
-                showErrorNotification("Error", error.message);
-                return null;
-              })
-          )
-        ).then(setImageUrls);
+
+        const usersPictures = data.map((user) =>
+          axiosPrivate
+            .get(`/profile-picture/users/${user._id}/picture`, {
+              responseType: "blob",
+            })
+            .then((response) => URL.createObjectURL(response.data))
+            .catch((error) => {
+              showErrorNotification("Error", error.message);
+              return null;
+            })
+        );
+        Promise.all(usersPictures).then((images) => {
+          if (isMounted) {
+            // Check if the component is still mounted before updating the state
+            setImageUrls(images);
+          }
+        });
         setCsvList(processedData);
       } catch (error) {
         showErrorNotification("Error", error.message);
       }
     };
+
     fetchUsers();
+
+    return () => {
+      isMounted = false; // Set the flag to false when the component is unmounted
+    };
   }, []);
 
   useEffect(() => {

@@ -36,15 +36,6 @@ function Header({ children }) {
         ? setTabsOrientation("vertical")
         : setTabsOrientation("horizontal");
     }
-
-    axiosPrivate
-      .get(`/profile-picture/users/${auth.userId}/picture`, { responseType: "blob" })
-      .then((response) => {
-        setImageUrl(URL.createObjectURL(response.data));
-      })
-      .catch((error) => {
-        showErrorNotification("Error", error.message);
-      });
     /** 
      The event listener that's calling the handleTabsOrientation function when resizing the window.
     */
@@ -56,6 +47,31 @@ function Header({ children }) {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
+
+  useEffect(() => {
+    let isMounted = true; // Add a flag to track if the component is mounted
+
+    const fetchProfilePicture = async () => {
+      try {
+        const response = await axiosPrivate.get(`/profile-picture/users/${auth.userId}/picture`, {
+          responseType: "blob",
+        });
+
+        if (isMounted) {
+          // Check if the component is still mounted before updating the state
+          setImageUrl(URL.createObjectURL(response.data));
+        }
+      } catch (error) {
+        showErrorNotification("Error", error.message);
+      }
+    };
+
+    fetchProfilePicture();
+
+    return () => {
+      isMounted = false; // Set the flag to false when the component is unmounted
+    };
+  }, []);
 
   return (
     <DLBox position="relative" mb={5}>

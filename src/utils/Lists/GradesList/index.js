@@ -30,12 +30,16 @@ function GradesList({ title, userResults, index }) {
       component="li"
       display="flex"
       flexDirection="column"
-      borderRadius="lg"
       py={1}
       pr={2}
       mb={2}
+      sx={{
+        borderRadius: 3,
+        background: "#f0f0f0",
+        boxShadow: "-2px 2px 10px #cccccc, 2px -2px 10px #ffffff",
+      }}
     >
-      <DLAccordion key={`${courseName}`} sx={{ width: "100%" }}>
+      <DLAccordion sx={{ width: "100%" }}>
         <AccordionSummary expandIcon={<ExpandMore />} aria-controls={`panel${index}-content`}>
           <DLBox ml={2} mt={0.5} lineHeight={1.4}>
             <DLTypography display="block" variant="button" fontWeight="medium">
@@ -45,7 +49,7 @@ function GradesList({ title, userResults, index }) {
         </AccordionSummary>
         <AccordionDetails>
           {exams.map(({ examTitle, results }) => (
-            <Card sx={{ marginTop: 1 }}>
+            <Card key={`${courseName}-${examTitle}`} sx={{ marginTop: 1 }}>
               {results &&
                 results.map(({ userId, json }) => (
                   <DLBox p={1} key={`${courseName}-${examTitle}-${userId}`} display="flex">
