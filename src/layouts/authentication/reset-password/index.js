@@ -21,8 +21,24 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
+import { useState } from "react";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
 
-function Cover() {
+function ResetPassword() {
+  const [email, setEmail] = useState("");
+  const axiosPrivate = useAxiosPrivate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axiosPrivate.post("/reset-password", { email });
+      console.log(response.data); // Handle the response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle the error appropriately
+    }
+  };
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>
       <Card>
@@ -37,7 +53,7 @@ function Cover() {
           mb={1}
           textAlign="center"
         >
-          <DLTypography variant="h3" fontWeight="medium" color="white" mt={1}>
+          <DLTypography variant="h5" fontWeight="medium" color="white" mt={1}>
             Reset Password
           </DLTypography>
           <DLTypography display="block" variant="button" color="white" my={1}>
@@ -45,12 +61,19 @@ function Cover() {
           </DLTypography>
         </DLBox>
         <DLBox pt={4} pb={3} px={3}>
-          <DLBox component="form" role="form">
+          <DLBox component="form" role="form" onSubmit={handleSubmit}>
             <DLBox mb={4}>
-              <DLInput type="email" label="Email" variant="standard" fullWidth />
+              <DLInput
+                type="email"
+                label="Enter your email"
+                variant="standard"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </DLBox>
             <DLBox mt={6} mb={1}>
-              <DLButton variant="gradient" color="info" fullWidth>
+              <DLButton variant="gradient" type="submit" color="info" fullWidth>
                 reset
               </DLButton>
             </DLBox>
@@ -61,4 +84,4 @@ function Cover() {
   );
 }
 
-export default Cover;
+export default ResetPassword;

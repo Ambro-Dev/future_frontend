@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import useAuth from "hooks/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -210,6 +210,21 @@ function Login() {
               >
                 {t("signin")}
               </DLButton>
+            </DLBox>
+            <DLBox mt={3} textAlign="center">
+              <DLTypography variant="button" color="text" fontWeight="regular">
+                Forgot password?{" "}
+                <DLTypography
+                  component={Link}
+                  to="/authentication/reset-password"
+                  variant="button"
+                  color="info"
+                  fontWeight="medium"
+                  textGradient
+                >
+                  Reset
+                </DLTypography>
+              </DLTypography>
             </DLBox>
           </DLBox>
         </DLBox>

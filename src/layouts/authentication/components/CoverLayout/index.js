@@ -18,28 +18,14 @@ import DLBox from "components/DLBox";
 // import DLTypography from "components/DLTypography";
 
 // Distance Learning React utils
-import DefaultNavbar from "utils/Navbars/DefaultNavbar";
 import PageLayout from "utils/LayoutContainers/PageLayout";
 
 // Authentication layout components
 import Footer from "layouts/authentication/components/Footer";
 
-// Distance Learning React page layout routes
-import pageRoutes from "page.routes";
-
 function CoverLayout({ coverHeight, image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
-        routes={pageRoutes}
-        action={{
-          type: "external",
-          route: "https://creative-tim.com/product/material-dashboard-pro-react",
-          label: "buy now",
-        }}
-        transparent
-        light
-      />
       <DLBox
         width="calc(100% - 2rem)"
         minHeight={coverHeight}

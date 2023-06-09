@@ -54,6 +54,7 @@ import VideoCallPage from "layouts/pages/VideoCallPage";
 import CourseInfo from "layouts/pages/course-info";
 import EventInfo from "layouts/pages/EventInfo";
 import EventWizard from "layouts/pages/EventWizard";
+import ResetPassword from "layouts/authentication/reset-password";
 import routespl from "./routespl";
 import routesen from "./routesen";
 import routesru from "./routesru";
@@ -215,6 +216,11 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
+          <Route
+            path="/authentication/reset-password"
+            element={<ResetPassword />}
+            key="reset-password"
+          />
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/unauthorized" element={<Unauthorized />} key="unauthorized" />
