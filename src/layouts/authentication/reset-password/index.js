@@ -36,7 +36,7 @@ function ResetPassword() {
       console.log(response.data); // Handle the response as needed
     } catch (error) {
       console.error(error);
-      // Handle the error appropriately
+      console.log(error);
     }
   };
   return (
