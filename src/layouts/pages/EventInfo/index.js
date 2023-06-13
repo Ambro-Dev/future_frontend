@@ -27,6 +27,7 @@ import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 import { useTranslation } from "react-i18next";
 import ErrorContext from "context/ErrorProvider";
+import axios from "axios";
 import BaseLayout from "./components/BaseLayout";
 
 function EventInfo() {
@@ -36,7 +37,7 @@ function EventInfo() {
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
   const [controller] = useMaterialUIController();
-  const { showErrorNotification } = useContext(ErrorContext);
+  const { showErrorNotification, showSuccessNotification } = useContext(ErrorContext);
   const { darkMode } = controller;
   const navigate = useNavigate();
 
@@ -48,6 +49,9 @@ function EventInfo() {
   };
 
   useEffect(() => {
+    const { CancelToken } = axios;
+    const source = CancelToken.source();
+
     if (!selectedEvent) {
       navigate("/profile/profile-overview");
     }
@@ -55,7 +59,7 @@ function EventInfo() {
     axiosPrivate
       .get(`/courses/${selectedEvent._id}/event`, {
         // connect the controller with the fetch request
-        signal: controller.signal,
+        cancelToken: source.token,
       })
       .then((response) => {
         setCourse(response.data);
@@ -64,12 +68,27 @@ function EventInfo() {
         showErrorNotification("Error", error.message);
       });
 
-    return () => controller?.abort();
+    return () => {
+      // cancel the request before component unmounts
+      source.cancel();
+    };
   }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
     navigate(-1);
+  };
+
+  const handleDelete = () => {
+    axiosPrivate
+      .put("events/delete", { courseId: course._id, eventId: selectedEvent._id })
+      .then((response) => {
+        navigate(`/courses/course-info/${course?._id}`);
+        showSuccessNotification(response.data.message);
+      })
+      .catch((error) => {
+        showErrorNotification("Error", error.message);
+      });
   };
 
   return (
@@ -85,7 +104,7 @@ function EventInfo() {
                     <DLBox
                       component="img"
                       src={course && `${serverUrl}/${course.pic}`}
-                      width="25%"
+                      width="100%"
                       p={1}
                       mb={1}
                       sx={{
@@ -135,7 +154,12 @@ function EventInfo() {
                                   {t("join")}
                                 </DLButton>
                               )}
-                              <DLButton variant="gradient" color="error" sx={{ ml: 1 }}>
+                              <DLButton
+                                variant="gradient"
+                                color="error"
+                                sx={{ ml: 1 }}
+                                onClick={handleDelete}
+                              >
                                 {t("delete")}
                               </DLButton>
                             </>
@@ -210,7 +234,7 @@ function EventInfo() {
                         </DLBox>
                         <DLBox width="50%">
                           <DLTypography variant="h6" fontWeight="medium">
-                            {selectedEvent.start.toLocaleString("en-US")}
+                            {selectedEvent.start.toLocaleString("pl-PL")}
                           </DLTypography>
                         </DLBox>
                       </DLBox>
@@ -232,7 +256,7 @@ function EventInfo() {
                         </DLBox>
                         <DLBox width="50%">
                           <DLTypography variant="h6" fontWeight="medium">
-                            {selectedEvent.end.toLocaleString("en-US")}
+                            {selectedEvent.end.toLocaleString("pl-PL")}
                           </DLTypography>
                         </DLBox>
                       </DLBox>

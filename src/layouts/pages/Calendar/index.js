@@ -45,7 +45,7 @@ function Calendar() {
       start: info.event.start,
       end: info.event.end,
       description: info.event.extendedProps.description,
-      _id: info.event.extendedProps._id,
+      id: info.event.extendedProps._id,
       url: info.event.url,
     };
 

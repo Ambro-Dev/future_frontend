@@ -54,7 +54,10 @@ function CourseInfo() {
   const axiosPrivate = useAxiosPrivate();
   const [description, setDescription] = useState();
   const [editing, setEditing] = useState(false);
-  const { showErrorNotification } = useContext(ErrorContext);
+  const { showErrorNotification, showSuccessNotification } = useContext(ErrorContext);
+  const [picture, setPicture] = useState(null);
+  const [newDescription, setNewDescription] = useState();
+  const [reload, setReload] = useState(false);
 
   const handleOpen = async (info) => {
     info.jsEvent.preventDefault();
@@ -95,6 +98,7 @@ function CourseInfo() {
         // Update state with fetched data
         const { data } = response;
         setDescription(data.description);
+        setNewDescription(data.description);
       })
       .catch((error) => {
         showErrorNotification("Error", error.message);
@@ -109,10 +113,25 @@ function CourseInfo() {
     return () => {
       socket.emit("leave-course", courseId);
     };
-  }, [courseId]);
+  }, [reload]);
 
   const handleSave = () => {
-    setEditing(!editing);
+    const editCourse = {
+      course: courseId,
+      description: newDescription !== description ? newDescription : undefined,
+      picture: picture || undefined,
+    };
+    if (description !== newDescription || picture) {
+      axiosPrivate
+        .put("/courses/edit-course", editCourse)
+        .then((response) => {
+          showSuccessNotification(response.data.message);
+          setTimeout(1000);
+          setEditing(!editing);
+          setReload(!reload);
+        })
+        .catch((error) => showErrorNotification("Error", error.message));
+    }
   };
 
   return (
@@ -128,6 +147,7 @@ function CourseInfo() {
                   setEditing={setEditing}
                   editing={editing}
                   handleSave={handleSave}
+                  setPicture={setPicture}
                 />
               </Grid>
             ) : (
@@ -151,7 +171,7 @@ function CourseInfo() {
                         </DLTypography>
                       </DLBox>
                       <DLBox sx={{ overflow: "auto", maxHeight: 250 }}>
-                        <DLEditor value={description} onChange={setDescription} />
+                        <DLEditor value={newDescription} onChange={setNewDescription} />
                       </DLBox>
                     </DLBox>
                   ) : (

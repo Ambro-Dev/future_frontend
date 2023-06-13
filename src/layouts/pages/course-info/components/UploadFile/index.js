@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-underscore-dangle */
 /**
 =========================================================
@@ -17,7 +16,7 @@ import DLBox from "components/DLBox";
 import DLTypography from "components/DLTypography";
 
 // Distance Learning React utils
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DLButton from "components/DLButton";
 import { useMaterialUIController } from "context";
@@ -28,7 +27,7 @@ import image from "assets/images/icons/flags/EN.png";
 import FileItem from "utils/Items/FileItem";
 import useAuth from "hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import DLSnackbar from "components/DLSnackbar";
+import ErrorContext from "context/ErrorProvider";
 
 function UploadFile({ courseId }) {
   const { t } = useTranslation("translation", { keyPrefix: "courseinfo" });
@@ -40,23 +39,7 @@ function UploadFile({ courseId }) {
   const [courseFiles, setCourseFiles] = useState(null);
   const axiosPrivate = useAxiosPrivate();
 
-  const [successSB, setSuccessSB] = useState(false);
-  const openSuccessSB = () => setSuccessSB(true);
-  const closeSuccessSB = () => setSuccessSB(false);
-
-  const renderSuccessSB = (
-    <DLSnackbar
-      color="success"
-      icon="check"
-      title="Upload File"
-      content="File uploaded successfully!"
-      dateTime="now"
-      open={successSB}
-      onClose={closeSuccessSB}
-      close={closeSuccessSB}
-      bgWhite
-    />
-  );
+  const { showErrorNotification, showSuccessNotification } = useContext(ErrorContext);
 
   const handleDownload = (file) => {
     axiosPrivate
@@ -70,6 +53,18 @@ function UploadFile({ courseId }) {
         link.setAttribute("download", file.originalname);
         document.body.appendChild(link);
         link.click();
+      });
+  };
+
+  const handleDelete = (file) => {
+    axiosPrivate
+      .delete(`files/${file.id}/delete`)
+      .then((response) => {
+        showSuccessNotification(response.data.message);
+        setRefreshFiles(!refreshFiles);
+      })
+      .catch((error) => {
+        showErrorNotification("Error", error.message);
       });
   };
 
@@ -89,8 +84,8 @@ function UploadFile({ courseId }) {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(() => {
-        openSuccessSB();
+      .then((response) => {
+        showSuccessNotification(response.data.message);
       });
     setRefreshFiles(!refreshFiles);
   };
@@ -135,7 +130,6 @@ function UploadFile({ courseId }) {
           onClose={handleClose}
         />
       </DLBox>
-      {renderSuccessSB}
       <DLBox p={2} sx={{ overflow: "auto" }}>
         {courseFiles ? (
           courseFiles.map((file) => {
@@ -147,7 +141,7 @@ function UploadFile({ courseId }) {
                 icon={image}
                 title={file.originalname}
                 event={() => handleDownload(file)}
-                eventDel={handleDownload}
+                eventDel={() => handleDelete(file)}
                 extension={extension}
                 auth={auth}
               />

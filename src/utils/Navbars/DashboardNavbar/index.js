@@ -113,22 +113,34 @@ function DashboardNavbar({ absolute, light, isMini }) {
       <NotificationItem
         icon={<DLBox component="img" src={pl} />}
         title="Polski"
-        onClick={() => changeLanguage("pl")}
+        onClick={() => {
+          changeLanguage("pl");
+          handleCloseMenu();
+        }}
       />
       <NotificationItem
         icon={<DLBox component="img" src={en} />}
         title="English"
-        onClick={() => changeLanguage("en")}
+        onClick={() => {
+          changeLanguage("en");
+          handleCloseMenu();
+        }}
       />
       <NotificationItem
         icon={<DLBox component="img" src={ua} />}
         title="Українська"
-        onClick={() => changeLanguage("ua")}
+        onClick={() => {
+          changeLanguage("ua");
+          handleCloseMenu();
+        }}
       />
       <NotificationItem
         icon={<DLBox component="img" src={ru} />}
         title="Русский"
-        onClick={() => changeLanguage("ru")}
+        onClick={() => {
+          changeLanguage("ru");
+          handleCloseMenu();
+        }}
       />
     </Menu>
   );

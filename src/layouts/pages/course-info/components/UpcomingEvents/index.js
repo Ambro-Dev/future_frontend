@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-underscore-dangle */
 /**
 =========================================================
@@ -121,7 +120,7 @@ function UpcomingEvents({ events, courseId }) {
 }
 
 UpcomingEvents.propTypes = {
-  events: PropTypes.array.isRequired,
+  events: PropTypes.arrayOf(PropTypes.object).isRequired,
   courseId: PropTypes.string.isRequired,
 };
 

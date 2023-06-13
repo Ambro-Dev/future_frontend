@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import DLBox from "components/DLBox";
 import BaseLayout from "layouts/pages/EventInfo/components/BaseLayout";
 import Sidenav from "./components/Sidenav";
-import Header from "../components/Header";
+import Header from "./components/Header";
 import ChangePassword from "./components/ChangePassword";
 
 // Settings page components

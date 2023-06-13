@@ -80,9 +80,6 @@ function ChatPage() {
     setSelectedConversation(conversationId);
     setMessagesList([]);
     socket.emit("join-conversation", conversationId);
-    setTimeout(() => {
-      sendRef.current.scrollIntoView({ behavior: "auto" });
-    }, 300);
   };
 
   const getImages = (list) => {

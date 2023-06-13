@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-function NewEvent(props) {
+function EditCourseImage(props) {
   const { t } = useTranslation("translation", { keyPrefix: "courses" });
   const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -28,10 +28,6 @@ function NewEvent(props) {
   ];
   const [avatarSelect, setAvatarSelect] = useState(null);
   const { open, setSelectedAvatar, onClose } = props;
-  const handleAvatarClick = (avatar) => {
-    setSelectedAvatar(avatar);
-    setAvatarSelect(avatar);
-  };
 
   const style = {
     position: "absolute",
@@ -70,13 +66,12 @@ function NewEvent(props) {
         <DLBox id="modal-modal-description" sx={{ overflow: "auto", maxHeight: 400 }}>
           <Grid container spacing={1}>
             {imageOptions.map((avatar) => (
-              <Grid item xs={12} md={6} xl={4}>
+              <Grid item key={avatar} xs={12} md={6} xl={4}>
                 <DLBox
                   component="img"
-                  key={avatar}
                   src={`${serverUrl}/${avatar}`}
                   alt="Avatar"
-                  onClick={() => handleAvatarClick(avatar)}
+                  onClick={() => setAvatarSelect(avatar)}
                   sx={{
                     border: avatar === avatarSelect ? "2px solid #1A73E8" : "none",
                     width: "100%",
@@ -86,9 +81,20 @@ function NewEvent(props) {
             ))}
           </Grid>
         </DLBox>
-        <DLBox mt={2}>
+        <DLBox mt={2} display="flex" justifyContent="space-around">
           <DLButton onClick={onClose} variant="text" color="info">
             {t("close")}
+          </DLButton>
+          <DLButton
+            onClick={() => {
+              setSelectedAvatar(avatarSelect);
+              onClose();
+            }}
+            variant="text"
+            color="success"
+            disabled={!avatarSelect}
+          >
+            Save
           </DLButton>
         </DLBox>
       </DLBox>
@@ -96,10 +102,10 @@ function NewEvent(props) {
   );
 }
 
-NewEvent.propTypes = {
+EditCourseImage.propTypes = {
   open: PropTypes.bool.isRequired,
   setSelectedAvatar: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default NewEvent;
+export default EditCourseImage;

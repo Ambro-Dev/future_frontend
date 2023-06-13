@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-underscore-dangle */
 /**
 =========================================================
@@ -86,7 +85,7 @@ function NextEvents({ events }) {
                   url={event.url}
                   index={index}
                   classname={event.className}
-                  event={event._id}
+                  event={event.id}
                   start={`${formattedStartDate}, ${formattedStartTime}`}
                   end={`${formattedEndDate}, ${formattedEndTime}`}
                 />
@@ -102,7 +101,17 @@ function NextEvents({ events }) {
 }
 
 NextEvents.propTypes = {
-  events: PropTypes.array.isRequired,
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      start: PropTypes.string,
+      end: PropTypes.string,
+      description: PropTypes.string,
+      _id: PropTypes.string,
+      url: PropTypes.string,
+      className: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default NextEvents;

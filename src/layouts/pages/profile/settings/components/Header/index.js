@@ -36,12 +36,12 @@ function Header() {
 
   const { showErrorNotification } = useContext(ErrorContext);
 
-  const handleSave = async (files) => {
+  const handleSave = (files) => {
     setPicture(files[0]);
     setOpen(false);
     const formData = new FormData();
     formData.append("picture", files[0]);
-    await axiosPrivate
+    axiosPrivate
       .post(`/profile-picture/users/${auth.userId}/picture`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
