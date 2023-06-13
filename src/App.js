@@ -71,7 +71,6 @@ export default function App() {
   const {
     miniSidenav,
     direction,
-    layout,
     openConfigurator,
     sidenavColor,
     transparentSidenav,
@@ -197,23 +196,18 @@ export default function App() {
 
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
+      <CssBaseline />
+      <Sidenav
+        color={sidenavColor}
+        brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+        brandName="Distance Learning"
+        routes={routes}
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseLeave}
+      />
+      <Configurator />
+      {configsButton}
       <ErrorProvider>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Distance Learning"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
         <Routes>
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />
           <Route

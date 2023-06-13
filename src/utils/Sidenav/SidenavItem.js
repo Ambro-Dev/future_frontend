@@ -14,13 +14,12 @@ import PropTypes from "prop-types";
 import Collapse from "@mui/material/Collapse";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import Icon from "@mui/material/Icon";
 
 // Distance Learning React components
 import DLBox from "components/DLBox";
 
 // Custom styles for the SidenavItem
-import { item, itemContent, itemArrow } from "utils/Sidenav/styles/sidenavItem";
+import { item, itemContent } from "utils/Sidenav/styles/sidenavItem";
 
 // Distance Learning React contexts
 import { useMaterialUIController } from "context";
@@ -51,16 +50,7 @@ function SidenavItem({ color, name, active, nested, children, open, ...rest }) {
           }
         >
           <ListItemText primary={name} />
-          {children && (
-            <Icon
-              component="i"
-              sx={(theme) =>
-                itemArrow(theme, { open, miniSidenav, transparentSidenav, whiteSidenav, darkMode })
-              }
-            >
-              expand_less
-            </Icon>
-          )}
+          {children}
         </DLBox>
       </ListItem>
       {children && (

@@ -28,6 +28,7 @@ import FileItem from "utils/Items/FileItem";
 import useAuth from "hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import ErrorContext from "context/ErrorProvider";
+import { Chip, Dialog, DialogActions } from "@mui/material";
 
 function UploadFile({ courseId }) {
   const { t } = useTranslation("translation", { keyPrefix: "courseinfo" });
@@ -38,6 +39,19 @@ function UploadFile({ courseId }) {
   const [refreshFiles, setRefreshFiles] = useState(false);
   const [courseFiles, setCourseFiles] = useState(null);
   const axiosPrivate = useAxiosPrivate();
+
+  const [deleteFile, setDeleteFile] = useState(null);
+
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpenDialog = (file) => {
+    setOpenDialog(true);
+    setDeleteFile(file);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   const { showErrorNotification, showSuccessNotification } = useContext(ErrorContext);
 
@@ -60,7 +74,9 @@ function UploadFile({ courseId }) {
     axiosPrivate
       .delete(`files/${file.id}/delete`)
       .then((response) => {
+        handleCloseDialog();
         showSuccessNotification(response.data.message);
+        setDeleteFile(null);
         setRefreshFiles(!refreshFiles);
       })
       .catch((error) => {
@@ -141,7 +157,7 @@ function UploadFile({ courseId }) {
                 icon={image}
                 title={file.originalname}
                 event={() => handleDownload(file)}
-                eventDel={() => handleDelete(file)}
+                eventDel={() => handleClickOpenDialog(file)}
                 extension={extension}
                 auth={auth}
               />
@@ -151,6 +167,46 @@ function UploadFile({ courseId }) {
           <DLBox>{t("nofiles")}</DLBox>
         )}
       </DLBox>
+      {deleteFile && (
+        <Dialog open={openDialog} onClose={handleCloseDialog}>
+          <DLBox key="dialog-card" sx={{ padding: 3 }}>
+            <DLBox
+              variant="gradient"
+              bgColor="warning"
+              borderRadius="lg"
+              coloredShadow="info"
+              mt={-3}
+              p={1}
+              my={-1}
+              textAlign="center"
+              key="title"
+            >
+              <DLTypography key="title-text" variant="h5" fontWeight="medium" color="white">
+                Confirm
+              </DLTypography>
+            </DLBox>
+            <DLBox key="content" mt={4}>
+              <DLTypography key="title-description-text" variant="button">
+                Delete file:
+              </DLTypography>
+              <Chip sx={{ margin: 1 }} label={deleteFile.originalname} variant="outlined" />
+            </DLBox>
+            <DialogActions>
+              <DLButton onClick={handleCloseDialog} variant="text" color="warning">
+                Cancel
+              </DLButton>
+              <DLButton
+                variant="text"
+                color="error"
+                onClick={() => handleDelete(deleteFile)}
+                autoFocus
+              >
+                Delete
+              </DLButton>
+            </DialogActions>
+          </DLBox>
+        </Dialog>
+      )}
     </Card>
   );
 }
