@@ -73,6 +73,7 @@ export default function App() {
     direction,
     openConfigurator,
     sidenavColor,
+    layout,
     transparentSidenav,
     whiteSidenav,
     darkMode,
@@ -109,10 +110,18 @@ export default function App() {
     const newSocket = io(process.env.REACT_APP_SERVER_URL);
     setSocket(newSocket);
 
+    // Emit the custom event with the userId after connection
+    if (auth.userId) {
+      newSocket.on("connect", () => {
+        const { userId } = auth;
+        newSocket.emit("user-connected", userId);
+      });
+    }
+
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [auth.userId]);
 
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
@@ -197,15 +206,21 @@ export default function App() {
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      <Sidenav
-        color={sidenavColor}
-        brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-        brandName="Distance Learning"
-        routes={routes}
-        onMouseEnter={handleOnMouseEnter}
-        onMouseLeave={handleOnMouseLeave}
-      />
-      <Configurator />
+      {layout === "dashboard" && (
+        <>
+          <Sidenav
+            color={sidenavColor}
+            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+            brandName="Distance Learning"
+            routes={routes}
+            onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
+          />
+          <Configurator />
+          {configsButton}
+        </>
+      )}
+      {layout === "vr" && <Configurator />}
       {configsButton}
       <ErrorProvider>
         <Routes>

@@ -1,13 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { VideoSDKMeeting } from "@videosdk.live/rtc-js-prebuilt";
 import useAuth from "hooks/useAuth";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
 
 import PropTypes from "prop-types";
+import { SocketContext } from "context/socket";
 
 export default function VideoCall({ meetingId }) {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
+  const { socket } = useContext(SocketContext);
+
+  useEffect(() => {
+    socket.emit("join-call", { eventId: meetingId, userId: auth.userId });
+
+    return () => {
+      socket.emit("leave-call", { eventId: meetingId, userId: auth.userId });
+    };
+  }, []);
+
   useEffect(() => {
     let title;
     const apiKey = process.env.REACT_APP_VIDEOSDK_API_KEY;
@@ -24,6 +35,7 @@ export default function VideoCall({ meetingId }) {
       apiKey,
 
       containerId: null,
+      participantId: auth.userId,
 
       micEnabled: true,
       webcamEnabled: true,
