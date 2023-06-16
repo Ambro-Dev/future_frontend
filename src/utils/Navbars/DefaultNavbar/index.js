@@ -4,8 +4,8 @@
 * Distance Learning React TS - v1.0.0
 =========================================================
 
-* Product Page: https://mans.org.pl/product/material-dashboard-2-pro-react-ts
-* Copyright 2022 MANS (https://www.creative-tim.com)
+* Product Page: https://future.ambro.dev/
+* Copyright 2023 Ambro-Dev (https://www.ambro.dev)
 
 Coded by Ambro-Dev
 

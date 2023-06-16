@@ -98,8 +98,8 @@ export default function VideoCall({ meetingId }) {
         // visible when redirect on leave not provieded
         actionButton: {
           // optional action button
-          label: "MANS", // action button label
-          href: "https://mans.org.pl/", // action button href
+          label: "Ambro-Dev", // action button label
+          href: "https://ambro.dev/", // action button href
           onClick: () => {
             // Close the current tab/window
             window.close();

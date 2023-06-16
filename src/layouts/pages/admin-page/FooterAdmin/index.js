@@ -33,7 +33,7 @@ function FooterAdmin({ light }) {
             color={light ? "white" : "text"}
             fontSize={size.sm}
           >
-            &copy; 2022, made by Gwarant-Service
+            &copy; {new Date().getFullYear()}, made by Ambro-Dev
           </DLBox>
           <DLBox
             component="ul"
@@ -53,18 +53,18 @@ function FooterAdmin({ light }) {
             })}
           >
             <DLBox component="li" pr={2} lineHeight={1}>
-              <Link href="https://mans.org.pl/" target="_blank">
+              <Link href="https://ambro.dev/" target="_blank">
                 <DLTypography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  MANS
+                  Ambro-Dev
                 </DLTypography>
               </Link>
             </DLBox>
             <DLBox component="li" px={2} lineHeight={1}>
-              <Link href="https://mans.org.pl/" target="_blank">
+              <Link href="https://ambro.dev/" target="_blank">
                 <DLTypography
                   variant="button"
                   fontWeight="regular"
@@ -75,7 +75,7 @@ function FooterAdmin({ light }) {
               </Link>
             </DLBox>
             <DLBox component="li" px={2} lineHeight={1}>
-              <Link href="https://mans.org.pl/" target="_blank">
+              <Link href="https://ambro.dev/" target="_blank">
                 <DLTypography
                   variant="button"
                   fontWeight="regular"
@@ -86,7 +86,7 @@ function FooterAdmin({ light }) {
               </Link>
             </DLBox>
             <DLBox component="li" pl={2} lineHeight={1}>
-              <Link href="https://mans.org.pl/" target="_blank">
+              <Link href="https://ambro.dev/" target="_blank">
                 <DLTypography
                   variant="button"
                   fontWeight="regular"

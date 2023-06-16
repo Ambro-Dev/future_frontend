@@ -20,11 +20,12 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import axios from "api/axios";
 
-import appIcon from "assets/images/logo/logo-mans.png";
+import appIcon from "assets/images/logo-ct.png";
 import { useTranslation } from "react-i18next";
 import ErrorContext from "context/ErrorProvider";
 import { SocketContext } from "context/socket";
 import io from "socket.io-client";
+import LoginsTabs from "./components/LoginsTabs";
 
 function Login() {
   const { t } = useTranslation("translation", { keyPrefix: "login" });
@@ -154,6 +155,9 @@ function Login() {
               </DLTypography>
             </Grid>
           </Grid>
+        </DLBox>
+        <DLBox px={2}>
+          <LoginsTabs />
         </DLBox>
         <DLBox
           pt={4}

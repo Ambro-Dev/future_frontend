@@ -221,7 +221,6 @@ export default function App() {
         </>
       )}
       {layout === "vr" && <Configurator />}
-      {configsButton}
       <ErrorProvider>
         <Routes>
           <Route path="/authentication/sign-in" element={<Login />} key="sign-in" />

@@ -21,22 +21,25 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useAxiosPrivate from "hooks/useAxiosPrivate";
+
+import ReCAPTCHA from "react-google-recaptcha";
+import ErrorContext from "context/ErrorProvider";
 
 function ResetPassword() {
   const [email, setEmail] = useState("");
   const axiosPrivate = useAxiosPrivate();
+  const { showErrorNotification, showSuccessNotification } = useContext(ErrorContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axiosPrivate.post("/reset-password", { email });
-      console.log(response.data); // Handle the response as needed
+      showSuccessNotification(response.data.message); // Handle the response as needed
     } catch (error) {
-      console.error(error);
-      console.log(error);
+      showErrorNotification("Error", error.message);
     }
   };
   return (
@@ -71,6 +74,9 @@ function ResetPassword() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+            </DLBox>
+            <DLBox mb={4}>
+              <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY} size="normal" />
             </DLBox>
             <DLBox mt={6} mb={1}>
               <DLButton variant="gradient" type="submit" color="info" fullWidth>

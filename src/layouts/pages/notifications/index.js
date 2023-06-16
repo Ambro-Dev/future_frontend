@@ -54,7 +54,7 @@ function Notifications() {
     <DLSnackbar
       color="success"
       icon="check"
-      title="Material Dashboard"
+      title="Distance Learning"
       content="Hello, world! This is a notification message"
       dateTime="11 mins ago"
       open={successSB}
@@ -67,7 +67,7 @@ function Notifications() {
   const renderInfoSB = (
     <DLSnackbar
       icon="notifications"
-      title="Material Dashboard"
+      title="Distance Learning"
       content="Hello, world! This is a notification message"
       dateTime="11 mins ago"
       open={infoSB}
@@ -80,7 +80,7 @@ function Notifications() {
     <DLSnackbar
       color="warning"
       icon="star"
-      title="Material Dashboard"
+      title="Distance Learning"
       content="Hello, world! This is a notification message"
       dateTime="11 mins ago"
       open={warningSB}
@@ -94,7 +94,7 @@ function Notifications() {
     <DLSnackbar
       color="error"
       icon="warning"
-      title="Material Dashboard"
+      title="Distance Learning"
       content="Hello, world! This is a notification message"
       dateTime="11 mins ago"
       open={errorSB}
