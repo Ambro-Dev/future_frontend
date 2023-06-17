@@ -53,7 +53,7 @@ function Footer({ company, links }) {
         fontSize={size.sm}
         px={1.5}
       >
-        &copy; 2022, made by
+        &copy; {new Date().getFullYear()}, made by
         <Link href={href} target="_blank">
           <DLTypography variant="button" fontWeight="medium">
             &nbsp;{name}&nbsp;
