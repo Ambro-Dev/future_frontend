@@ -107,7 +107,9 @@ export default function App() {
   }, [i18n]);
 
   useEffect(() => {
-    const newSocket = io(process.env.REACT_APP_SOCKET_URL);
+    const newSocket = io(process.env.REACT_APP_SOCKET_URL, {
+      path: "/socket",
+    });
     setSocket(newSocket);
 
     // Emit the custom event with the userId after connection
